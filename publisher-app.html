@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching Materials Publisher — Michel Estopiñán</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#D84315;--navy:#1A2B4A;--cream:#FAF8F5;--ink:#1C1C1C;--muted:#6B6B6B;--border:rgba(0,0,0,0.1);--card:#fff;--green:#1B6B3A;--green-bg:#EBF9F0;--red-bg:#fff0f0;--red:#7B2020;--info-bg:#EBF0FF;--info:#1A2B4A}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.6}
+nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100}
+.nav-logo{font-size:15px;font-weight:500;color:#fff;letter-spacing:-.2px}
+.nav-logo span{color:var(--orange)}
+.nav-sub{font-size:12px;color:rgba(255,255,255,.5)}
+.wrap{max-width:720px;margin:0 auto;padding:2rem 1.5rem 4rem}
+.page-title{margin-bottom:2rem}
+.page-title h1{font-size:26px;font-weight:500;color:var(--navy);margin-bottom:4px}
+.page-title p{font-size:14px;color:var(--muted)}
+.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:1.5rem;gap:0}
+.tab{padding:9px 20px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'DM Sans',sans-serif;transition:color .15s}
+.tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+.tab:hover:not(.active){color:var(--ink)}
+.panel{display:none}
+.panel.active{display:block}
+.form-label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:6px}
+input[type=text]{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--card);color:var(--ink);outline:none;margin-bottom:14px;transition:border-color .15s}
+input[type=text]:focus{border-color:var(--orange)}
+textarea{width:100%;border:1.5px solid var(--border);border-radius:6px;padding:12px 14px;font-size:13px;font-family:'DM Mono',monospace;background:var(--card);color:var(--ink);resize:vertical;line-height:1.55;outline:none;transition:border-color .15s}
+textarea:focus{border-color:var(--orange)}
+.row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.btn{padding:9px 18px;font-size:13px;font-weight:500;border:1.5px solid var(--border);border-radius:6px;cursor:pointer;background:var(--card);color:var(--ink);font-family:'DM Sans',sans-serif;display:inline-flex;align-items:center;gap:7px;transition:all .15s;text-decoration:none}
+.btn:hover{border-color:var(--ink);background:#f5f5f5}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.primary:hover{background:var(--orange);border-color:var(--orange)}
+.btn.success{background:var(--green);border-color:var(--green);color:#fff}
+.btn.success:hover{background:#145230;border-color:#145230}
+.btn.danger{background:#dc3545;border-color:#dc3545;color:#fff}
+.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
+.method-card{background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:1rem 1.25rem;cursor:pointer;transition:all .15s}
+.method-card:hover,.method-card.selected{border-color:var(--orange);box-shadow:0 0 0 3px rgba(216,67,21,.08)}
+.method-card .badge{display:inline-block;font-size:10px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-bottom:8px}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-blue{background:var(--info-bg);color:var(--info)}
+.method-card h3{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:4px}
+.method-card p{font-size:12px;color:var(--muted);line-height:1.6}
+.result-box{background:var(--card);border:1.5px solid var(--border);border-radius:8px;padding:1.25rem;margin-top:1rem;display:none}
+.result-box.show{display:block}
+.result-label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.result-url{font-size:12px;font-family:'DM Mono',monospace;background:#f8f8f8;border:1px solid var(--border);border-radius:5px;padding:10px 12px;word-break:break-all;color:var(--ink);line-height:1.6;cursor:pointer;user-select:all;transition:border-color .15s}
+.result-url:hover{border-color:var(--orange)}
+.status{font-size:13px;margin-top:10px;padding:8px 12px;border-radius:6px;display:none;line-height:1.5}
+.status.show{display:block}
+.status.ok{background:var(--green-bg);color:var(--green);border:1px solid #28a74530}
+.status.err{background:var(--red-bg);color:var(--red);border:1px solid #dc354530}
+.status.info{background:var(--info-bg);color:var(--info);border:1px solid #1A2B4A30}
+.note{background:var(--info-bg);border-left:3px solid var(--orange);border-radius:0 6px 6px 0;padding:10px 14px;font-size:13px;color:var(--navy);line-height:1.6;margin-bottom:1.25rem}
+.prog{height:4px;background:#eee;border-radius:2px;overflow:hidden;margin-top:10px;display:none}
+.prog.show{display:block}
+.prog-fill{height:100%;background:var(--orange);border-radius:2px;transition:width .4s}
+.preview-frame{width:100%;height:520px;border:1.5px solid var(--border);border-radius:8px;margin-top:12px;background:#fff}
+.lib-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.lib-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lib-item .info .name{font-size:14px;font-weight:500;color:var(--navy)}
+.lib-item .info .meta{font-size:11px;color:var(--muted);margin-top:2px}
+.lib-item .btns{display:flex;gap:6px;flex-shrink:0}
+.lib-empty{font-size:14px;color:var(--muted);padding:1.5rem 0;text-align:center}
+.help-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem;margin-bottom:10px}
+.help-card h3{font-size:14px;font-weight:500;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--orange);color:#fff;border-radius:50%;font-size:11px;font-weight:500;flex-shrink:0}
+.help-card p{font-size:13px;color:var(--muted);line-height:1.7}
+.help-card code{font-family:'DM Mono',monospace;font-size:12px;background:#f0f0f0;padding:1px 5px;border-radius:3px;color:var(--navy)}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">M<span>.</span>Estopiñán &nbsp;·&nbsp; <span style="font-weight:300;color:rgba(255,255,255,.7);font-size:13px">Teaching Materials Publisher</span></span>
+  <span class="nav-sub">PG01 · SRH Berlin</span>
+</nav>
+
+<div class="wrap">
+  <div class="page-title">
+    <h1>Teaching Materials Publisher</h1>
+    <p>Paste any HTML file → get a shareable link → paste directly into Moodle. No accounts, no hosting fees.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'publish')">Publish</button>
+    <button class="tab" onclick="switchTab(this,'preview')">Preview</button>
+    <button class="tab" onclick="switchTab(this,'library')">My Links</button>
+    <button class="tab" onclick="switchTab(this,'help')">How to use</button>
+  </div>
+
+  <!-- ── PUBLISH ── -->
+  <div class="panel active" id="tab-publish">
+
+    <div class="note">Choose Method 1 for any file. It works instantly with no external service — the link never expires.</div>
+
+    <div class="method-grid">
+      <div class="method-card selected" id="m1" onclick="selectMethod(1)">
+        <div class="badge badge-green">Free · Never expires</div>
+        <h3>Method 1 — Data URL</h3>
+        <p>Encodes HTML directly into the link. Works offline. Opens in any browser. Recommended for all files.</p>
+      </div>
+      <div class="method-card" id="m2" onclick="selectMethod(2)">
+        <div class="badge badge-blue">Free · 365 days</div>
+        <h3>Method 2 — dpaste.org</h3>
+        <p>Uploads to a free service. Gets a short clean URL. Best for sharing via WhatsApp or email.</p>
+      </div>
+    </div>
+
+    <label class="form-label">File name (for your library)</label>
+    <input type="text" id="fname" placeholder="e.g. W5S2 Academic English — Chapter">
+
+    <label class="form-label">Paste HTML content here</label>
+    <textarea id="html-in" rows="11" placeholder="Open the .html file in Notepad (Windows) or TextEdit (Mac), select all (Ctrl+A), copy, and paste here."></textarea>
+
+    <div class="row">
+      <button class="btn primary" onclick="publish()">&#8679; Generate Link</button>
+      <button class="btn" onclick="previewFromPublish()">&#9654; Preview first</button>
+      <button class="btn" onclick="clearAll()">&#10005; Clear</button>
+    </div>
+
+    <div class="prog" id="prog"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+
+    <div class="result-box" id="result-box">
+      <div class="result-label">Your shareable link — click to copy</div>
+      <div class="result-url" id="result-url" onclick="copyUrl(this)" title="Click to copy"></div>
+      <div class="row">
+        <button class="btn success" onclick="copyUrl()">&#10697; Copy link</button>
+        <button class="btn" onclick="openUrl()">&#8599; Open in browser</button>
+        <button class="btn" onclick="saveToLib()">&#9733; Save to My Links</button>
+      </div>
+    </div>
+
+    <div class="status" id="pub-status"></div>
+  </div>
+
+  <!-- ── PREVIEW ── -->
+  <div class="panel" id="tab-preview">
+    <label class="form-label">Paste HTML here to preview</label>
+    <textarea id="html-preview" rows="7" placeholder="Paste HTML content here…"></textarea>
+    <div class="row"><button class="btn primary" onclick="renderPreview()">&#9654; Render preview</button></div>
+    <iframe class="preview-frame" id="preview-frame" sandbox="allow-scripts allow-same-origin" title="HTML preview"></iframe>
+  </div>
+
+  <!-- ── LIBRARY ── -->
+  <div class="panel" id="tab-library">
+    <div class="note">Links are saved in this browser. They stay here even after you close the app.</div>
+    <div class="row" style="margin-bottom:1rem">
+      <button class="btn danger" onclick="clearLib()">&#10005; Clear all links</button>
+    </div>
+    <div class="lib-list" id="lib-list"></div>
+    <div class="lib-empty" id="lib-empty" style="display:none">No links saved yet. Publish a file and click "Save to My Links".</div>
+  </div>
+
+  <!-- ── HELP ── -->
+  <div class="panel" id="tab-help">
+
+    <div class="help-card">
+      <h3><span class="step-num">1</span> Open your HTML file in a text editor</h3>
+      <p>Right-click the <code>.html</code> file → <strong>Open with</strong> → <strong>Notepad</strong> (Windows) or <strong>TextEdit</strong> (Mac).<br>
+      Select all with <code>Ctrl+A</code> (Windows) or <code>Cmd+A</code> (Mac), then copy.</p>
+    </div>
+
+    <div class="help-card">
+      <h3><span class="step-num">2</span> Paste and generate a link</h3>
+      <p>Go to the <strong>Publish</strong> tab. Type a name for the file, paste the HTML content, and click <strong>Generate Link</strong>.</p>
+    </div>
+
+    <div class="help-card">
+      <h3><span class="step-num">3</span> Copy the link and add it to Moodle</h3>
+      <p>Click <strong>Copy link</strong>. In Moodle: <em>Add an activity → URL → paste the link → Save</em>.<br>
+      Students click the link and the page opens directly in their browser. No login needed.</p>
+    </div>
+
+    <div class="help-card">
+      <h3>Which method should I use?</h3>
+      <p><strong>Method 1 (Data URL)</strong> — the whole page is encoded inside the link. It is long but it works forever, even offline, with no external service. Recommended for all materials.<br><br>
+      <strong>Method 2 (dpaste.org)</strong> — uploads to a free public service and gives you a short URL like <code>dpaste.org/ABC123</code>. Expires after 365 days. Good for sharing in chat or email where a long URL looks messy.</p>
+    </div>
+
+    <div class="help-card">
+      <h3>Can students see each other's content?</h3>
+      <p>Method 1 links are completely unguessable — only people you share them with can open them. Method 2 links are technically public on dpaste.org but nobody will ever stumble on them (random strings). For exam materials or sensitive content, always use Method 1.</p>
+    </div>
+
+    <div class="help-card">
+      <h3>What file types work?</h3>
+      <p>Only <code>.html</code> files. This includes everything produced in this course: the textbook chapter, the interactive 20-activity worksheet, the printable task sheet, and any future materials.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const LIB='me_pub_v2';
+let method=1;
+let lastUrl='';
+
+function switchTab(btn,id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  if(id==='library')renderLib();
+}
+
+function selectMethod(n){
+  method=n;
+  document.getElementById('m1').classList.toggle('selected',n===1);
+  document.getElementById('m2').classList.toggle('selected',n===2);
+}
+
+function status(msg,type){
+  const s=document.getElementById('pub-status');
+  s.textContent=msg; s.className='status show '+type;
+  if(type==='ok')setTimeout(()=>{s.className='status';},3000);
+}
+
+function setBar(pct){
+  const p=document.getElementById('prog');
+  document.getElementById('prog-fill').style.width=pct+'%';
+  p.className=pct>0&&pct<100?'prog show':'prog';
+}
+
+async function publish(){
+  const html=document.getElementById('html-in').value.trim();
+  if(!html){status('Please paste some HTML content first.','err');return;}
+  const name=document.getElementById('fname').value.trim()||'Untitled material';
+
+  if(method===1){
+    setBar(40);
+    try{
+      const b64=btoa(unescape(encodeURIComponent(html)));
+      const url='data:text/html;base64,'+b64;
+      lastUrl=url;
+      showResult(url,name);
+      setBar(100); setTimeout(()=>setBar(0),600);
+    }catch(e){
+      status('Encoding error. Make sure the HTML is valid text.','err');
+      setBar(0);
+    }
+  } else {
+    status('Uploading to dpaste.org…','info');
+    setBar(25);
+    try{
+      const fd=new FormData();
+      fd.append('content',html);
+      fd.append('lexer','html');
+      fd.append('expires','365');
+      fd.append('format','json');
+      setBar(55);
+      const res=await fetch('https://dpaste.org/api/',{method:'POST',body:fd});
+      if(!res.ok) throw new Error(res.status);
+      const data=await res.json();
+      setBar(85);
+      let url=(typeof data==='string'?data:data.url||data.link||'').replace(/\/?$/,'')+'/raw/';
+      if(!url||url==='/raw/') throw new Error('No URL returned');
+      lastUrl=url;
+      showResult(url,name);
+      setBar(100); setTimeout(()=>setBar(0),600);
+    }catch(e){
+      status('Could not reach dpaste.org. Switch to Method 1 — it works without internet.','err');
+      setBar(0);
+    }
+  }
+}
+
+function showResult(url,name){
+  const box=document.getElementById('result-box');
+  const el=document.getElementById('result-url');
+  const display=url.length>130?url.slice(0,100)+'… ['+url.length+' chars — full URL copied]':url;
+  el.textContent=display;
+  el.dataset.full=url;
+  box.className='result-box show';
+  status('Link ready. Click "Copy link" then paste into Moodle.','ok');
+}
+
+function copyUrl(el){
+  const full=(document.getElementById('result-url').dataset.full)||lastUrl;
+  if(!full){status('Generate a link first.','err');return;}
+  navigator.clipboard.writeText(full)
+    .then(()=>status('Copied to clipboard!','ok'))
+    .catch(()=>{
+      const t=document.createElement('textarea');
+      t.value=full; document.body.appendChild(t); t.select();
+      document.execCommand('copy'); document.body.removeChild(t);
+      status('Copied!','ok');
+    });
+}
+
+function openUrl(){
+  if(lastUrl) window.open(lastUrl,'_blank');
+}
+
+function saveToLib(){
+  if(!lastUrl){status('Generate a link first.','err');return;}
+  const name=document.getElementById('fname').value.trim()||'Untitled';
+  const lib=JSON.parse(localStorage.getItem(LIB)||'[]');
+  lib.unshift({name,url:lastUrl,method:method===1?'Data URL':'dpaste.org',date:new Date().toLocaleDateString('en-GB')});
+  localStorage.setItem(LIB,JSON.stringify(lib.slice(0,100)));
+  status('Saved to My Links!','ok');
+}
+
+function clearAll(){
+  document.getElementById('html-in').value='';
+  document.getElementById('fname').value='';
+  document.getElementById('result-box').className='result-box';
+  document.getElementById('pub-status').className='status';
+  lastUrl='';
+}
+
+function previewFromPublish(){
+  const html=document.getElementById('html-in').value.trim();
+  if(!html){status('Paste some HTML first.','err');return;}
+  document.getElementById('html-preview').value=html;
+  document.querySelectorAll('.tab')[1].click();
+  renderPreview();
+}
+
+function renderPreview(){
+  const html=document.getElementById('html-preview').value.trim();
+  if(html) document.getElementById('preview-frame').srcdoc=html;
+}
+
+function renderLib(){
+  const lib=JSON.parse(localStorage.getItem(LIB)||'[]');
+  const list=document.getElementById('lib-list');
+  const empty=document.getElementById('lib-empty');
+  if(!lib.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  list.innerHTML=lib.map((item,i)=>`
+    <div class="lib-item">
+      <div class="info">
+        <div class="name">${item.name}</div>
+        <div class="meta">${item.method} &nbsp;·&nbsp; ${item.date}</div>
+      </div>
+      <div class="btns">
+        <button class="btn" style="padding:6px 12px;font-size:12px" onclick="copyLib(${i})">&#10697; Copy</button>
+        <button class="btn" style="padding:6px 12px;font-size:12px" onclick="openLib(${i})">&#8599; Open</button>
+        <button class="btn" style="padding:6px 12px;font-size:12px" onclick="delLib(${i})">&#10005;</button>
+      </div>
+    </div>`).join('');
+}
+
+function copyLib(i){
+  const lib=JSON.parse(localStorage.getItem(LIB)||'[]');
+  if(!lib[i]) return;
+  navigator.clipboard.writeText(lib[i].url)
+    .then(()=>alert('Copied: '+lib[i].name))
+    .catch(()=>prompt('Copy this link manually:',lib[i].url));
+}
+function openLib(i){
+  const lib=JSON.parse(localStorage.getItem(LIB)||'[]');
+  if(lib[i]) window.open(lib[i].url,'_blank');
+}
+function delLib(i){
+  const lib=JSON.parse(localStorage.getItem(LIB)||'[]');
+  lib.splice(i,1);
+  localStorage.setItem(LIB,JSON.stringify(lib));
+  renderLib();
+}
+function clearLib(){
+  if(confirm('Delete all saved links?')){localStorage.removeItem(LIB);renderLib();}
+}
+</script>
+</body>
+</html>
