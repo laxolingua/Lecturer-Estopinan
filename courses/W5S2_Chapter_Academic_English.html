@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic English — Chapter 5.2 | PG01</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#D84315;--navy:#1A2B4A;--cream:#FAF8F5;--ink:#1C1C1C;--muted:#6B6B6B;--border:rgba(0,0,0,0.09);--card:#fff;--green:#1B6B3A;--green-bg:#EBF9F0;--red:#8B1A1A;--red-bg:#FFF0F0;--amber:#7A4B00;--amber-bg:#FFF7E6}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.75}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:rgba(250,248,245,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:52px}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:16px;color:var(--navy);text-decoration:none}
+.nav-logo span{color:var(--orange)}
+.nav-chapter{font-size:12px;color:var(--muted)}
+
+/* LAYOUT */
+.wrap{max-width:800px;margin:0 auto;padding:3rem 2rem 6rem}
+
+/* CHAPTER HEADER */
+.ch-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.ch-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem}
+.ch-tag{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+.tag-week{background:#EBF0FF;color:var(--navy)}
+.tag-session{background:#FFF0EB;color:var(--orange)}
+.ch-header h1{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);color:var(--navy);line-height:1.1;margin-bottom:1rem;letter-spacing:-.5px}
+.ch-intro{font-size:16px;font-weight:300;color:var(--muted);line-height:1.8;max-width:680px}
+.ch-outcomes{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin-top:1.5rem}
+.ch-outcomes h3{font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:.75rem}
+.ch-outcomes ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.ch-outcomes li{font-size:14px;color:var(--ink);display:flex;align-items:flex-start;gap:8px}
+.ch-outcomes li::before{content:'→';color:var(--orange);flex-shrink:0;font-size:13px;margin-top:2px}
+
+/* CONTENTS */
+.toc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:3rem}
+.toc h3{font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.toc ol{padding-left:1.25rem;display:flex;flex-direction:column;gap:4px}
+.toc li a{font-size:14px;color:var(--navy);text-decoration:none}
+.toc li a:hover{color:var(--orange);text-decoration:underline}
+
+/* SECTION HEADERS */
+h2.section{font-family:'DM Serif Display',serif;font-size:28px;color:var(--navy);margin:3rem 0 1rem;padding-top:2rem;border-top:1px solid var(--border)}
+h2.section span{color:var(--orange);font-size:16px;font-style:normal;margin-right:8px}
+h3.sub{font-size:17px;font-weight:500;color:var(--navy);margin:2rem 0 .75rem}
+
+/* BODY TEXT */
+p{font-size:15px;color:#2C2C2C;margin-bottom:1rem;line-height:1.8}
+strong{font-weight:500;color:var(--ink)}
+
+/* RULES BOX */
+.rules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin:1.5rem 0}
+.rule-card{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.rule-header{background:var(--navy);padding:8px 14px;display:flex;align-items:center;gap:10px}
+.rule-sym{font-family:'DM Mono',monospace;font-size:16px;color:var(--orange);font-weight:500;min-width:28px}
+.rule-title{font-size:13px;font-weight:500;color:#fff;letter-spacing:.2px}
+.rule-body{padding:12px 14px;font-size:13px;color:var(--muted);line-height:1.7}
+.rule-body code{font-family:'DM Mono',monospace;font-size:12px;background:#F0F0F0;padding:1px 5px;border-radius:3px;color:var(--orange)}
+
+/* EXAMPLES */
+.example-block{margin:1.5rem 0}
+.example-label{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.ex-wrong{background:var(--red-bg);border-left:4px solid #dc3545;padding:10px 14px;border-radius:0 4px 4px 0;margin-bottom:6px;font-size:14px;color:var(--red)}
+.ex-wrong .label{font-size:10px;font-weight:500;color:#dc3545;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.ex-right{background:var(--green-bg);border-left:4px solid #28a745;padding:10px 14px;border-radius:0 4px 4px 0;font-size:14px;color:var(--green)}
+.ex-right .label{font-size:10px;font-weight:500;color:#28a745;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.rule-note{background:var(--amber-bg);border-left:4px solid #D84315;padding:10px 14px;border-radius:0 4px 4px 0;font-size:13px;color:var(--amber);margin:1rem 0}
+.rule-note strong{color:var(--amber)}
+
+/* TABLE */
+.ref-table{width:100%;border-collapse:collapse;font-size:14px;margin:1.5rem 0;border-radius:6px;overflow:hidden;border:1px solid var(--border)}
+.ref-table th{background:var(--navy);color:#fff;padding:10px 14px;text-align:left;font-weight:500;font-size:12px;letter-spacing:.3px}
+.ref-table td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top;color:#2C2C2C}
+.ref-table tr:last-child td{border-bottom:none}
+.ref-table tr:nth-child(even) td{background:#F8F9FA}
+.cat-label{font-weight:500;color:var(--navy)}
+
+/* KEY POINT */
+.key-point{background:var(--card);border:1.5px solid var(--orange);border-radius:6px;padding:1.25rem 1.5rem;margin:1.5rem 0;display:flex;gap:14px;align-items:flex-start}
+.key-icon{font-size:24px;flex-shrink:0;line-height:1}
+.key-point h4{font-size:13px;font-weight:500;color:var(--orange);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.key-point p{font-size:14px;color:var(--ink);margin:0}
+
+/* WORKED EXAMPLE FULL */
+.worked{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin:1.5rem 0}
+.worked-label{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:1rem}
+.worked-row{display:grid;grid-template-columns:80px 1fr;gap:12px;align-items:start;margin-bottom:10px;font-size:14px}
+.worked-row:last-child{margin-bottom:0}
+.worked-step{background:var(--navy);color:#fff;padding:3px 10px;border-radius:2px;font-size:11px;font-weight:500;text-align:center;letter-spacing:.5px;white-space:nowrap}
+.worked-content{color:#2C2C2C;line-height:1.7}
+.worked-content .highlight{color:var(--orange);font-weight:500}
+.worked-content .highlight-green{color:var(--green);font-weight:500}
+
+/* QUICK TEST */
+.self-check{background:#F0F4FF;border:1px solid #C0CFF0;border-radius:8px;padding:1.5rem;margin:2rem 0}
+.self-check h4{font-size:13px;font-weight:500;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;margin-bottom:1rem}
+.check-q{font-size:14px;color:var(--ink);margin-bottom:.5rem;display:flex;gap:8px}
+.check-q::before{content:'?';color:var(--orange);font-weight:500;flex-shrink:0}
+
+/* ASSESSMENT LINK */
+.assess-box{background:var(--navy);border-radius:8px;padding:1.5rem;margin:2rem 0;color:#fff;display:flex;gap:14px;align-items:flex-start}
+.assess-box h4{font-size:14px;font-weight:500;color:#fff;margin-bottom:4px}
+.assess-box p{font-size:13px;color:rgba(255,255,255,.7);margin:0;line-height:1.6}
+
+/* SUMMARY TABLE */
+.summary-table{width:100%;border-collapse:collapse;font-size:14px;margin:1.5rem 0}
+.summary-table th{background:var(--orange);color:#fff;padding:9px 14px;text-align:left;font-size:12px;font-weight:500;letter-spacing:.3px}
+.summary-table td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+.summary-table tr:last-child td{border-bottom:none}
+
+hr.sec-divide{border:none;border-top:1px solid var(--border);margin:3rem 0}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">M<span>.</span>Estopiñán</a>
+  <span class="nav-chapter">PG01 · Chapter 5.2</span>
+</nav>
+
+<div class="wrap">
+
+<!-- CHAPTER HEADER -->
+<div class="ch-header">
+  <div class="ch-meta">
+    <span class="ch-tag tag-week">Week 5</span>
+    <span class="ch-tag tag-session">Session 2</span>
+  </div>
+  <h1>Academic<br><em style="font-style:italic;color:var(--orange)">English</em></h1>
+  <p class="ch-intro">Writing with precision, caution, and formality. This chapter covers everything taught in Session 2 in full detail. If you missed the class, work through this chapter from the beginning — it contains all explanations, rules, worked examples, and the model answers for every task.</p>
+
+  <div class="ch-outcomes">
+    <h3>By the end of this chapter you will be able to</h3>
+    <ul>
+      <li>Apply correct punctuation in academic sentences, including semi-colons, commas, and apostrophes</li>
+      <li>Use linking words accurately to signal logical relationships between ideas</li>
+      <li>Hedge claims using modal verbs, hedge verbs, and qualifying phrases</li>
+      <li>Convert active sentences into passive and impersonal academic structures</li>
+      <li>Apply all four skills together when editing your own writing</li>
+    </ul>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#s1">The Academic English Toolkit — Overview</a></li>
+    <li><a href="#s2">Punctuation — The Core Rules</a></li>
+    <li><a href="#s3">Linking Words — Signposting Your Logic</a></li>
+    <li><a href="#s4">Language of Caution — Hedging</a></li>
+    <li><a href="#s5">Active / Passive Voice & Impersonal Writing</a></li>
+    <li><a href="#s6">Putting It All Together — Editing Checklist</a></li>
+    <li><a href="#s7">Model Answers for Class Tasks</a></li>
+  </ol>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2 class="section" id="s1"><span>1</span>The Academic English Toolkit — Overview</h2>
+
+<p>Academic writing is not simply correct writing — it is writing that operates at a specific register, follows recognisable conventions, and signals intellectual credibility to the reader. These five tools work together to achieve that effect.</p>
+
+<table class="summary-table">
+  <tr>
+    <th>Tool</th><th>What it does</th><th>Why it matters for Assessment 1</th>
+  </tr>
+  <tr>
+    <td><strong>01 Punctuation</strong></td>
+    <td>Controls sentence boundaries, clause structure, and grammatical precision</td>
+    <td>Errors in punctuation lose marks under "English Language" in the rubric</td>
+  </tr>
+  <tr>
+    <td><strong>02 Linking Words</strong></td>
+    <td>Signals the logical relationship between sentences and paragraphs</td>
+    <td>Academic paragraphs must flow — ideas need explicit connective tissue</td>
+  </tr>
+  <tr>
+    <td><strong>03 Language of Caution</strong></td>
+    <td>Limits the scope of claims; avoids over-generalisation</td>
+    <td>All report claims must be hedged unless you have direct evidence — rubric checks "Content" accuracy</td>
+  </tr>
+  <tr>
+    <td><strong>04 Passive / Impersonal</strong></td>
+    <td>Removes personal pronouns; foregrounds evidence over author</td>
+    <td>Reports must be written in the third person — "Structure" criterion</td>
+  </tr>
+  <tr>
+    <td><strong>05 Consistent Register</strong></td>
+    <td>All four tools working together maintain formal academic tone</td>
+    <td>A single informal phrase or pronoun can undermine an otherwise strong paragraph</td>
+  </tr>
+</table>
+
+<div class="assess-box">
+  <div style="font-size:28px;flex-shrink:0">📋</div>
+  <div>
+    <h4>Assessment 1 connection</h4>
+    <p>Your 1,000-word sustainability report (due Week 11) will be assessed on English Language, Structure, Content, and Referencing. Every skill in this chapter directly affects at least one of those criteria. Use the checklist in Section 6 as your final editing pass before submission.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2 class="section" id="s2"><span>2</span>Punctuation — The Core Rules</h2>
+
+<p>Poor punctuation is one of the most common reasons academic writing loses marks. The issues are rarely exotic — they are almost always the same six mistakes, made repeatedly. Master these six rules and your writing immediately reads as more competent.</p>
+
+<h3 class="sub">Why punctuation matters in academic writing</h3>
+<p>Punctuation does not simply separate words — it tells the reader how to group ideas, where one thought ends and another begins, and what kind of relationship exists between clauses. In academic English, punctuation errors signal carelessness, which undermines the credibility of your argument regardless of how strong the content is.</p>
+
+<div class="rules-grid">
+  <div class="rule-card">
+    <div class="rule-header"><span class="rule-sym">A–Z</span><span class="rule-title">Capital Letters</span></div>
+    <div class="rule-body">Use at the start of every sentence and for proper nouns: names of people, places, languages, institutions, journal titles. <code>Journal of Nutrition</code>, not <code>journal of nutrition</code>.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-header"><span class="rule-sym">.</span><span class="rule-title">Full Stops</span></div>
+    <div class="rule-body">End every complete sentence. A sentence without a full stop, or two complete sentences joined by only a comma, is a grammatical error known as a run-on sentence or comma splice.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-header"><span class="rule-sym">,</span><span class="rule-title">Commas</span></div>
+    <div class="rule-body">Use after introductory phrases, around non-restrictive clauses, and in lists. A non-restrictive clause gives extra information: <code>One study, published in 2022, found…</code></div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-header"><span class="rule-sym">'</span><span class="rule-title">Apostrophes</span></div>
+    <div class="rule-body">Use for possession only (<code>the study's findings</code>). <strong>Never use contractions in academic writing.</strong> <code>don't</code> → <code>do not</code>. <code>it's</code> → <code>it is</code>. No exceptions outside direct quotes.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-header"><span class="rule-sym">;</span><span class="rule-title">Semi-colons</span></div>
+    <div class="rule-body">Join two complete, related sentences: <code>[sentence]; however, [sentence].</code> Also separate complex list items that themselves contain commas.</div>
+  </div>
+  <div class="rule-card">
+    <div class="rule-header"><span class="rule-sym">" "</span><span class="rule-title">Quotation Marks</span></div>
+    <div class="rule-body">Reserve for direct quotes from sources only. Always pair with an in-text citation: <code>(Morris, 2024, p. 3)</code>. For short quotes, integrate into your sentence.</div>
+  </div>
+</div>
+
+<h3 class="sub">The most common error: the comma splice</h3>
+<p>A comma splice occurs when two complete sentences are joined by a comma alone. It is one of the most frequent punctuation errors in student academic writing.</p>
+
+<div class="example-block">
+  <div class="ex-wrong"><div class="label">Comma splice — incorrect</div>The results were positive, however more research is needed.</div>
+  <div class="ex-right"><div class="label">Corrected — semi-colon + however</div>The results were positive; however, more research is needed.</div>
+</div>
+
+<div class="rule-note">
+  <strong>The "however" rule:</strong> When "however" connects two complete sentences, it always needs a semi-colon before it and a comma after it. A comma alone before "however" is a comma splice — a grammatical error.
+</div>
+
+<h3 class="sub">Worked example — full punctuation correction</h3>
+<div class="worked">
+  <div class="worked-label">Worked example · Task 1</div>
+  <div class="worked-row">
+    <div class="worked-step">Original</div>
+    <div class="worked-content" style="font-style:italic;color:var(--muted)">plant based diets have become increasingly popular in recent years some researchers suggest that they may reduce the risk of heart disease however its important to note that not all plant based foods are equally healthy for example processed vegan products can contain high levels of sugar and salt one study published in the journal of nutrition 2022 found that people who followed a whole food plant based diet experienced significant improvements in their cardiovascular health</div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step">Corrected</div>
+    <div class="worked-content"><span class="highlight">P</span>lant-based diets have become increasingly popular in recent years<span class="highlight">.</span> Some researchers suggest that they may reduce the risk of heart disease<span class="highlight">;</span> however<span class="highlight">,</span> <span class="highlight">i</span>t is important to note that not all plant-based foods are equally healthy<span class="highlight">.</span> <span class="highlight">F</span>or example<span class="highlight">,</span> processed vegan products can contain high levels of sugar and salt<span class="highlight">.</span> <span class="highlight-green">O</span>ne study<span class="highlight">,</span> published in the <span class="highlight-green">J</span>ournal of <span class="highlight-green">N</span>utrition (2022)<span class="highlight">,</span> found that people who followed a whole-food<span class="highlight">,</span> plant-based diet experienced significant improvements in their cardiovascular health<span class="highlight">.</span></div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step">Changes</div>
+    <div class="worked-content" style="font-size:13px">
+      <strong style="color:var(--orange)">Capital letters:</strong> Plant-based (sentence start), Journal of Nutrition (proper noun), For example (sentence start), One study (sentence start)<br>
+      <strong style="color:var(--orange)">Full stops:</strong> After "years", "healthy", "salt"<br>
+      <strong style="color:var(--orange)">Semi-colon:</strong> Before "however" (joining two complete sentences)<br>
+      <strong style="color:var(--orange)">Comma:</strong> After "however", after "For example", around "published in…2022", after "whole-food"<br>
+      <strong style="color:var(--orange)">Apostrophe:</strong> "its" → "it is" (contraction removed)<br>
+      <strong style="color:var(--orange)">Hyphen:</strong> "plant-based" as a compound adjective
+    </div>
+  </div>
+</div>
+
+<div class="key-point">
+  <span class="key-icon">💡</span>
+  <div>
+    <h4>Practical tip</h4>
+    <p>Read your writing aloud. Your ear will catch comma splices, missing full stops, and awkward sentence length better than your eye will when reading silently. Every sentence should sound like a complete thought.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2 class="section" id="s3"><span>3</span>Linking Words — Signposting Your Logic</h2>
+
+<p>Linking words (also called connectives or discourse markers) tell the reader how each sentence relates to the one before it. Without them, a paragraph is a list of separate facts. With them, it becomes a structured argument. In academic writing, the logical connection between ideas must always be made explicit — the reader should never have to guess.</p>
+
+<h3 class="sub">The four categories</h3>
+
+<table class="ref-table">
+  <tr>
+    <th>Category</th><th>What it signals</th><th>Examples</th><th>Avoid in academic writing</th>
+  </tr>
+  <tr>
+    <td><span class="cat-label">Addition</span></td>
+    <td>Adds a further point in the same direction</td>
+    <td>Furthermore, Moreover, In addition, Additionally, As well as, Not only… but also</td>
+    <td>Also (at sentence start) — too informal</td>
+  </tr>
+  <tr>
+    <td><span class="cat-label">Contrast</span></td>
+    <td>Introduces an opposing or qualifying point</td>
+    <td>However, Although, Nevertheless, Despite, On the other hand, In contrast, Nonetheless</td>
+    <td>But (at sentence start) — too informal</td>
+  </tr>
+  <tr>
+    <td><span class="cat-label">Example</span></td>
+    <td>Introduces an illustration of the preceding point</td>
+    <td>For example, For instance, Such as, Including, Namely, In particular</td>
+    <td>Like (in this sense) — too conversational</td>
+  </tr>
+  <tr>
+    <td><span class="cat-label">Cause &amp; Result</span></td>
+    <td>Shows that one thing causes or follows from another</td>
+    <td>Because of, Due to, As a result, Therefore, Consequently, This led to, Hence</td>
+    <td>So (alone) — too informal</td>
+  </tr>
+</table>
+
+<h3 class="sub">Position and punctuation of linking words</h3>
+<p>The position of a linking word changes its punctuation requirements. This is a common area of error.</p>
+
+<div class="example-block">
+  <div class="ex-wrong"><div class="label">Incorrect — comma splice</div>The results were positive, however more research is needed.</div>
+  <div class="ex-right"><div class="label">Correct — semi-colon at sentence boundary</div>The results were positive; however, more research is needed.</div>
+</div>
+<div class="example-block">
+  <div class="ex-right"><div class="label">Also correct — new sentence</div>The results were positive. However, more research is needed.</div>
+</div>
+
+<div class="rule-note">
+  <strong>Never write: "However, but…" or "But, however…"</strong> These are redundant — both signal contrast. Use one or the other, never both together.
+</div>
+
+<h3 class="sub">Worked example — adding linking words</h3>
+<div class="worked">
+  <div class="worked-label">Worked example · Task 2</div>
+  <div class="worked-row">
+    <div class="worked-step">Paragraph</div>
+    <div class="worked-content">The use of pesticides in modern agriculture has been widely criticised by environmental scientists. <span class="highlight">However</span>, farmers argue that without them, crop yields would decrease significantly, leading to food shortages. <span class="highlight">Moreover</span>, studies have shown that certain pesticides may persist in the soil for decades, causing long-term damage to ecosystems. <span class="highlight">Additionally</span>, there is growing evidence that some pesticide residues enter the food chain, raising concerns about human health. <span class="highlight">As a result</span>, many governments have begun introducing regulations to limit the use of the most harmful chemicals.</div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step">Analysis</div>
+    <div class="worked-content" style="font-size:13px">
+      <strong style="color:var(--orange)">However</strong> — contrast: scientists criticise pesticides, but farmers defend them.<br>
+      <strong style="color:var(--orange)">Moreover</strong> — addition: a further piece of negative evidence is added.<br>
+      <strong style="color:var(--orange)">Additionally</strong> — addition: yet another piece of evidence in the same direction.<br>
+      <strong style="color:var(--orange)">As a result</strong> — cause/result: the accumulated evidence leads to government action.<br>
+      <em>Why not "But" or "Also"?</em> These are too informal for academic writing. They lack the register required in a research report or essay.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2 class="section" id="s4"><span>4</span>Language of Caution — Hedging</h2>
+
+<p>Hedging is one of the defining features of academic writing. A hedge is a linguistic device that limits the strength of a claim — it signals to the reader that the evidence supports the claim to a degree, rather than absolutely. Academic knowledge is inherently provisional: new research can always revise or overturn a current consensus.</p>
+
+<h3 class="sub">Why academic writing hedges</h3>
+<p>When you write without hedging, you make claims that go beyond what your evidence can support. This is not only intellectually dishonest — it also makes you vulnerable to challenge. A skilled reader will immediately ask: <em>"Is this true in every case? Has this been proven definitively?"</em> If the answer is no, an unhedged claim undermines the credibility of your entire argument.</p>
+
+<div class="key-point">
+  <span class="key-icon">🎓</span>
+  <div>
+    <h4>The core principle</h4>
+    <p>Hedging is not weakness — it is intellectual honesty. You are a scholar, not a salesperson. Your job is to represent what the evidence says, not to sell a conclusion.</p>
+  </div>
+</div>
+
+<h3 class="sub">Four categories of hedging language</h3>
+<table class="ref-table">
+  <tr>
+    <th>Type</th><th>Examples</th><th>What they do</th>
+  </tr>
+  <tr>
+    <td><span class="cat-label">Modal verbs</span></td>
+    <td>may, might, could, would, should</td>
+    <td>Express possibility rather than certainty</td>
+  </tr>
+  <tr>
+    <td><span class="cat-label">Hedge verbs</span></td>
+    <td>seem to, appear to, tend to, suggest, indicate</td>
+    <td>Soften the directness of the assertion — the data "suggests" rather than "proves"</td>
+  </tr>
+  <tr>
+    <td><span class="cat-label">Adverbs</span></td>
+    <td>possibly, probably, generally, usually, often, rarely, typically</td>
+    <td>Limit scope — something is true "generally" not universally</td>
+  </tr>
+  <tr>
+    <td><span class="cat-label">Limiting phrases</span></td>
+    <td>in some cases, in many instances, it is likely that…, to a certain extent, in certain contexts</td>
+    <td>Restrict the claim to specific circumstances rather than universal application</td>
+  </tr>
+</table>
+
+<h3 class="sub">Over-hedging: the opposite error</h3>
+<p>While under-hedging is the more common problem, over-hedging is also a mistake. If a claim is hedged so heavily that it says almost nothing, it contributes nothing to the argument. Compare:</p>
+
+<div class="example-block">
+  <div class="ex-wrong"><div class="label">Under-hedged — too strong</div>Renewable energy will solve climate change.</div>
+  <div class="ex-wrong"><div class="label">Over-hedged — too weak</div>Renewable energy might possibly perhaps be able to help in some situations sometimes.</div>
+  <div class="ex-right"><div class="label">Correctly hedged — calibrated</div>Renewable energy may represent one of the most promising pathways to significantly reducing greenhouse gas emissions.</div>
+</div>
+
+<h3 class="sub">Worked examples — Task 3</h3>
+<div class="worked">
+  <div class="worked-label">Worked example · Task 3</div>
+  <div class="worked-row">
+    <div class="worked-step">Sentence 1</div>
+    <div class="worked-content">
+      <strong style="color:var(--muted)">Original:</strong> Renewable energy is the solution to climate change.<br>
+      <strong style="color:var(--green)">Hedged:</strong> Renewable energy <span class="highlight">may represent</span> one of the most promising solutions to climate change.<br>
+      <span style="font-size:13px;color:var(--muted)">Hedge used: "may represent" (modal + hedge verb). "Is the solution" is absolute; "may represent one of" limits the claim to possibility and partial scope.</span>
+    </div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step">Sentence 2</div>
+    <div class="worked-content">
+      <strong style="color:var(--muted)">Original:</strong> Social media causes depression in teenagers.<br>
+      <strong style="color:var(--green)">Hedged:</strong> Social media <span class="highlight">appears to be associated with</span> higher rates of depression <span class="highlight">among some</span> adolescents.<br>
+      <span style="font-size:13px;color:var(--muted)">Hedges used: "appears to be associated with" (avoids direct causation), "some" (avoids universality). "Causes" implies a definitive causal relationship that the research does not fully support.</span>
+    </div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step">Sentence 3</div>
+    <div class="worked-content">
+      <strong style="color:var(--muted)">Original:</strong> Countries that invest in education have better economies.<br>
+      <strong style="color:var(--green)">Hedged:</strong> Countries that invest in education <span class="highlight">tend to</span> demonstrate stronger economic performance <span class="highlight">in many cases</span>.<br>
+      <span style="font-size:13px;color:var(--muted)">Hedges used: "tend to" (pattern, not law), "in many cases" (not all). The original implies every country, always. The hedged version reflects the reality of correlation research.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2 class="section" id="s5"><span>5</span>Active / Passive Voice &amp; Impersonal Writing</h2>
+
+<p>Academic writing in most disciplines avoids first-person pronouns (I, we, you) because the focus should be on the research and evidence, not on the researcher. Two main strategies achieve this: the passive voice and impersonal "it" structures.</p>
+
+<h3 class="sub">Understanding the passive voice</h3>
+<p>In an active sentence, the subject performs the action. In a passive sentence, the subject receives the action — or the actor is removed entirely.</p>
+
+<table class="ref-table">
+  <tr><th>Active</th><th>Passive</th></tr>
+  <tr><td>We conducted a survey of 200 participants.</td><td>A survey of 200 participants was conducted.</td></tr>
+  <tr><td>I collected the data over six months.</td><td>The data were collected over six months.</td></tr>
+  <tr><td>Some people argue that…</td><td>It is argued that…</td></tr>
+  <tr><td>The researchers found that…</td><td>It was found that… / The findings suggest that…</td></tr>
+</table>
+
+<div class="rule-note">
+  <strong>Note on "data":</strong> "Data" is technically plural (singular: datum). In formal academic writing, use "The data <em>were</em> collected…" not "The data was…". Some style guides now accept the singular, but the plural is safer in formal academic contexts.
+</div>
+
+<h3 class="sub">Impersonal "It" structures</h3>
+<p>A second strategy is to restructure the sentence so it begins with the impersonal "it" as a grammatical subject, rather than a human actor.</p>
+
+<table class="ref-table">
+  <tr><th>Personal / Active</th><th>Impersonal structure</th></tr>
+  <tr><td>Many scientists think that…</td><td>It is widely <strong>thought</strong> that…</td></tr>
+  <tr><td>Researchers have found that…</td><td>It has been <strong>found</strong> that…</td></tr>
+  <tr><td>I argue that…</td><td>It can be <strong>argued</strong> that…</td></tr>
+  <tr><td>This shows that…</td><td>It is <strong>suggested</strong> by this that… / This <strong>suggests</strong> that…</td></tr>
+</table>
+
+<div class="key-point">
+  <span class="key-icon">⚠️</span>
+  <div>
+    <h4>Field conventions</h4>
+    <p>In some research traditions (especially in the sciences and social sciences), "we" is acceptable in methodology sections to describe the researchers' own actions. Always check the conventions of your specific discipline. For PG01 reports, avoid first person throughout unless your topic area has a clear convention otherwise — check with your tutor.</p>
+  </div>
+</div>
+
+<h3 class="sub">Worked examples — Task 4</h3>
+<div class="worked">
+  <div class="worked-label">Worked example · Task 4</div>
+  <div class="worked-row">
+    <div class="worked-step">Sentence 1</div>
+    <div class="worked-content">
+      <strong style="color:var(--muted)">Before:</strong> I think that sustainable agriculture could solve the problem of food insecurity.<br>
+      <strong style="color:var(--green)">After:</strong> It can be argued that sustainable agriculture <span class="highlight">may offer</span> a solution to the problem of food insecurity.<br>
+      <span style="font-size:13px;color:var(--muted)">Note: "I think" → impersonal structure. "Could solve" → "may offer" (also adds hedging). "The problem of" is kept as it is already formal.</span>
+    </div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step">Sentence 2</div>
+    <div class="worked-content">
+      <strong style="color:var(--muted)">Before:</strong> We carried out a review of ten peer-reviewed studies on urban farming.<br>
+      <strong style="color:var(--green)">After:</strong> A review of ten peer-reviewed studies on urban farming <span class="highlight">was carried out</span>.<br>
+      <span style="font-size:13px;color:var(--muted)">Note: "We" removed entirely; "carried out" becomes the passive "was carried out". The sentence is restructured to put the object (review) first.</span>
+    </div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step">Sentence 3</div>
+    <div class="worked-content">
+      <strong style="color:var(--muted)">Before:</strong> You can see from the graph that coffee prices have risen sharply.<br>
+      <strong style="color:var(--green)">After:</strong> As the graph illustrates, coffee prices have risen sharply in recent years.<br>
+      <span style="font-size:13px;color:var(--muted)">Note: "You can see" removed — the graph is now the active agent ("illustrates"), or the phrase can be restructured without any personal reference.</span>
+    </div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step">Sentence 4</div>
+    <div class="worked-content">
+      <strong style="color:var(--muted)">Before:</strong> I believe the findings show a clear link between diet and health outcomes.<br>
+      <strong style="color:var(--green)">After:</strong> The findings <span class="highlight">suggest</span> a clear link between diet and health outcomes.<br>
+      <span style="font-size:13px;color:var(--muted)">Note: "I believe" removed. "Show" → "suggest" (also adds hedging — the findings suggest a link, not definitively prove it).</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2 class="section" id="s6"><span>6</span>Putting It All Together — Self-Editing Checklist</h2>
+
+<p>Use this checklist every time you finish a paragraph or a complete draft. Go sentence by sentence for maximum effect.</p>
+
+<table class="summary-table">
+  <tr>
+    <th>Check</th><th>Question to ask</th><th>Common error</th>
+  </tr>
+  <tr>
+    <td><strong>01 Punctuation</strong></td>
+    <td>Does every sentence end with a full stop? Are there any contractions? Are commas placed correctly around embedded clauses?</td>
+    <td>Comma before "however", apostrophe in "its" (= it is), run-on sentences</td>
+  </tr>
+  <tr>
+    <td><strong>02 Linking Words</strong></td>
+    <td>Is the logical relationship between each sentence made explicit? Is the linking word formal enough for academic writing?</td>
+    <td>"Also" at sentence start, "But" in formal writing, missing linker between paragraphs</td>
+  </tr>
+  <tr>
+    <td><strong>03 Hedging</strong></td>
+    <td>Are there any absolute claims that could be challenged? Does every claim accurately reflect the strength of the evidence?</td>
+    <td>"proves", "shows", "will", "all", "every" — replace with hedged equivalents</td>
+  </tr>
+  <tr>
+    <td><strong>04 Personal Pronouns</strong></td>
+    <td>Have I removed all instances of I, we, you from my own writing (outside direct quotes)?</td>
+    <td>"I think", "we found", "you can see" — restructure as impersonal</td>
+  </tr>
+  <tr>
+    <td><strong>05 Register</strong></td>
+    <td>Does every sentence sound like it belongs in a formal academic report? Any slang, contractions, or conversational phrases?</td>
+    <td>Mixed register (formal paragraph with one casual phrase), exclamation marks, rhetorical questions</td>
+  </tr>
+</table>
+
+<!-- ═══════════════════════════════════ -->
+<h2 class="section" id="s7"><span>7</span>Model Answers for Class Tasks</h2>
+
+<p>These are the model answers for the four tasks completed in session. Note that for Tasks 3 and 4, multiple correct answers exist — what matters is the application of the principle, not replicating the exact wording.</p>
+
+<h3 class="sub">Task 1 — Punctuation correction</h3>
+<div class="ex-right">
+  <div class="label">Model answer</div>
+  Plant-based diets have become increasingly popular in recent years. Some researchers suggest that they may reduce the risk of heart disease; however, it is important to note that not all plant-based foods are equally healthy. For example, processed vegan products can contain high levels of sugar and salt. One study, published in the Journal of Nutrition (2022), found that people who followed a whole-food, plant-based diet experienced significant improvements in their cardiovascular health.
+</div>
+
+<h3 class="sub">Task 2 — Linking words (pesticides paragraph)</h3>
+<div class="ex-right">
+  <div class="label">Model answer</div>
+  The use of pesticides in modern agriculture has been widely criticised by environmental scientists. <strong>However</strong>, farmers argue that without them, crop yields would decrease significantly, leading to food shortages. <strong>Moreover</strong>, studies have shown that certain pesticides may persist in the soil for decades, causing long-term damage to ecosystems. <strong>Additionally</strong>, there is growing evidence that some pesticide residues enter the food chain, raising concerns about human health. <strong>As a result</strong>, many governments have begun introducing regulations to limit the use of the most harmful chemicals.
+</div>
+
+<h3 class="sub">Task 3 — Language of caution rewrites</h3>
+<div class="worked">
+  <div class="worked-row"><div class="worked-step">1</div><div class="worked-content"><em>Original:</em> Renewable energy is the solution to climate change.<br><strong style="color:var(--green)">Model:</strong> Renewable energy may represent one of the most promising solutions to climate change.</div></div>
+  <div class="worked-row"><div class="worked-step">2</div><div class="worked-content"><em>Original:</em> Social media causes depression in teenagers.<br><strong style="color:var(--green)">Model:</strong> Social media appears to be associated with higher rates of depression among some adolescents.</div></div>
+  <div class="worked-row"><div class="worked-step">3</div><div class="worked-content"><em>Original:</em> Countries that invest in education have better economies.<br><strong style="color:var(--green)">Model:</strong> Countries that invest in education tend to demonstrate stronger economic performance in many cases.</div></div>
+</div>
+
+<h3 class="sub">Task 4 — Impersonal rewrites</h3>
+<div class="worked">
+  <div class="worked-row"><div class="worked-step">1</div><div class="worked-content"><em>Before:</em> I think that sustainable agriculture could solve the problem of food insecurity.<br><strong style="color:var(--green)">After:</strong> It can be argued that sustainable agriculture may offer a solution to the problem of food insecurity.</div></div>
+  <div class="worked-row"><div class="worked-step">2</div><div class="worked-content"><em>Before:</em> We carried out a review of ten peer-reviewed studies on urban farming.<br><strong style="color:var(--green)">After:</strong> A review of ten peer-reviewed studies on urban farming was carried out.</div></div>
+  <div class="worked-row"><div class="worked-step">3</div><div class="worked-content"><em>Before:</em> You can see from the graph that coffee prices have risen sharply.<br><strong style="color:var(--green)">After:</strong> As the graph illustrates, coffee prices have risen sharply in recent years.</div></div>
+  <div class="worked-row"><div class="worked-step">4</div><div class="worked-content"><em>Before:</em> I believe the findings show a clear link between diet and health outcomes.<br><strong style="color:var(--green)">After:</strong> The findings suggest a clear link between diet and health outcomes.</div></div>
+</div>
+
+<div class="self-check">
+  <h4>Quick self-check before you close this chapter</h4>
+  <div class="check-q">Can you explain the difference between a comma splice and a correctly punctuated sentence with "however"?</div>
+  <div class="check-q">Can you name two formal contrast linkers and one informal one that should be avoided in academic writing?</div>
+  <div class="check-q">Can you give an example of a sentence that is over-hedged and one that is correctly hedged?</div>
+  <div class="check-q">Can you convert "I found that the data shows a clear trend" into a fully impersonal sentence?</div>
+  <div class="check-q">Can you explain why "data were collected" is preferred over "data was collected" in formal academic writing?</div>
+</div>
+
+</div><!-- end .wrap -->
+</body>
+</html>
