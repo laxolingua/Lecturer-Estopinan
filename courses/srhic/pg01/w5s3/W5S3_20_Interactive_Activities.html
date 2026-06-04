@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Arguments & Counter-Arguments — 20 Activities | PG01 W5S3</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--o:#D84315;--n:#1A2B4A;--cr:#FAF8F5;--ink:#1C1C1C;--mu:#6B6B6B;--bd:rgba(0,0,0,0.1);--cd:#fff;--gn:#1B6B3A;--gb:#EBF9F0;--rb:#FFF0F0;--rd:#7B2020;--tl:#028090;--pu:#6A1B9A;--am:#FFC107}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cr);color:var(--ink);font-size:15px;line-height:1.6}
+nav{background:var(--n);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100}
+.nl{font-size:15px;font-weight:500;color:#fff}.nl span{color:var(--o)}
+.ns{font-size:12px;color:rgba(255,255,255,.5)}
+.w{max-width:740px;margin:0 auto;padding:2rem 1.5rem 5rem}
+.ph{margin-bottom:2rem}.ph h1{font-size:22px;font-weight:500;color:var(--n);margin-bottom:4px}.ph p{font-size:14px;color:var(--mu)}
+.sc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.sb{background:var(--cd);border:1px solid var(--bd);border-radius:8px;padding:.75rem 1rem;text-align:center}
+.sb .lb{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.sb .vl{font-size:24px;font-weight:500;color:var(--n)}
+.pb{height:5px;background:#e5e5e5;border-radius:3px;margin-bottom:2rem;overflow:hidden}
+.pf{height:100%;background:var(--o);border-radius:3px;transition:width .4s}
+.sh{background:var(--n);color:#fff;font-size:13px;font-weight:500;padding:8px 14px;margin:2rem 0 1rem;border-radius:6px;letter-spacing:.3px}
+.sh span{color:var(--o);margin-right:6px}
+.ac{background:var(--cd);border:1px solid var(--bd);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1rem}
+.am{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.an{background:var(--o);color:#fff;font-size:10px;font-weight:500;padding:3px 10px;border-radius:3px;letter-spacing:.5px}
+.at{font-size:11px;color:var(--mu);text-transform:uppercase;letter-spacing:.5px}
+.aq{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:12px;line-height:1.6}
+.aq em{font-style:italic;color:var(--mu)}
+.sb2{background:var(--cr);border-left:3px solid var(--o);padding:10px 14px;border-radius:0 6px 6px 0;font-size:14px;font-style:italic;margin-bottom:12px;line-height:1.7}
+.cs{display:flex;flex-direction:column;gap:7px}
+.ch{display:flex;align-items:center;gap:10px;padding:9px 14px;border:1.5px solid var(--bd);border-radius:7px;cursor:pointer;font-size:14px;background:var(--cd);color:var(--ink);text-align:left;transition:background .15s}
+.ch:hover:not([disabled]){background:#f5f5f5}
+.ch.correct{border-color:#28a745;background:var(--gb);color:var(--gn)}
+.ch.wrong{border-color:#dc3545;background:var(--rb);color:var(--rd)}
+.ci{width:20px;height:20px;border-radius:50%;border:1.5px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.gi{border:none;border-bottom:2px solid var(--o);background:transparent;font-size:14px;color:var(--ink);padding:2px 4px;min-width:130px;outline:none;font-family:'DM Sans',sans-serif}
+.gi.correct{border-color:#28a745;color:var(--gn)}.gi.wrong{border-color:#dc3545;color:var(--rd)}
+.ti{width:100%;border:1.5px solid var(--bd);border-radius:7px;padding:10px 12px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--cd);color:var(--ink);resize:vertical;line-height:1.6;outline:none;transition:border-color .15s}
+.ti:focus{border-color:var(--o)}
+.hl{background:#FFE0D6;border-radius:3px;padding:1px 4px;cursor:pointer;transition:background .15s}
+.hl:hover{background:#FFCBBB}.hl.sel{background:var(--o);color:#fff}.hl.cok{background:#28a745;color:#fff;pointer-events:none}.hl.cno{background:#dc3545;color:#fff}
+.tg{padding:5px 13px;border:1.5px solid var(--bd);border-radius:20px;font-size:13px;cursor:pointer;background:var(--cd);color:var(--ink);transition:all .15s;user-select:none;display:inline-block;margin:3px}
+.tg:hover{border-color:var(--n)}.tg.sel{background:var(--o);border-color:var(--o);color:#fff}.tg.placed{opacity:.35;pointer-events:none}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.cz{border:1.5px solid var(--bd);border-radius:7px;padding:10px 12px;min-height:48px}
+.czl{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.czi{display:flex;flex-wrap:wrap;gap:5px;min-height:28px}
+.cp{padding:4px 10px;border-radius:12px;font-size:12px;font-weight:500;background:#f0f0f0;color:var(--ink);display:inline-block}
+.sl{display:flex;flex-direction:column;gap:7px}
+.si{padding:10px 14px;background:#f5f5f5;border:1.5px solid var(--bd);border-radius:7px;cursor:grab;font-size:14px;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.si:active{cursor:grabbing;border-color:var(--o)}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pc{display:flex;flex-direction:column;gap:7px}
+.ps{border:1.5px solid var(--bd);border-radius:7px;padding:9px 12px;font-size:13px;background:#f9f9f9;color:var(--ink);cursor:pointer;transition:all .15s;line-height:1.5}
+.ps:hover{border-color:var(--n)}.ps.as{border-color:var(--o);background:#FFF0EB}.ps.correct{border-color:#28a745;background:var(--gb);color:var(--gn);pointer-events:none}.ps.wrong{border-color:#dc3545;background:var(--rb);color:var(--rd)}
+.fb{margin-top:12px;padding:10px 14px;border-radius:7px;font-size:13px;line-height:1.65;display:none}
+.fb.show{display:block}.fb.ok{background:var(--gb);border-left:3px solid #28a745;color:var(--gn)}.fb.no{background:var(--rb);border-left:3px solid #dc3545;color:var(--rd)}
+.fb strong{font-weight:500}
+.bs{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{padding:7px 16px;font-size:13px;font-weight:500;border:1.5px solid var(--bd);border-radius:7px;cursor:pointer;background:var(--cd);color:var(--ink);font-family:'DM Sans',sans-serif;transition:all .15s}
+.btn:hover{background:#f0f0f0}.btn.p{background:var(--n);border-color:var(--n);color:#fff}.btn.p:hover{background:var(--o);border-color:var(--o)}
+.ref{font-size:12px;cursor:default;background:#f5f5f5;border-color:#e0e0e0;color:var(--mu)}
+.fl{text-align:center;padding:2rem;background:var(--cd);border:1px solid var(--bd);border-radius:10px;margin-top:1.5rem;display:none}
+.fl h2{font-size:22px;font-weight:500;color:var(--n);margin-bottom:8px}.fl p{font-size:14px;color:var(--mu);line-height:1.7}
+</style>
+</head>
+<body>
+<nav><span class="nl">M<span>.</span>Estopiñán &nbsp;·&nbsp; <span style="font-weight:300;font-size:13px;color:rgba(255,255,255,.7)">PG01 Week 5 Session 3</span></span><span class="ns">Arguments — 20 Activities</span></nav>
+<div class="w">
+<div class="ph"><h1>Arguments &amp; Counter-Arguments — Interactive Practice</h1><p>20 activities · Claim · Evidence · Warrant · Logos/Ethos/Pathos · Counterarguments · Fallacies · Source Credibility</p></div>
+<div class="sc">
+  <div class="sb"><div class="lb">Score</div><div class="vl" id="sc-s">0 / 20</div></div>
+  <div class="sb"><div class="lb">Correct</div><div class="vl" id="sc-c" style="color:#1B6B3A">0</div></div>
+  <div class="sb"><div class="lb">Remaining</div><div class="vl" id="sc-r">20</div></div>
+</div>
+<div class="pb"><div class="pf" id="pg" style="width:0%"></div></div>
+
+<!-- SECTION 1 -->
+<div class="sh"><span>01</span>Claim · Evidence · Warrant</div>
+
+<div class="ac" id="a1">
+  <div class="am"><span class="an">01</span><span class="at">Multiple Choice</span></div>
+  <p class="aq">Which of these is a Claim suitable for an academic argument?</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a1',false)"><span class="ci"></span>Climate change is a topic that affects many countries.</button>
+    <button class="ch" onclick="mc(this,'a1',false)"><span class="ci"></span>The Paris Agreement was signed in 2015.</button>
+    <button class="ch" onclick="mc(this,'a1',true)"><span class="ci"></span>Carbon pricing represents the most cost-effective policy mechanism for reducing industrial emissions in high-income economies.</button>
+    <button class="ch" onclick="mc(this,'a1',false)"><span class="ci"></span>Some people think renewable energy is good.</button>
+  </div>
+  <div class="fb" id="fb-a1"></div>
+  <div class="bs"><button class="btn" onclick="retry('a1')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a2">
+  <div class="am"><span class="an">02</span><span class="at">True / False</span></div>
+  <p class="aq">True or false: a Warrant is optional in an academic paragraph — the evidence can speak for itself.</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a2',false)"><span class="ci"></span>True — the reader can draw the conclusion themselves</button>
+    <button class="ch" onclick="mc(this,'a2',true)"><span class="ci"></span>False — the warrant must be stated explicitly to show the logical connection between evidence and claim</button>
+  </div>
+  <div class="fb" id="fb-a2"></div>
+  <div class="bs"><button class="btn" onclick="retry('a2')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a3">
+  <div class="am"><span class="an">03</span><span class="at">Identify the Component</span></div>
+  <p class="aq">Read the sentence. Is it a Claim (C), Evidence (E), or Warrant (W)?</p>
+  <div class="sb2">Poore and Nemecek (2018), analysing 38,000 farms across 119 countries, found that a vegan diet reduces food-related emissions by 73% compared to a high-meat diet.</div>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a3',false)"><span class="ci"></span>Claim</button>
+    <button class="ch" onclick="mc(this,'a3',true)"><span class="ci"></span>Evidence</button>
+    <button class="ch" onclick="mc(this,'a3',false)"><span class="ci"></span>Warrant</button>
+  </div>
+  <div class="fb" id="fb-a3"></div>
+  <div class="bs"><button class="btn" onclick="retry('a3')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a4">
+  <div class="am"><span class="an">04</span><span class="at">Identify the Component</span></div>
+  <p class="aq">Is this a Claim, Evidence, or Warrant?</p>
+  <div class="sb2">Since dietary patterns are a primary driver of individual carbon footprints, food choices represent a viable lever for population-level emissions reduction.</div>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a4',false)"><span class="ci"></span>Claim</button>
+    <button class="ch" onclick="mc(this,'a4',false)"><span class="ci"></span>Evidence</button>
+    <button class="ch" onclick="mc(this,'a4',true)"><span class="ci"></span>Warrant</button>
+  </div>
+  <div class="fb" id="fb-a4"></div>
+  <div class="bs"><button class="btn" onclick="retry('a4')">↺ Try again</button></div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="sh"><span>02</span>Logos · Ethos · Pathos</div>
+
+<div class="ac" id="a5">
+  <div class="am"><span class="an">05</span><span class="at">Categorise — Click then place</span></div>
+  <p class="aq">Click each sentence to select it, then click the correct category.</p>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px" id="a5-pool">
+    <span class="tg" data-cat="logos" onclick="catSel(this,'a5')">"A meta-analysis of 47 studies found a 32% reduction in cardiovascular risk (Chen et al., 2023)."</span>
+    <span class="tg" data-cat="ethos" onclick="catSel(this,'a5')">"As the WHO's Director-General stated in the 2023 Global Health Report…"</span>
+    <span class="tg" data-cat="pathos" onclick="catSel(this,'a5')">"Imagine the world your children will inherit if we fail to act on this today."</span>
+    <span class="tg" data-cat="logos" onclick="catSel(this,'a5')">"Battery storage costs have fallen 89% since 2013 (BloombergNEF, 2023)."</span>
+  </div>
+  <div class="cg">
+    <div class="cz" onclick="catPlace('a5','logos')"><div class="czl" style="color:var(--tl)">Logos</div><div class="czi" id="a5-logos"></div></div>
+    <div class="cz" onclick="catPlace('a5','ethos')"><div class="czl" style="color:var(--n)">Ethos</div><div class="czi" id="a5-ethos"></div></div>
+    <div class="cz" onclick="catPlace('a5','pathos')" style="grid-column:1/-1"><div class="czl" style="color:var(--o)">Pathos</div><div class="czi" id="a5-pathos"></div></div>
+  </div>
+  <div class="fb" id="fb-a5"></div>
+  <div class="bs"><button class="btn p" onclick="checkCats('a5')">✓ Check</button><button class="btn" onclick="retry('a5')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a6">
+  <div class="am"><span class="an">06</span><span class="at">Multiple Choice</span></div>
+  <p class="aq">Which sentence uses Pathos in a way that is acceptable in academic writing?</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a6',false)"><span class="ci"></span>"We must act NOW! Our planet is dying and we are killing it!"</button>
+    <button class="ch" onclick="mc(this,'a6',true)"><span class="ci"></span>"The 40 million people currently living in high flood-risk areas (IPCC, 2023) face existential displacement — a humanitarian cost that demands policy consideration."</button>
+    <button class="ch" onclick="mc(this,'a6',false)"><span class="ci"></span>"Everyone knows that climate change is the most important issue of our time."</button>
+    <button class="ch" onclick="mc(this,'a6',false)"><span class="ci"></span>"It would be heartless to ignore the suffering of future generations."</button>
+  </div>
+  <div class="fb" id="fb-a6"></div>
+  <div class="bs"><button class="btn" onclick="retry('a6')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a7">
+  <div class="am"><span class="an">07</span><span class="at">Best Choice</span></div>
+  <p class="aq">You are writing an academic report on urban mental health. Which source best provides Ethos?</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a7',false)"><span class="ci"></span>A Reddit thread by urban residents describing their mental health experiences</button>
+    <button class="ch" onclick="mc(this,'a7',false)"><span class="ci"></span>A blog post by a wellness influencer on the benefits of parks</button>
+    <button class="ch" onclick="mc(this,'a7',true)"><span class="ci"></span>A peer-reviewed study published in the <em>British Journal of Psychiatry</em> (2023) by a team of clinical psychologists</button>
+    <button class="ch" onclick="mc(this,'a7',false)"><span class="ci"></span>A newspaper opinion column by a politician supporting green spaces</button>
+  </div>
+  <div class="fb" id="fb-a7"></div>
+  <div class="bs"><button class="btn" onclick="retry('a7')">↺ Try again</button></div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="sh"><span>03</span>Causal &amp; Comparative Arguments</div>
+
+<div class="ac" id="a8">
+  <div class="am"><span class="an">08</span><span class="at">Multiple Choice</span></div>
+  <p class="aq">Which statement correctly describes the difference between correlation and causation?</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a8',false)"><span class="ci"></span>Correlation means two things happen together and one causes the other.</button>
+    <button class="ch" onclick="mc(this,'a8',true)"><span class="ci"></span>Correlation means two things tend to vary together; causation means one thing produces the other through a demonstrable mechanism.</button>
+    <button class="ch" onclick="mc(this,'a8',false)"><span class="ci"></span>Causation is stronger than correlation but both can be proven by statistics alone.</button>
+    <button class="ch" onclick="mc(this,'a8',false)"><span class="ci"></span>They are the same thing — if two things are correlated, one must cause the other.</button>
+  </div>
+  <div class="fb" id="fb-a8"></div>
+  <div class="bs"><button class="btn" onclick="retry('a8')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a9">
+  <div class="am"><span class="an">09</span><span class="at">Spot the Problem</span></div>
+  <p class="aq">Click the part of this causal argument that is logically weak.</p>
+  <div class="sb2" id="a9-s">The city introduced a new cycling infrastructure in 2021. <span class="hl" data-id="a9" data-ok="true" onclick="spotErr(this)">Since then, air quality has improved by 15%. Therefore, the cycling infrastructure caused the improvement in air quality.</span> This demonstrates the effectiveness of sustainable urban transport investment.</div>
+  <p style="font-size:12px;color:var(--mu);margin-bottom:8px">Hint: what other factors might explain the improvement? What is missing from the argument?</p>
+  <div class="fb" id="fb-a9"></div>
+  <div class="bs"><button class="btn" onclick="retry('a9')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a10">
+  <div class="am"><span class="an">10</span><span class="at">Multiple Choice</span></div>
+  <p class="aq">A student writes: "Nuclear power is too dangerous, while solar energy is environmentally friendly." What is the main problem with this comparison?</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a10',false)"><span class="ci"></span>The student should not compare nuclear and solar energy.</button>
+    <button class="ch" onclick="mc(this,'a10',true)"><span class="ci"></span>The comparison uses different criteria for each option — safety vs. environmental impact — making it unfair and illogical.</button>
+    <button class="ch" onclick="mc(this,'a10',false)"><span class="ci"></span>Nuclear power is actually safe, so the claim is factually wrong.</button>
+    <button class="ch" onclick="mc(this,'a10',false)"><span class="ci"></span>The student should use more evidence.</button>
+  </div>
+  <div class="fb" id="fb-a10"></div>
+  <div class="bs"><button class="btn" onclick="retry('a10')">↺ Try again</button></div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="sh"><span>04</span>Counterarguments</div>
+
+<div class="ac" id="a11">
+  <div class="am"><span class="an">11</span><span class="at">Multiple Choice</span></div>
+  <p class="aq">Why does including a counterargument make your academic argument <em>stronger</em>, not weaker?</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a11',false)"><span class="ci"></span>It makes the essay longer, which impresses markers.</button>
+    <button class="ch" onclick="mc(this,'a11',true)"><span class="ci"></span>It demonstrates that you have considered the full complexity of the issue and can still defend your position under challenge.</button>
+    <button class="ch" onclick="mc(this,'a11',false)"><span class="ci"></span>It proves that both sides are equally valid.</button>
+    <button class="ch" onclick="mc(this,'a11',false)"><span class="ci"></span>It is required by the rubric, so it must be included.</button>
+  </div>
+  <div class="fb" id="fb-a11"></div>
+  <div class="bs"><button class="btn" onclick="retry('a11')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a12">
+  <div class="am"><span class="an">12</span><span class="at">Drag to Reorder</span></div>
+  <p class="aq">Drag the three sentences into the correct Acknowledge → Refute → Reinforce order.</p>
+  <div class="sl" id="a12-list">
+    <div class="si" draggable="true" data-pos="3" ondragstart="ds(event)" ondragover="dov(event)" ondrop="dp(event,'a12')"><span style="color:#bbb;font-size:16px">⠿</span>This therefore supports the position that universal free education is a viable and necessary policy direction for high-income democracies.</div>
+    <div class="si" draggable="true" data-pos="1" ondragstart="ds(event)" ondragover="dov(event)" ondrop="dp(event,'a12')"><span style="color:#bbb;font-size:16px">⠿</span>Some economists argue that free university education is fiscally unsustainable and would require unsustainable tax increases.</div>
+    <div class="si" draggable="true" data-pos="2" ondragstart="ds(event)" ondragover="dov(event)" ondrop="dp(event,'a12')"><span style="color:#bbb;font-size:16px">⠿</span>However, evidence from Germany and Norway demonstrates that free higher education systems can be maintained without damaging tax burdens when funded through progressive income tax structures (OECD, 2022).</div>
+  </div>
+  <div class="fb" id="fb-a12"></div>
+  <div class="bs"><button class="btn p" onclick="checkOrder('a12',[1,2,3])">✓ Check order</button><button class="btn" onclick="retry('a12')">↺ Try again</button><button class="btn" onclick="showAns('a12','Order: (1) Acknowledge — economists argue it is unsustainable. (2) Refute — However, evidence from Germany and Norway contradicts this. (3) Reinforce — This therefore supports the position. Note the language: "Some economists argue" (Acknowledge), "However, evidence demonstrates" (Refute), "This therefore supports" (Reinforce).')">See answer</button></div>
+</div>
+
+<div class="ac" id="a13">
+  <div class="am"><span class="an">13</span><span class="at">Gap Fill — Counterargument language</span></div>
+  <p class="aq">Type the correct counterargument phrase in each gap.</p>
+  <div class="sb2">
+    <input class="gi" id="a13g1" placeholder="________"> that electric vehicles are too expensive for most consumers, which may slow their adoption.
+    <br><br>
+    <input class="gi" id="a13g2" placeholder="________">, the rapidly falling cost of battery technology — a 90% reduction in a decade (BloombergNEF, 2023) — suggests this barrier is temporary rather than structural.
+  </div>
+  <div class="fb" id="fb-a13"></div>
+  <div class="bs"><button class="btn p" onclick="checkA13()">✓ Check</button><button class="btn" onclick="retry('a13')">↺ Try again</button><button class="btn" onclick="showAns('a13','Gap 1 (Acknowledge): "It could be argued" / "Critics contend" / "Some researchers suggest". Gap 2 (Refute): "However" / "Nevertheless" / "Despite this". The key is the logical movement: Acknowledge = hedged reporting language. Refute = contrast linker followed by counter-evidence.')">See answer</button></div>
+</div>
+
+<div class="ac" id="a14">
+  <div class="am"><span class="an">14</span><span class="at">Rewrite</span></div>
+  <p class="aq">This counterargument has a Straw Man problem — it misrepresents the opposing view. Rewrite the Acknowledge step to be fair and accurate.</p>
+  <div class="sb2">It has been argued that people who eat meat want to destroy the environment and have no concern for animals or future generations. However, research shows that plant-based diets are more sustainable.</div>
+  <textarea class="ti" id="a14-in" rows="3" placeholder="Write a fair Acknowledge step that does not distort the opposing view…"></textarea>
+  <div class="fb" id="fb-a14"></div>
+  <div class="bs"><button class="btn p" onclick="checkA14()">✓ Check</button><button class="btn" onclick="retry('a14')">↺ Try again</button><button class="btn" onclick="showAns('a14','Model: "It could be argued that individual dietary choices are a relatively minor contributor to overall emissions compared to industrial and transport sectors, and that focusing on personal food choices distracts from the systemic change required." — This represents the opposing view fairly, without attributing bad motives or distorting the position.')">See answer</button></div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="sh"><span>05</span>Logical Fallacies</div>
+
+<div class="ac" id="a15">
+  <div class="am"><span class="an">15</span><span class="at">Matching Pairs</span></div>
+  <p class="aq">Match each statement (left) to the logical fallacy it represents (right). Click left then right.</p>
+  <div class="pg">
+    <div class="pc" id="a15-L">
+      <div class="ps" data-i="0" onclick="pairClick('a15','L',0)">"If we legalise cannabis, next we'll legalise all drugs and society will collapse."</div>
+      <div class="ps" data-i="1" onclick="pairClick('a15','L',1)">"You can't trust his views on immigration — he wasn't even born in this country."</div>
+      <div class="ps" data-i="2" onclick="pairClick('a15','L',2)">"After we introduced the new vaccine, autism rates rose. The vaccine must cause autism."</div>
+    </div>
+    <div class="pc" id="a15-R">
+      <div class="ps" data-i="1" onclick="pairClick('a15','R',1)">Ad Hominem</div>
+      <div class="ps" data-i="0" onclick="pairClick('a15','R',0)">Slippery Slope</div>
+      <div class="ps" data-i="2" onclick="pairClick('a15','R',2)">Post Hoc</div>
+    </div>
+  </div>
+  <div class="fb" id="fb-a15"></div>
+  <div class="bs"><button class="btn p" onclick="checkPairs('a15')">✓ Check</button><button class="btn" onclick="retry('a15')">↺ Try again</button><button class="btn" onclick="showAns('a15','(1) Slippery Slope: assumes one step inevitably leads to an extreme outcome without evidence. (2) Ad Hominem: attacks the person rather than the argument. (3) Post Hoc: B followed A, therefore A caused B — but no mechanism is established.')">See answer</button></div>
+</div>
+
+<div class="ac" id="a16">
+  <div class="am"><span class="an">16</span><span class="at">Highlight the fallacy</span></div>
+  <p class="aq">Click the sentence that contains a logical fallacy.</p>
+  <div class="sb2" id="a16-s">
+    <span class="hl" data-id="a16" data-ok="false" onclick="spotErr(this)">A 2022 WHO study found that countries with higher green space coverage per capita had lower rates of urban depression (r = 0.72, p &lt; 0.01).</span><br><br>
+    <span class="hl" data-id="a16" data-ok="true" onclick="spotErr(this)">Anyone who disagrees with investing in urban parks clearly does not care about mental health or children's wellbeing.</span><br><br>
+    <span class="hl" data-id="a16" data-ok="false" onclick="spotErr(this)">It can therefore be argued that urban green space policy may contribute to improvements in population mental health outcomes.</span>
+  </div>
+  <div class="fb" id="fb-a16"></div>
+  <div class="bs"><button class="btn" onclick="retry('a16')">↺ Try again</button></div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="sh"><span>06</span>Source Credibility — CRAAP Test</div>
+
+<div class="ac" id="a17">
+  <div class="am"><span class="an">17</span><span class="at">Multiple Choice</span></div>
+  <p class="aq">Which criterion of the CRAAP test is most relevant when evaluating a report published by an oil company about the safety of their own drilling practices?</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a17',false)"><span class="ci"></span>Currency</button>
+    <button class="ch" onclick="mc(this,'a17',false)"><span class="ci"></span>Relevance</button>
+    <button class="ch" onclick="mc(this,'a17',false)"><span class="ci"></span>Accuracy</button>
+    <button class="ch" onclick="mc(this,'a17',true)"><span class="ci"></span>Purpose — the report may have a commercial motive to present favourable findings</button>
+  </div>
+  <div class="fb" id="fb-a17"></div>
+  <div class="bs"><button class="btn" onclick="retry('a17')">↺ Try again</button></div>
+</div>
+
+<div class="ac" id="a18">
+  <div class="am"><span class="an">18</span><span class="at">Best Choice</span></div>
+  <p class="aq">You want to cite evidence about the psychological effects of social media on teenagers. Which source scores highest on the CRAAP test?</p>
+  <div class="cs">
+    <button class="ch" onclick="mc(this,'a18',false)"><span class="ci"></span>A TED Talk by a psychologist from 2019 on social media and anxiety</button>
+    <button class="ch" onclick="mc(this,'a18',false)"><span class="ci"></span>A Wikipedia article on "Social media and mental health"</button>
+    <button class="ch" onclick="mc(this,'a18',true)"><span class="ci"></span>A peer-reviewed study in the <em>Journal of Adolescent Health</em> (2024), with a sample of 12,000 teenagers across six countries</button>
+    <button class="ch" onclick="mc(this,'a18',false)"><span class="ci"></span>An Instagram post by a mental health awareness account with 500,000 followers</button>
+  </div>
+  <div class="fb" id="fb-a18"></div>
+  <div class="bs"><button class="btn" onclick="retry('a18')">↺ Try again</button></div>
+</div>
+
+<!-- SECTION 7 -->
+<div class="sh"><span>07</span>Building the Full Argument</div>
+
+<div class="ac" id="a19">
+  <div class="am"><span class="an">19</span><span class="at">Rewrite — Write the Warrant</span></div>
+  <p class="aq">The paragraph below has a Claim and Evidence but is missing the Warrant. Write a Warrant sentence that explicitly connects the evidence to the claim.</p>
+  <div class="sb2"><strong style="color:var(--n)">Claim:</strong> Investment in public transport is essential for reducing urban carbon emissions.<br><br><strong style="color:var(--n)">Evidence:</strong> A 2023 European Environment Agency report found that cities with extensive metro and bus networks have 40% lower per-capita transport emissions than car-dependent cities of similar size.</div>
+  <textarea class="ti" id="a19-in" rows="2" placeholder="Write the Warrant — the logical explanation of why this evidence supports the claim…"></textarea>
+  <div class="fb" id="fb-a19"></div>
+  <div class="bs"><button class="btn p" onclick="checkA19()">✓ Check</button><button class="btn" onclick="retry('a19')">↺ Try again</button><button class="btn" onclick="showAns('a19','Model warrant: "This pattern indicates that expanding public transport infrastructure directly reduces individual dependence on private vehicles, thereby lowering total transport-related emissions at the city level." — A good warrant explains the mechanism (reduced car dependence → lower emissions) and connects the data to the broader claim (investment in public transport → reduced urban emissions).')">See answer</button></div>
+</div>
+
+<div class="ac" id="a20">
+  <div class="am"><span class="an">20</span><span class="at">Mixed Challenge — Identify 3 problems</span></div>
+  <p class="aq">This paragraph has <strong>three</strong> academic argument problems: a logical fallacy, a missing warrant, and an over-strong claim (no hedging). Identify all three in the text box.</p>
+  <div class="sb2">Social media is the primary cause of the global mental health crisis. Studies show that teenagers who use Instagram spend more time on it than teenagers who don't use Instagram. Anyone who argues otherwise clearly has not read the research on this topic. We must accept that social media causes all mental health problems in young people.</div>
+  <textarea class="ti" id="a20-in" rows="4" placeholder="Identify the three problems: (1) Logical fallacy: … (2) Missing warrant: … (3) Over-strong claim: …"></textarea>
+  <div class="fb" id="fb-a20"></div>
+  <div class="bs"><button class="btn p" onclick="checkA20()">✓ Check</button><button class="btn" onclick="retry('a20')">↺ Try again</button><button class="btn" onclick="showAns('a20','(1) Logical fallacy: "Anyone who argues otherwise clearly has not read the research" = Ad Hominem — attacking people who disagree rather than engaging with their argument. (2) Missing warrant: The "evidence" (teens who use Instagram spend more time on it) is not an external study — it is tautological and has no warrant connecting it to the mental health claim. (3) Over-strong claim: "primary cause of the global mental health crisis" and "causes all mental health problems" — no hedging. Should be "may contribute to" or "appears to be associated with" in some adolescents.')">See answer</button></div>
+</div>
+
+<div class="fl" id="final"><h2 id="ft"></h2><p id="fs"></p></div>
+</div>
+
+<script>
+const done=new Set();let correct=0;
+const pSel={};let catSelItem=null;let dragEl=null;
+
+function upd(){
+  const t=done.size;
+  document.getElementById('sc-s').textContent=correct+' / '+t;
+  document.getElementById('sc-c').textContent=correct;
+  document.getElementById('sc-r').textContent=20-t;
+  document.getElementById('pg').style.width=(t/20*100)+'%';
+  if(t===20){
+    const f=document.getElementById('final');f.style.display='block';
+    const p=correct/20;
+    document.getElementById('ft').textContent=p>=.85?'Excellent!':p>=.65?'Good effort!':'Keep practising!';
+    document.getElementById('fs').textContent='You scored '+correct+'/20. '+(p>=.85?'Strong grasp of academic argumentation.':p>=.65?'Review the "See answer" explanations for anything you found difficult.':'Work through the textbook chapter and come back to retry the activities you found hardest.');
+    f.scrollIntoView({behavior:'smooth'});
+  }
+}
+
+function markDone(id,ok){if(!done.has(id)){done.add(id);if(ok)correct++;}upd();}
+
+function showFb(id,ok,msg){
+  const f=document.getElementById('fb-'+id);
+  f.className='fb show '+(ok?'ok':'no');
+  f.innerHTML='<strong>'+(ok?'Correct. ':'Not quite. ')+'</strong>'+msg;
+}
+
+function showAns(id,msg){showFb(id,false,'<strong>Answer: </strong>'+msg);if(!done.has(id))markDone(id,false);}
+
+const M={
+  a1:{t:'Correct. A claim must be specific, debatable, and supportable. "Carbon pricing represents the most cost-effective policy mechanism…" takes a position on a debatable topic that can be supported with evidence.',f:'A claim is a debatable position, not a fact and not a vague topic. Option C is the only one that makes a specific, arguable assertion about policy effectiveness.'},
+  a2:{t:'Correct. The Warrant is the logical bridge between evidence and claim. Without it, you are leaving the reader to make the logical connection themselves — which in academic writing is never acceptable. The marker needs to see your analytical thinking.',f:'The warrant is not optional. "Evidence speaks for itself" is one of the most common weaknesses in student writing. You must always explain what the evidence means and why it supports your claim.'},
+  a3:{t:'Correct. This is Evidence — a specific, cited empirical finding from a named study. It provides data to support a claim, not the claim itself.',f:'This is Evidence — it names an author, a year, a sample size, and a specific finding (73% reduction). A Claim would make a position statement. A Warrant would explain the logical connection.'},
+  a4:{t:'Correct. This is a Warrant — it explains the logical mechanism that connects dietary choices (the topic) to emissions reduction (the claim). It answers the question: "Why does this evidence support the claim?"',f:'This is a Warrant — it gives the logical explanation of why food choices matter for carbon footprints. It does not make a claim (no specific debatable position) and does not provide data (no statistics or citations).'},
+  a6:{t:'Correct. This uses Pathos (the human cost, displacement risk) but anchors it to data from the IPCC — making it academically acceptable. The emotional weight is real but is grounded in verifiable evidence.',f:'Options A, C, and D use Pathos without evidence — pure emotional appeal. Academic Pathos must always be grounded in data. The 40 million people figure comes from the IPCC (2023), which makes option B both emotionally resonant and academically legitimate.'},
+  a7:{t:'Correct. A peer-reviewed study in a specialist academic journal, authored by clinical psychologists, is the gold standard for Ethos in academic writing. It provides both Authority (experts in the relevant field) and Accuracy (peer review).',f:'A Reddit thread is anecdotal (not authoritative), a blog is not peer-reviewed, and a politician\'s opinion is politically motivated. The peer-reviewed journal article is the only source with genuine academic authority.'},
+  a8:{t:'Correct. Correlation = things vary together. Causation = one produces the other through a demonstrable mechanism. You must always explain the mechanism to establish causation — statistics alone can never prove it.',f:'Correlation and causation are fundamentally different. Two things can be correlated (rise and fall together) without any causal relationship — the classic example is ice cream sales and drowning rates both rising in summer.'},
+  a10:{t:'Correct. Comparing nuclear on safety and solar on environmental impact is comparing on inconsistent criteria — a False Dichotomy-adjacent error in comparative argument. A fair comparison must evaluate both options on the same dimensions.',f:'The problem is not the comparison itself but the inconsistent criteria. A rigorous comparative argument would evaluate both nuclear and solar on the same dimensions: cost, emissions, deployment speed, risk — then show which is superior across all relevant criteria.'},
+  a11:{t:'Correct. A counterargument shows intellectual rigour. It demonstrates you understand the topic well enough to identify and engage with the strongest objection — and that your position survives that challenge.',f:'Including a counterargument is not an admission of weakness. It is a demonstration of critical thinking. A marker reading a one-sided argument will always ask: "But what about the other side?" Anticipating that question and answering it makes your argument more convincing, not less.'},
+  a17:{t:'Correct. Purpose (P in CRAAP) is the key criterion here. A report commissioned by or produced by an organisation with a financial interest in the outcome has an inherent bias risk. This does not mean it is wrong — but it must be read critically and ideally corroborated by independent sources.',f:'While Currency and Accuracy are also relevant, Purpose is the most critical issue. When the organisation writing the report has a financial stake in the conclusions, bias is a primary concern — regardless of how recent or seemingly accurate the data is.'},
+  a18:{t:'Correct. The peer-reviewed journal article (2024, large sample, multiple countries) scores highly on all five CRAAP criteria: Currency (2024), Relevance (teenagers, social media, mental health), Authority (peer-reviewed, Journal of Adolescent Health), Accuracy (large empirical study), Purpose (academic, not commercial).',f:'The TED Talk lacks peer review. Wikipedia is not a primary source. The Instagram post has no academic credibility. The peer-reviewed journal article with a large, diverse sample is the only source that meets academic standards.'},
+};
+
+function mc(btn,id,ok){
+  const ac=document.getElementById(id);
+  ac.querySelectorAll('.ch').forEach(b=>b.disabled=true);
+  if(ok){btn.classList.add('correct');btn.querySelector('.ci').textContent='✓';showFb(id,true,M[id]?.t||'Correct!');markDone(id,true);}
+  else{btn.classList.add('wrong');btn.querySelector('.ci').textContent='✗';ac.querySelectorAll('.ch').forEach(b=>{if(b.getAttribute('onclick')?.includes(',true)'))b.classList.add('correct');});showFb(id,false,M[id]?.f||'Review the explanation.');markDone(id,false);}
+}
+
+function spotErr(el){
+  const id=el.dataset.id;
+  if(el.dataset.ok==='true'){
+    document.querySelectorAll('.hl[data-id="'+id+'"]').forEach(e=>e.style.pointerEvents='none');
+    el.className='hl cok';
+    const msgs={
+      a9:'Correct. The problem is "Therefore, the cycling infrastructure caused the improvement in air quality." This is a Post Hoc fallacy — the infrastructure was introduced before the improvement, but other factors (e.g. reduced industrial activity, weather patterns, other transport policies) could explain the change. A rigorous causal argument would need to control for these variables.',
+      a16:'Correct. "Anyone who argues otherwise clearly has not read the research" is an Ad Hominem fallacy — it attacks people who hold the opposing view rather than engaging with their argument. The sentence implies that disagreement equals ignorance, which is an unfair and logically invalid move.'
+    };
+    showFb(id,true,msgs[id]||'Correct!');markDone(id,true);
+  } else {
+    el.className='hl cno';setTimeout(()=>{el.className='hl';el.style.pointerEvents='';},500);
+    const hints={a9:'Not quite — look for the sentence that makes a causal claim without establishing the mechanism or ruling out other explanations.',a16:'Not that sentence — look for the one that attacks people rather than engaging with the argument.'};
+    showFb(id,false,hints[id]||'Try again.');
+  }
+}
+
+function catSel(el,id){document.querySelectorAll('#'+id+'-pool .tg:not(.placed)').forEach(t=>t.classList.remove('sel'));el.classList.add('sel');catSelItem=el;}
+function catPlace(id,cat){
+  if(!catSelItem||catSelItem.closest('#'+id+'-pool')===null)return;
+  const zone=document.getElementById(id+'-'+cat);
+  const pill=document.createElement('span');pill.className='cp';
+  const short=catSelItem.textContent.trim().slice(0,50)+(catSelItem.textContent.length>50?'…':'');
+  pill.textContent=short;pill.dataset.cat=catSelItem.dataset.cat;
+  zone.appendChild(pill);catSelItem.classList.add('placed');catSelItem.classList.remove('sel');catSelItem=null;
+}
+function checkCats(id){
+  const placed=document.querySelectorAll('#'+id+'-pool .tg.placed').length;
+  if(placed<4){showFb(id,false,'Place all 4 items first.');return;}
+  let ok=true;
+  ['logos','ethos','pathos'].forEach(cat=>{
+    document.querySelectorAll('#'+id+'-'+cat+' .cp').forEach(p=>{if(p.dataset.cat!==cat)ok=false;});
+  });
+  if(ok){showFb(id,true,'All categorised correctly. Logos = data/statistics/research. Ethos = authority of the source. Pathos = emotional/values appeal.');markDone(id,true);}
+  else{showFb(id,false,'One or more items are in the wrong category. Logos uses data and statistics. Ethos cites authority (WHO Director-General). Pathos makes an emotional appeal. Try again.');}
+}
+
+function ds(e){dragEl=e.target.closest('.si');e.dataTransfer.effectAllowed='move';}
+function dov(e){e.preventDefault();}
+function dp(e,id){
+  e.preventDefault();const tgt=e.target.closest('.si');
+  if(!tgt||tgt===dragEl)return;
+  const list=document.getElementById(id+'-list');
+  if([...list.children].indexOf(dragEl)<[...list.children].indexOf(tgt))list.insertBefore(dragEl,tgt.nextSibling);
+  else list.insertBefore(dragEl,tgt);
+}
+function checkOrder(id,exp){
+  const items=[...document.getElementById(id+'-list').children];
+  const ok=items.every((el,i)=>parseInt(el.dataset.pos)===exp[i]);
+  if(ok){showFb(id,true,'Correct order: (1) Acknowledge — "Some economists argue…" (2) Refute — "However, evidence from Germany and Norway…" (3) Reinforce — "This therefore supports…"');markDone(id,true);}
+  else showFb(id,false,'Not quite. The order should be: Acknowledge (state the opposing view) → Refute (challenge it with evidence) → Reinforce (bring the reader back to your claim).');
+}
+
+const pSel2={};
+function pairClick(id,side,idx){
+  if(!pSel2[id])pSel2[id]={L:null,R:null};
+  pSel2[id][side]=idx;
+  document.querySelectorAll('#'+id+'-'+side+' .ps').forEach(s=>s.classList.remove('as'));
+  document.querySelector('#'+id+'-'+side+' .ps[data-i="'+idx+'"]').classList.add('as');
+  if(pSel2[id].L!==null&&pSel2[id].R!==null){
+    const l=document.querySelector('#'+id+'-L .ps[data-i="'+pSel2[id].L+'"]');
+    const r=document.querySelector('#'+id+'-R .ps[data-i="'+pSel2[id].R+'"]');
+    if(pSel2[id].L===pSel2[id].R){l.className='ps correct';r.className='ps correct';}
+    else{l.classList.add('wrong');r.classList.add('wrong');setTimeout(()=>{l.classList.remove('wrong','as');r.classList.remove('wrong','as');},600);}
+    pSel2[id]={L:null,R:null};
+  }
+}
+function checkPairs(id){
+  const m=document.querySelectorAll('#'+id+'-L .ps.correct').length;
+  if(m===3){showFb(id,true,'All matched. Slippery Slope = extreme consequence without evidence. Ad Hominem = attacks the person. Post Hoc = B followed A therefore A caused B.');markDone(id,true);}
+  else showFb(id,false,'You have '+m+'/3. Click a sentence on the left, then its matching fallacy on the right.');
+}
+
+function checkA13(){
+  const g1=document.getElementById('a13g1').value.trim().toLowerCase();
+  const g2=document.getElementById('a13g2').value.trim().toLowerCase();
+  const ok1=['it could be argued','critics contend','some researchers suggest','it has been argued','some argue','it could be said'].some(p=>g1.includes(p.split(' ')[0]));
+  const ok2=['however','nevertheless','despite this','nonetheless','yet'].some(p=>g2.toLowerCase().startsWith(p));
+  const ok=ok1&&ok2;
+  document.getElementById('a13g1').classList.toggle('correct',ok1);document.getElementById('a13g1').classList.toggle('wrong',!ok1);
+  document.getElementById('a13g2').classList.toggle('correct',ok2);document.getElementById('a13g2').classList.toggle('wrong',!ok2);
+  showFb('a13',ok,ok?'Correct. Gap 1 needs hedged Acknowledge language (It could be argued that…). Gap 2 needs a contrast Refute linker (However…).':(ok1?'Gap 2 needs a contrast linker: However / Nevertheless / Despite this.':ok2?'Gap 1 needs an Acknowledge phrase: "It could be argued that…" / "Critics contend that…"':'Gap 1 = Acknowledge phrase. Gap 2 = contrast linker (However/Nevertheless).'));
+  if(ok)markDone('a13',true);
+}
+
+function checkA14(){
+  const val=document.getElementById('a14-in').value.trim().toLowerCase();
+  const hasStraw=/(want to destroy|don't care|no concern|heartless|evil|selfish)/i.test(val);
+  const hasAck=/(could be argued|some argue|critics|contend|suggest|it has been|true that|it is worth noting)/i.test(val);
+  if(hasStraw){showFb('a14',false,'Your rewrite still distorts the opposing view. Avoid attributing motives (destroying the environment, not caring). State the actual argument: that individual dietary choices are a relatively minor factor compared to industrial emissions, or that local context matters.');return;}
+  if(val.length<20){showFb('a14',false,'Please write a complete sentence.');return;}
+  if(hasAck){showFb('a14',true,'Good. Your Acknowledge step uses hedged reporting language and does not distort the opposing view. A fair counterargument represents the other side\'s best argument, not a weaker version of it.');markDone('a14',true);}
+  else{showFb('a14',false,'Try starting with: "It could be argued that…" or "Some researchers suggest that…" to signal you are presenting another view fairly.');}
+}
+
+function checkA19(){
+  const val=document.getElementById('a19-in').value.trim().toLowerCase();
+  if(val.length<20){showFb('a19',false,'Please write a complete sentence.');return;}
+  const hasLink=/(indicates|suggests|demonstrates|shows|implies|means|therefore|thus|hence|because|since|connection|mechanism|leads|results in)/i.test(val);
+  const hasConnect=/(public transport|transport|vehicle|car|emission|carbon|infrastructure)/i.test(val);
+  if(hasLink&&hasConnect){showFb('a19',true,'Good warrant. You have explained the logical mechanism connecting the evidence (40% lower emissions) to the claim (investment in public transport reduces urban emissions). That logical explanation is what the warrant does.');markDone('a19',true);}
+  else{showFb('a19',false,'A warrant needs to explain WHY the evidence supports the claim. Try: "This [data/pattern/finding] indicates that [mechanism] — which means [connection to claim]." Use words like: indicates, suggests, demonstrates, therefore, because, since.');}
+}
+
+function checkA20(){
+  const val=document.getElementById('a20-in').value.trim().toLowerCase();
+  const hasFallacy=/(ad hominem|hominem|attacks|attack|anyone who disagrees|dismiss)/i.test(val);
+  const hasWarrant=/(warrant|evidence.*connection|connect|mechanism|explains why|speaks for itself)/i.test(val);
+  const hasHedge=/(over.?strong|claim|hedge|hedging|all|primary cause|causes all|absolute|universal|too strong|no hedg)/i.test(val);
+  const found=[];if(hasFallacy)found.push(1);if(hasWarrant)found.push(2);if(hasHedge)found.push(3);
+  if(found.length===3){showFb('a20',true,'All three identified. (1) Ad Hominem: "Anyone who argues otherwise…" (2) Missing warrant: The "evidence" given is tautological and not connected to the mental health claim. (3) Over-strong claim: "primary cause of the global mental health crisis" and "causes all mental health problems" need heavy hedging.');markDone('a20',true);}
+  else if(found.length>0){showFb('a20',false,'You found '+found.length+'/3. Keep looking: (1) Which sentence attacks people who disagree? (2) Is the "evidence" actually connected to the claim by a logical explanation? (3) Which phrases are too absolute and need hedging?');}
+  else{showFb('a20',false,'Start by looking for: (1) a sentence that attacks people rather than arguments, (2) a place where evidence is cited but never connected logically to the claim, (3) words like "all", "always", "primary cause" that make the claim too absolute.');}
+}
+
+function retry(id){
+  const ac=document.getElementById(id);
+  ac.querySelectorAll('.ch').forEach(b=>{b.disabled=false;b.classList.remove('correct','wrong');b.querySelector('.ci').textContent='';});
+  ac.querySelectorAll('.gi').forEach(g=>{g.value='';g.classList.remove('correct','wrong');});
+  ac.querySelectorAll('.ti').forEach(t=>{t.value='';});
+  ac.querySelectorAll('.hl').forEach(e=>{e.className='hl';e.style.pointerEvents='';});
+  if(id==='a5'){['logos','ethos','pathos'].forEach(c=>document.getElementById('a5-'+c).innerHTML='');document.querySelectorAll('#a5-pool .tg').forEach(t=>{t.classList.remove('placed','sel');t.style.pointerEvents='';});catSelItem=null;}
+  if(id==='a15'){document.querySelectorAll('#a15-L .ps, #a15-R .ps').forEach(s=>s.className='ps');pSel2['a15']={L:null,R:null};}
+  document.getElementById('fb-'+id).className='fb';
+}
+</script>
+</body>
+</html>

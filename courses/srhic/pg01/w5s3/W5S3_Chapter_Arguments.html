@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Arguments & Counter-Arguments — Chapter 5.3 | PG01</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#D84315;--navy:#1A2B4A;--cream:#FAF8F5;--ink:#1C1C1C;--muted:#6B6B6B;--border:rgba(0,0,0,0.09);--card:#fff;--green:#1B6B3A;--green-bg:#EBF9F0;--red:#7B2020;--red-bg:#FFF0F0;--teal:#028090;--purple:#6A1B9A;--purple-bg:#F3E5F5;--amber-bg:#FFF7E6}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.75;font-size:15px}
+nav{position:sticky;top:0;z-index:50;background:rgba(250,248,245,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:52px}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:16px;color:var(--navy);text-decoration:none}
+.nav-logo span{color:var(--orange)}
+.wrap{max-width:800px;margin:0 auto;padding:3rem 2rem 6rem}
+.ch-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid var(--border)}
+.ch-meta{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem}
+.ch-tag{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:2px}
+.tag-w{background:#EBF0FF;color:var(--navy)}
+.tag-s{background:#FFF0EB;color:var(--orange)}
+.ch-header h1{font-family:'DM Serif Display',serif;font-size:clamp(32px,5vw,52px);color:var(--navy);line-height:1.1;margin-bottom:1rem;letter-spacing:-.5px}
+.ch-intro{font-size:16px;font-weight:300;color:var(--muted);line-height:1.8;max-width:680px}
+.outcomes{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--orange);border-radius:0 6px 6px 0;padding:1.25rem 1.5rem;margin-top:1.5rem}
+.outcomes h3{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:.75rem}
+.outcomes li{font-size:14px;color:var(--ink);display:flex;align-items:flex-start;gap:8px;margin-bottom:5px}
+.outcomes li::before{content:'→';color:var(--orange);flex-shrink:0;margin-top:2px}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:3rem}
+.toc h3{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.toc ol{padding-left:1.25rem;display:flex;flex-direction:column;gap:4px}
+.toc a{font-size:14px;color:var(--navy);text-decoration:none}
+.toc a:hover{color:var(--orange)}
+h2.sec{font-family:'DM Serif Display',serif;font-size:28px;color:var(--navy);margin:3rem 0 1rem;padding-top:2rem;border-top:1px solid var(--border)}
+h2.sec span{color:var(--orange);font-size:16px;margin-right:8px}
+h3.sub{font-size:17px;font-weight:500;color:var(--navy);margin:2rem 0 .75rem}
+p{font-size:15px;color:#2C2C2C;margin-bottom:1rem;line-height:1.8}
+strong{font-weight:500}
+.def-box{background:var(--navy);color:#fff;border-radius:8px;padding:1.5rem;margin:1.5rem 0;display:flex;gap:14px}
+.def-box h4{font-size:13px;font-weight:500;color:var(--orange);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.def-box p{color:rgba(255,255,255,.85);margin:0;font-size:14px}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5rem 0}
+.col-card{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.col-hd{padding:9px 14px;font-size:12px;font-weight:500;color:#fff;letter-spacing:.3px}
+.col-body{padding:12px 14px;font-size:13px;color:var(--muted);line-height:1.7}
+.col-ex{padding:10px 14px;font-size:12px;border-top:1px solid var(--border)}
+.col-ex .good{color:var(--green);margin-bottom:5px}
+.col-ex .bad{color:var(--red)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1.5rem 0}
+.step-card{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:10px}
+.step-hd{display:flex;align-items:center;gap:10px;padding:10px 14px}
+.step-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff;flex-shrink:0}
+.step-title{font-size:14px;font-weight:500;color:var(--navy)}
+.step-body{padding:10px 14px 12px;font-size:13px;color:var(--muted);line-height:1.7}
+.lang-list{list-style:none;padding:6px 0 0;display:flex;flex-direction:column;gap:5px}
+.lang-list li{font-size:13px;font-style:italic;color:var(--navy);padding:4px 10px;background:#f8f8f8;border-radius:3px}
+.worked{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin:1.5rem 0}
+.worked-lbl{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:1rem}
+.worked-row{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:start;margin-bottom:10px;font-size:14px}
+.worked-step{color:#fff;padding:4px 10px;border-radius:3px;font-size:11px;font-weight:500;text-align:center;white-space:nowrap}
+.worked-content{color:#2C2C2C;line-height:1.75}
+.worked-content .hl{color:var(--orange);font-weight:500}
+.worked-content .hlg{color:var(--green);font-weight:500}
+.ex-wrong{background:var(--red-bg);border-left:4px solid #dc3545;padding:10px 14px;border-radius:0 4px 4px 0;margin-bottom:6px;font-size:14px;color:var(--red)}
+.ex-right{background:var(--green-bg);border-left:4px solid #28a745;padding:10px 14px;border-radius:0 4px 4px 0;font-size:14px;color:var(--green)}
+.ex-wrong .lbl,.ex-right .lbl{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.fallacy-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1.5rem 0}
+.fallacy{background:var(--card);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.fallacy-hd{background:var(--navy);padding:8px 12px}
+.fallacy-name{font-size:12px;font-weight:500;color:var(--orange)}
+.fallacy-body{padding:10px 12px;font-size:12px;color:var(--muted);line-height:1.65}
+.fallacy-body em{color:var(--red);font-style:italic}
+.craap{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:1.5rem 0}
+.craap-card{border-radius:6px;overflow:hidden;text-align:center}
+.craap-hd{padding:12px 6px 6px;color:#fff;font-size:20px;font-weight:700}
+.craap-word{font-size:11px;font-weight:500;padding:4px 6px 8px;color:#fff;letter-spacing:.3px}
+.craap-body{padding:10px 8px;font-size:11px;color:var(--muted);line-height:1.55;background:var(--card)}
+.template-table{width:100%;border-collapse:collapse;font-size:14px;margin:1.5rem 0}
+.template-table th{background:var(--navy);color:#fff;padding:9px 14px;text-align:left;font-size:11px;font-weight:500}
+.template-table td{padding:9px 14px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.65}
+.template-table tr:last-child td{border-bottom:none}
+.template-table .step-lbl{font-weight:500;color:#fff;padding:9px 12px;text-align:center;font-size:12px;vertical-align:middle}
+.assess-box{background:var(--navy);border-radius:8px;padding:1.5rem;margin:2rem 0;display:flex;gap:14px}
+.assess-box h4{font-size:14px;font-weight:500;color:#fff;margin-bottom:4px}
+.assess-box p{font-size:13px;color:rgba(255,255,255,.7);margin:0;line-height:1.6}
+.key-point{background:var(--card);border:1.5px solid var(--orange);border-radius:6px;padding:1.25rem 1.5rem;margin:1.5rem 0;display:flex;gap:14px}
+.key-point h4{font-size:12px;font-weight:500;color:var(--orange);margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+.key-point p{font-size:14px;color:var(--ink);margin:0}
+.self-check{background:#EBF0FF;border:1px solid #C0CFF0;border-radius:8px;padding:1.5rem;margin:2rem 0}
+.self-check h4{font-size:12px;font-weight:500;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;margin-bottom:1rem}
+.check-q{font-size:14px;color:var(--ink);margin-bottom:.5rem;display:flex;gap:8px}
+.check-q::before{content:'?';color:var(--orange);font-weight:500;flex-shrink:0}
+hr.div{border:none;border-top:1px solid var(--border);margin:3rem 0}
+</style>
+</head>
+<body>
+<nav>
+  <a href="#" class="nav-logo">M<span>.</span>Estopiñán</a>
+  <span style="font-size:12px;color:var(--muted)">PG01 · Chapter 5.3</span>
+</nav>
+<div class="wrap">
+
+<div class="ch-header">
+  <div class="ch-meta"><span class="ch-tag tag-w">Week 5</span><span class="ch-tag tag-s">Session 3</span></div>
+  <h1>Arguments &amp;<br><em style="font-style:italic;color:var(--orange)">Counter-Arguments</em></h1>
+  <p class="ch-intro">How to build, challenge, and defend a scholarly position. This chapter covers everything from Session 3 in full. If you missed the class, work through all sections — they contain the complete theory, frameworks, worked examples, and model answers you need for Assessment 1.</p>
+  <div class="outcomes">
+    <h3>By the end of this chapter you will be able to</h3>
+    <ul style="list-style:none">
+      <li>Identify and articulate the Claim, Evidence, and Warrant in any academic argument</li>
+      <li>Recognise and use Logos, Ethos, and Pathos appropriately in academic writing</li>
+      <li>Construct a three-step counterargument (Acknowledge · Refute · Reinforce)</li>
+      <li>Evaluate source credibility using the CRAAP framework</li>
+      <li>Apply the full argument paragraph template to Assessment 1 writing</li>
+      <li>Identify and avoid the six most common logical fallacies</li>
+    </ul>
+  </div>
+</div>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#s1">What is an Academic Argument?</a></li>
+    <li><a href="#s2">Types of Argument — Logos, Ethos, Pathos</a></li>
+    <li><a href="#s3">Causal and Comparative Arguments</a></li>
+    <li><a href="#s4">Counterarguments — The Three-Step Move</a></li>
+    <li><a href="#s5">Logical Fallacies</a></li>
+    <li><a href="#s6">Source Credibility — The CRAAP Test</a></li>
+    <li><a href="#s7">The Argument Paragraph Template</a></li>
+    <li><a href="#s8">Model Answers</a></li>
+  </ol>
+</div>
+
+<!-- 1 -->
+<h2 class="sec" id="s1"><span>1</span>What is an Academic Argument?</h2>
+<p>In everyday language, an argument is a disagreement. In academic writing, an argument is something entirely different: a reasoned, evidence-based case for a position. Academic arguments are not won by speaking louder or more confidently — they are won by the quality of the evidence and the logic connecting that evidence to the claim.</p>
+<div class="def-box">
+  <div style="font-size:28px;flex-shrink:0">📐</div>
+  <div>
+    <h4>Definition</h4>
+    <p>An academic argument is a structured discourse in which a writer advances a debatable claim, supports it with credible evidence, and explicitly connects the evidence to the claim through logical reasoning (the warrant).</p>
+  </div>
+</div>
+<h3 class="sub">The three components: Claim · Evidence · Warrant</h3>
+<div class="three-col">
+  <div class="col-card">
+    <div class="col-hd" style="background:var(--orange)">01 Claim</div>
+    <div class="col-body">The main point you are arguing. Must be specific, debatable, and supportable. A claim is a position — not a fact and not a topic.</div>
+    <div class="col-ex"><div class="good">✓ Plant-based diets represent a more sustainable dietary choice for reducing carbon emissions.</div><div class="bad">✗ Plant-based diets exist. (fact, not claim)</div></div>
+  </div>
+  <div class="col-card">
+    <div class="col-hd" style="background:var(--teal)">02 Evidence</div>
+    <div class="col-body">Data, research, statistics, expert opinion, or verified examples that support the claim. Must be from credible, cited sources.</div>
+    <div class="col-ex"><div class="good">✓ Scarborough et al. (2023) found that vegan diets produce 75% less carbon than high-meat diets.</div><div class="bad">✗ I read somewhere that vegan diets are better.</div></div>
+  </div>
+  <div class="col-card">
+    <div class="col-hd" style="background:var(--purple)">03 Warrant</div>
+    <div class="col-body">The logical connection between the evidence and the claim. Often implicit in everyday speech — in academic writing it should be stated explicitly.</div>
+    <div class="col-ex"><div class="good">✓ Dietary patterns are a significant driver of personal carbon footprints, making food choice a lever for climate action.</div><div class="bad">✗ (no warrant — leaving the evidence to "speak for itself")</div></div>
+  </div>
+</div>
+<div class="assess-box">
+  <div style="font-size:28px;flex-shrink:0">📋</div>
+  <div><h4>Assessment 1 connection</h4><p>Every body paragraph in your 1,000-word report should contain all three components. The Claim goes in your topic sentence. The Evidence follows with a signal phrase and citation. The Warrant is the analytical sentence that explains what the evidence means. Missing any one of the three weakens the paragraph.</p></div>
+</div>
+
+<!-- 2 -->
+<h2 class="sec" id="s2"><span>2</span>Types of Argument — Logos, Ethos, Pathos</h2>
+<p>Aristotle identified three fundamental modes of persuasion. Understanding which mode you are using — and which is appropriate — is a core academic writing skill.</p>
+<div class="three-col">
+  <div class="col-card">
+    <div class="col-hd" style="background:var(--teal)">Logos — Logic &amp; Evidence</div>
+    <div class="col-body">Arguments based on data, statistics, research findings, and logical reasoning. The dominant mode in academic writing. Requires cited sources and explicit logical connections.</div>
+    <div class="col-ex"><div class="good">✓ Battery storage costs have fallen 89% since 2013 (BloombergNEF, 2023), making renewable-plus-storage systems viable.</div></div>
+  </div>
+  <div class="col-card">
+    <div class="col-hd" style="background:var(--navy)">Ethos — Credibility</div>
+    <div class="col-body">Arguments that establish the authority of the source. Citing the WHO, peer-reviewed journals, or recognised domain experts is Ethos in academic writing.</div>
+    <div class="col-ex"><div class="good">✓ As the IPCC's Sixth Assessment Report (2023) concludes…</div><div class="bad">✗ My colleague in the energy industry told me…</div></div>
+  </div>
+  <div class="col-card">
+    <div class="col-hd" style="background:var(--orange)">Pathos — Emotion &amp; Values</div>
+    <div class="col-body">Appeals to the reader's emotions, values, or moral instincts. Used sparingly in academic writing. Acceptable when grounded in data; not acceptable as a substitute for evidence.</div>
+    <div class="col-ex"><div class="good">✓ The 40 million people living in flood-prone coastal areas face existential risk (IPCC, 2023) — a figure that demands policy attention.</div><div class="bad">✗ We must act NOW before our planet is destroyed!</div></div>
+  </div>
+</div>
+<div class="key-point">
+  <span style="font-size:24px">💡</span>
+  <div><h4>Key principle</h4><p>Academic writing is not purely emotionless — but every appeal to values or consequence must be anchored to data. Pathos without Logos is rhetoric. Logos without Ethos (credible sources) is weak. The most powerful academic arguments combine all three, with Logos dominant.</p></div>
+</div>
+
+<!-- 3 -->
+<h2 class="sec" id="s3"><span>3</span>Causal and Comparative Arguments</h2>
+<h3 class="sub">Causal arguments</h3>
+<p>A causal argument claims that one event or condition causes another. These are extremely common in academic writing — and extremely easy to do incorrectly.</p>
+<div class="key-point">
+  <span style="font-size:24px">⚠️</span>
+  <div><h4>Correlation ≠ Causation</h4><p>The most important rule in causal arguments. Two things can increase or decrease together (correlation) without one causing the other. Ice cream sales and drowning rates both rise in summer — but ice cream does not cause drowning. A good causal argument must explain the mechanism: not just that A and B are related, but <em>how</em> A produces B.</p></div>
+</div>
+<div class="ex-wrong"><div class="lbl">Weak causal — correlation only</div>After the introduction of carbon pricing in Sweden, emissions fell. Therefore, carbon pricing reduces emissions.</div>
+<div class="ex-right" style="margin-bottom:1.5rem"><div class="lbl">Strong causal — mechanism explained</div>Sweden's carbon tax directly increased the cost of fossil-fuel use, incentivising households and industry to switch to lower-carbon alternatives. This price signal mechanism drove a 26% reduction in emissions between 1991 and 2020 (Swedish EPA, 2022), while GDP grew by 78%, demonstrating that economic performance and emissions reduction are not mutually exclusive.</div>
+
+<h3 class="sub">Comparative arguments</h3>
+<p>A comparative argument claims that one option is better, more effective, or more appropriate than another. The critical requirement is that you compare on <strong>consistent criteria</strong>. Comparing X on one criterion and Y on a different criterion is not a fair comparison.</p>
+<div class="ex-wrong"><div class="lbl">Inconsistent criteria — unfair comparison</div>"Nuclear power is too expensive, while solar energy is clean." (Comparing on different dimensions — cost vs. environmental impact.)</div>
+<div class="ex-right" style="margin-bottom:1.5rem"><div class="lbl">Consistent criteria — fair comparison</div>"When evaluated on both deployment speed and lifecycle carbon emissions, solar power outperforms nuclear on both dimensions: solar installations can be completed in 1–2 years versus 10–15 for nuclear, and lifecycle emissions are 6–10x lower (IPCC, 2023)."</div>
+
+<!-- 4 -->
+<h2 class="sec" id="s4"><span>4</span>Counterarguments — The Three-Step Move</h2>
+<p>Including a counterargument in your writing does not weaken your position — it strengthens it. A writer who ignores the strongest objection to their claim looks naive. A writer who acknowledges it fairly and refutes it with evidence looks intellectually rigorous.</p>
+<div class="key-point">
+  <span style="font-size:24px">🎓</span>
+  <div><h4>Why include counterarguments?</h4><p>Academic writing requires balanced, evidence-based reasoning. Readers — and markers — will ask: "But what about the other side?" Anticipating and addressing that question demonstrates critical thinking, which is explicitly assessed in Assessment 1 under Content and Critical Analysis.</p></div>
+</div>
+<h3 class="sub">The three-step structure</h3>
+<div class="step-card">
+  <div class="step-hd"><div class="step-num" style="background:var(--teal)">1</div><div class="step-title">Acknowledge — State the opposing view fairly</div></div>
+  <div class="step-body">Represent the opposing position accurately. Do not distort or exaggerate it (that would be a Straw Man fallacy). Use hedged reporting language to signal you are presenting another view, not your own.
+  <ul class="lang-list" style="margin-top:8px">
+    <li>It could be argued that…</li><li>Some researchers contend that…</li><li>Critics of this position suggest that…</li><li>While it is true that…</li>
+  </ul></div>
+</div>
+<div class="step-card">
+  <div class="step-hd"><div class="step-num" style="background:var(--orange)">2</div><div class="step-title">Refute — Challenge with evidence or by limiting scope</div></div>
+  <div class="step-body">Show why your position is stronger — using evidence, logic, or by restricting the opposing view to specific contexts where it applies but showing it does not apply universally.
+  <ul class="lang-list" style="margin-top:8px">
+    <li>However, this view fails to account for…</li><li>While this may be true in specific contexts, the evidence suggests…</li><li>Nevertheless, the weight of research indicates…</li><li>This argument, while valid locally, does not undermine the overall picture.</li>
+  </ul></div>
+</div>
+<div class="step-card">
+  <div class="step-hd"><div class="step-num" style="background:var(--green)">3</div><div class="step-title">Reinforce — Bring the reader back to your claim</div></div>
+  <div class="step-body">After addressing the opposition, restate your claim — now stronger for having survived challenge. Link back to the evidence you presented earlier.
+  <ul class="lang-list" style="margin-top:8px">
+    <li>This therefore reinforces the argument that…</li><li>The balance of evidence thus supports the claim that…</li><li>Taken together, these points confirm that…</li><li>It therefore follows that…</li>
+  </ul></div>
+</div>
+
+<h3 class="sub">Worked example — full three-step</h3>
+<div class="worked">
+  <div class="worked-lbl">Worked example · Topic: Plant-based diets and sustainability</div>
+  <div class="worked-row">
+    <div class="worked-step" style="background:var(--teal)">ACKNOWLEDGE</div>
+    <div class="worked-content"><span class="hl">It could be argued</span> that promoting plant-based diets as a climate solution oversimplifies a complex issue. As Garnett (2020) notes, the environmental impact of food production varies considerably depending on farming practices, land use, and transportation distance, <span class="hl">meaning that</span> locally-sourced animal products <span class="hl">can, in some cases,</span> have a lower carbon footprint than imported plant-based alternatives.</div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step" style="background:var(--orange)">REFUTE</div>
+    <div class="worked-content"><span class="hlg">However,</span> this argument, <span class="hlg">while valid in specific local contexts,</span> does not undermine the overall picture. The global average data consistently demonstrates that plant-based diets produce substantially lower emissions at scale. Poore and Nemecek (2018), analysing over 38,000 farms in 119 countries, found that a vegan diet reduces food-related emissions by an average of 73% compared to a high-meat diet.</div>
+  </div>
+  <div class="worked-row">
+    <div class="worked-step" style="background:var(--green)">REINFORCE</div>
+    <div class="worked-content"><span class="hlg">This therefore reinforces</span> the argument that, at a population level, dietary shifts towards plant-based food represent one of the most impactful individual actions available for reducing carbon footprints. Local exceptions do not negate the structural pattern.</div>
+  </div>
+  <div style="background:var(--cream);padding:10px 14px;margin-top:10px;border-radius:6px;font-size:13px;color:var(--muted)">
+    <strong style="color:var(--navy)">Notice:</strong> Orange highlighting = hedging in the Acknowledge step. Green highlighting = contrast and reinforce language. The concession phrase "while valid in specific local contexts" admits the opposing point has some validity before showing it does not apply universally.
+  </div>
+</div>
+
+<!-- 5 -->
+<h2 class="sec" id="s5"><span>5</span>Logical Fallacies</h2>
+<p>A logical fallacy is an error in reasoning that makes an argument appear valid when it is not. Recognising these in other people's writing — and eliminating them from your own — is a mark of academic maturity.</p>
+<div class="fallacy-grid">
+  <div class="fallacy"><div class="fallacy-hd"><div class="fallacy-name">Ad Hominem</div></div><div class="fallacy-body">Attacking the person making the argument rather than the argument itself.<br><em>"We shouldn't listen to his climate views — he's not even a scientist."</em></div></div>
+  <div class="fallacy"><div class="fallacy-hd"><div class="fallacy-name">Straw Man</div></div><div class="fallacy-body">Misrepresenting the opposing position to make it easier to attack.<br><em>"People who support renewable energy want us all to live without electricity."</em></div></div>
+  <div class="fallacy"><div class="fallacy-hd"><div class="fallacy-name">Slippery Slope</div></div><div class="fallacy-body">Claiming one event will inevitably lead to extreme consequences without evidence.<br><em>"If we allow this one regulation, it will lead to total government control."</em></div></div>
+  <div class="fallacy"><div class="fallacy-hd"><div class="fallacy-name">False Dichotomy</div></div><div class="fallacy-body">Presenting only two options when more exist.<br><em>"You're either with us or against us — there is no middle ground."</em></div></div>
+  <div class="fallacy"><div class="fallacy-hd"><div class="fallacy-name">Post Hoc</div></div><div class="fallacy-body">Claiming that because B followed A, A caused B.<br><em>"After the new policy, crime fell. Therefore the policy reduced crime."</em></div></div>
+  <div class="fallacy"><div class="fallacy-hd"><div class="fallacy-name">Appeal to False Authority</div></div><div class="fallacy-body">Citing an authority outside their area of expertise.<br><em>"This famous actor says the vaccine is unsafe."</em></div></div>
+</div>
+
+<!-- 6 -->
+<h2 class="sec" id="s6"><span>6</span>Source Credibility — The CRAAP Test</h2>
+<p>The strength of an academic argument depends entirely on the quality of its evidence. The CRAAP test (Blakeslee, 2004) is a five-criterion framework used by academic librarians worldwide to evaluate source quality.</p>
+<div class="craap">
+  <div class="craap-card"><div class="craap-hd" style="background:var(--teal)">C</div><div class="craap-word" style="background:var(--teal)">Currency</div><div class="craap-body">Is the source recent enough? Science and policy change quickly. A 2005 study on AI is not current.</div></div>
+  <div class="craap-card"><div class="craap-hd" style="background:var(--orange)">R</div><div class="craap-word" style="background:var(--orange)">Relevance</div><div class="craap-body">Does it directly address your question? A study on diet in Finland may not apply to Germany.</div></div>
+  <div class="craap-card"><div class="craap-hd" style="background:var(--navy)">A</div><div class="craap-word" style="background:var(--navy)">Authority</div><div class="craap-body">Is the author an expert in this specific field? Is it peer-reviewed? Published in a reputable journal?</div></div>
+  <div class="craap-card"><div class="craap-hd" style="background:var(--green)">A</div><div class="craap-word" style="background:var(--green)">Accuracy</div><div class="craap-body">Can the claims be verified? Are sources cited? Does it align with the broader literature?</div></div>
+  <div class="craap-card"><div class="craap-hd" style="background:var(--purple)">P</div><div class="craap-word" style="background:var(--purple)">Purpose</div><div class="craap-body">Why was this written? To inform, persuade, or sell? Industry-funded research may carry bias.</div></div>
+</div>
+<p>Note on Wikipedia: Wikipedia is useful for orientation and for following up its own reference lists, but it is never an acceptable primary source in academic writing. Cite the original studies that Wikipedia references, not Wikipedia itself.</p>
+
+<!-- 7 -->
+<h2 class="sec" id="s7"><span>7</span>The Argument Paragraph Template</h2>
+<p>This five-step template maps directly onto the Assessment 1 marking rubric. Every body paragraph in your report should follow this structure.</p>
+<table class="template-table">
+  <thead><tr><th>Step</th><th>What to write</th><th>Example</th></tr></thead>
+  <tbody>
+    <tr><td class="step-lbl" style="background:var(--orange)">Topic Sentence</td><td>Your mini-claim for this paragraph. One clear, specific, debatable sentence.</td><td style="font-style:italic;color:var(--muted)">Plant-based diets represent a more sustainable dietary option than meat-based alternatives.</td></tr>
+    <tr><td class="step-lbl" style="background:var(--teal)">Evidence</td><td>Introduce evidence with a signal phrase. Include in-text citation.</td><td style="font-style:italic;color:var(--muted)">According to Scarborough et al. (2023), vegan diets produce on average 75% less carbon than high-meat diets.</td></tr>
+    <tr><td class="step-lbl" style="background:var(--navy)">Analysis (Warrant)</td><td>Explain what the evidence means — connect it to the claim. Never let evidence speak for itself.</td><td style="font-style:italic;color:var(--muted)">This significant differential suggests that individual dietary choices can have a measurable impact on carbon footprints at scale.</td></tr>
+    <tr><td class="step-lbl" style="background:var(--purple)">Counterargument</td><td>Acknowledge the strongest objection in one sentence. Refute in one sentence.</td><td style="font-style:italic;color:var(--muted)">While some critics note that local animal products can outperform imported plant-based foods, the global average data consistently supports dietary shift as an effective intervention.</td></tr>
+    <tr><td class="step-lbl" style="background:var(--green)">Concluding Sentence</td><td>Reinforce the claim and signal the link to the next paragraph.</td><td style="font-style:italic;color:var(--muted)">The evidence therefore supports the contention that promoting plant-based diets represents a viable climate strategy at both individual and policy levels.</td></tr>
+  </tbody>
+</table>
+
+<!-- 8 -->
+<h2 class="sec" id="s8"><span>8</span>Model Answers — Case Studies</h2>
+<h3 class="sub">Case Study 1 — Renewable Energy Argument Analysis</h3>
+<div class="worked">
+  <div class="worked-lbl">Model answer</div>
+  <div class="worked-row"><div class="worked-step" style="background:var(--orange)">CLAIM</div><div class="worked-content">Intermittency does not represent an insurmountable obstacle to a renewable energy transition.</div></div>
+  <div class="worked-row"><div class="worked-step" style="background:var(--teal)">EVIDENCE</div><div class="worked-content">BloombergNEF (2023): battery storage costs fallen 89% since 2013. Tesla Megapack and grid-scale lithium-ion systems cited as concrete examples.</div></div>
+  <div class="worked-row"><div class="worked-step" style="background:var(--navy)">WARRANT</div><div class="worked-content">Falling costs make large-scale storage deployment increasingly viable, which directly resolves the intermittency problem at scale.</div></div>
+  <div class="worked-row"><div class="worked-step" style="background:var(--purple)">ARISTOTLE</div><div class="worked-content">Dominant = Logos (statistical data, named report). Secondary = Ethos (BloombergNEF as recognised authority, Tesla as established technology). No Pathos — appropriate for a technical argument.</div></div>
+  <div class="worked-row"><div class="worked-step" style="background:var(--green)">3-STEP</div><div class="worked-content">Acknowledge: "Critics argue that without large-scale energy storage…" — Refute: "Nevertheless, recent advances… suggest this barrier is being rapidly addressed." — Reinforce: "This evidence therefore supports the contention that intermittency… does not represent an insurmountable obstacle."</div></div>
+</div>
+
+<div class="self-check">
+  <h4>Quick self-check before closing this chapter</h4>
+  <div class="check-q">Can you explain the difference between a Claim and a fact?</div>
+  <div class="check-q">What is a Warrant, and why do you need to state it explicitly in academic writing?</div>
+  <div class="check-q">What is the difference between correlation and causation? Give one example of each.</div>
+  <div class="check-q">What does the Acknowledge step in a counterargument do, and what is the risk if you get it wrong?</div>
+  <div class="check-q">Name three logical fallacies and give a brief example of each in the context of environmental argument.</div>
+  <div class="check-q">What does the P in CRAAP stand for, and why is it particularly important when using industry reports?</div>
+</div>
+
+</div>
+</body>
+</html>
