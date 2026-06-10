@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PG01 W6 Wed — 20 Practice Activities: Arguments &amp; Literature</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css">
+<style>
+  :root{ --navy:#15293F; --orange:#D84315; --teal:#0E7C86; --amber:#F0A500; --green:#1E8E3E; --red:#C62828;
+    --ink:#333; --gray:#6C7680; --lt:#F4F6F8; }
+  *{box-sizing:border-box;}
+  body{font-family:'Roboto',sans-serif;color:var(--ink);line-height:1.6;max-width:760px;margin:0 auto;padding:0 18px 80px;background:#fff;font-size:16px;}
+  .hero{background:var(--navy);color:#fff;margin:0 -18px 18px;padding:38px 32px 30px;}
+  .hero .eyebrow{color:var(--amber);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+  .hero h1{font-size:27px;margin:8px 0 8px;}
+  .hero p{color:#cdd9e5;font-size:15px;margin:0;}
+  .bar{position:sticky;top:0;background:#fff;border-bottom:1px solid #e0e0e0;padding:10px 0;margin-bottom:10px;z-index:5;display:flex;align-items:center;gap:14px;}
+  .track{flex:1;height:9px;background:var(--lt);border-radius:6px;overflow:hidden;}
+  .fillbar{height:100%;width:0;background:var(--orange);transition:width .3s;}
+  .score{font-weight:700;color:var(--navy);font-size:14px;white-space:nowrap;}
+  .q{border:1px solid #e3e7eb;border-radius:8px;padding:18px 20px;margin:16px 0;}
+  .qnum{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--orange);}
+  .qtag{float:right;font-size:11px;font-weight:700;color:#fff;background:var(--teal);padding:2px 9px;border-radius:20px;letter-spacing:.5px;}
+  .stem{font-weight:500;margin:8px 0 12px;font-size:16.5px;}
+  .stem em{color:var(--navy);font-style:italic;}
+  .opt{display:block;width:100%;text-align:left;border:1.5px solid #d7dde2;background:#fff;border-radius:7px;padding:11px 14px;margin:7px 0;font-size:15px;cursor:pointer;font-family:inherit;transition:.15s;}
+  .opt:hover{border-color:var(--teal);background:#f3fafb;}
+  .opt.sel{border-color:var(--navy);}
+  .opt.correct{border-color:var(--green);background:#E6F2EA;}
+  .opt.wrong{border-color:var(--red);background:#FBEAEA;}
+  .fb{display:none;margin-top:12px;padding:13px 15px;border-radius:7px;font-size:14.5px;line-height:1.55;}
+  .fb.ok{background:#E6F2EA;border:1px solid var(--green);}
+  .fb.no{background:#FFF4E5;border:1px solid var(--amber);}
+  .fb b{color:var(--navy);}
+  .retry{margin-top:10px;background:none;border:1.5px solid var(--orange);color:var(--orange);font-weight:700;border-radius:6px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13.5px;}
+  .retry:hover{background:var(--orange);color:#fff;}
+  .done{background:var(--navy);color:#fff;border-radius:8px;padding:24px;margin-top:24px;text-align:center;display:none;}
+  .done h2{margin:0 0 6px;color:var(--amber);}
+  .seg{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin:26px 0 4px;border-top:2px solid var(--lt);padding-top:14px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="eyebrow">PG01 · Week 6 · Wednesday · Practice</div>
+  <h1>20 Activities — Building an Argument from the Literature</h1>
+  <p>Source layers · searching · CRAAP · Claim–Evidence–Warrant · contested evidence &amp; hedging · Acknowledge–Refute–Reinforce. Pick an answer; if it's wrong you can try again, and every answer explains itself.</p>
+</div>
+<div class="bar"><div class="track"><div class="fillbar" id="fill"></div></div><div class="score" id="score">0 / 20</div></div>
+<div id="quiz"></div>
+<div class="done" id="done"><h2>Set complete</h2><p id="donetxt"></p></div>
+
+<script>
+const Q=[
+ {seg:"Source layers"},
+ {t:"Layers",stem:"A peer-reviewed study reporting original experimental data for the first time is which kind of source?",o:["Primary","Secondary","Tertiary"],a:0,
+  fb:["Correct. Original data reported first-hand is <b>primary</b> literature — the strongest evidence layer.","Secondary sources interpret primary work (reviews, meta-analyses). Original data reported first-hand is primary.","Tertiary sources summarise secondary ones (encyclopaedias). Original first-hand data is primary."]},
+ {t:"Layers",stem:"A 2024 meta-analysis that combines and interprets 30 earlier studies is best described as:",o:["Primary","Secondary","Tertiary"],a:1,
+  fb:["A meta-analysis doesn't generate new raw data — it synthesises existing studies, which makes it secondary.","Correct. A meta-analysis synthesises and interprets primary studies, so it is <b>secondary</b> literature.","Tertiary means a summary of secondary sources (handbooks). A meta-analysis is secondary."]},
+ {t:"Layers",stem:"For Assessment 1 evidence, which source should you NOT cite directly?",o:["A peer-reviewed journal article","A systematic review","A Wikipedia article"],a:2,
+  fb:["Peer-reviewed articles are exactly what you should cite.","Systematic reviews are strong secondary sources — fine to cite.","Correct. Wikipedia is tertiary. Use it to orient yourself, then follow its references to the <b>primary</b> source and cite that."]},
+ {seg:"Searching like a researcher"},
+ {t:"Boolean",stem:"You want results containing either 'remote work' or 'hybrid work'. Which operator widens your search to catch both?",o:["AND","OR","NOT"],a:1,
+  fb:["AND narrows — it requires both terms together.","Correct. <b>OR</b> widens the net to include either term.","NOT excludes a term. OR is what widens to catch either."]},
+ {t:"Boolean",stem:"Searching <em>productiv*</em> instead of <em>productivity</em> is an example of:",o:["A Boolean NOT","Truncation","Citation chaining"],a:1,
+  fb:["NOT excludes terms — not what the asterisk does.","Correct. The asterisk is <b>truncation</b>: it catches productivity, productive, productiveness, etc.","Citation chaining means following references between papers, not using a wildcard."]},
+ {t:"Searching",stem:"You find one excellent paper. You then look at who has cited it since, using 'Cited by'. This is:",o:["Backward citation chaining","Forward citation chaining","Boolean filtering"],a:1,
+  fb:["Backward chaining looks at who THIS paper cited (its own reference list).","Correct. Looking at who cited a paper <em>after</em> it was published is <b>forward</b> chaining.","Filtering narrows a results list; this is citation chaining."]},
+ {t:"Searching",stem:"Which is the better first step when searching a database?",o:["Type your full research question as one sentence","Pull out 2–4 keywords and combine them with Boolean operators"],a:1,
+  fb:["Full sentences include filler words that confuse database search engines.","Correct. Reduce to concept keywords, then combine with Boolean operators for precise results."]},
+ {seg:"CRAAP"},
+ {t:"CRAAP",stem:"A source is from a named professor and published in a peer-reviewed journal. Which CRAAP dimension does this most directly satisfy?",o:["Currency","Authority","Purpose"],a:1,
+  fb:["Currency is about how recent the source is.","Correct. Credentials and a reputable publisher speak to <b>Authority</b>.","Purpose asks why the source exists (inform/persuade/sell)."]},
+ {t:"CRAAP",stem:"A blog post promoting a paid productivity course claims remote work is always best. Which CRAAP dimension is the biggest red flag?",o:["Relevance","Purpose","Currency"],a:1,
+  fb:["It may well be relevant to your topic — that's not the problem.","Correct. It exists to <b>sell</b> a product, so its Purpose introduces bias. Treat with caution.","Currency isn't the core issue here; the selling motive is."]},
+ {t:"CRAAP",stem:"A foundational 1998 study is still widely cited in your field. Does failing 'Currency' automatically disqualify it?",o:["Yes — anything that old is unusable","No — CRAAP is judgement, not a rigid checklist"],a:1,
+  fb:["Age alone doesn't disqualify a source.","Correct. A foundational, still-cited study can pass Currency. CRAAP guides <b>judgement</b>, not a mechanical rule."]},
+ {t:"CRAAP",stem:"Which CRAAP question asks whether the source is evidence-based and verifiable elsewhere?",o:["Relevance","Accuracy","Authority"],a:1,
+  fb:["Relevance asks whether it fits your question.","Correct. <b>Accuracy</b> is about evidence, peer review, and verifiability.","Authority is about who wrote and published it."]},
+ {seg:"Claim – Evidence – Warrant"},
+ {t:"C-E-W",stem:"In Claim–Evidence–Warrant, which part is the reasoning that links the evidence to the claim?",o:["Claim","Evidence","Warrant"],a:2,
+  fb:["The claim is the point you want accepted.","Evidence is the sourced support.","Correct. The <b>warrant</b> is the connecting reasoning — and it's the part students most often leave unstated."]},
+ {t:"C-E-W",stem:"Which sentence is a CLAIM rather than evidence?",o:["A 2024 survey of 5,000 students reported higher grades among early sleepers.","Universities should adopt later timetables.","The dataset is available in the journal's appendix."],a:1,
+  fb:["That's sourced data — evidence.","Correct. It's a position the writer wants you to accept — a <b>claim</b>.","That's a factual detail about the data — evidence/context."]},
+ {seg:"Contested evidence & hedging"},
+ {t:"Hedging",stem:"The evidence is from a single correlational study. Which sentence is appropriately hedged?",o:["Sugar causes hyperactivity in children.","Sugar may be associated with increased activity in some children."],a:1,
+  fb:["From one correlational study, 'causes' overstates the evidence and damages credibility.","Correct. 'May be associated with' matches the strength of the language to the strength of the evidence."]},
+ {t:"Hedging",stem:"Which statement should be written as UNCONTESTED (stated directly, no hedging)?",o:["Down's syndrome is caused by an extra copy of chromosome 21.","Genetic factors fully determine criminal behaviour."],a:0,
+  fb:["Correct. This is an established biological fact — state it directly.","This is contested and overstated; it would need heavy hedging or rejecting outright."]},
+ {t:"Hedging",stem:"Which word does NOT belong in a hedging toolkit?",o:["suggests","tends to","proves"],a:2,
+  fb:["'suggests' appropriately softens a claim.","'tends to' is a useful hedge.","Correct. <b>'proves'</b> is an absolute — the opposite of hedging. Avoid it unless the evidence is genuinely conclusive."]},
+ {seg:"Acknowledge – Refute – Reinforce"},
+ {t:"A-R-R",stem:"\"It is important to note that critics argue remote work harms collaboration.\" Which step of the counterargument move is this?",o:["Acknowledge","Refute","Reinforce"],a:0,
+  fb:["Correct. Naming the objection fairly is the <b>Acknowledge</b> step.","Refute explains why the objection doesn't overturn your claim.","Reinforce restates your claim afterwards."]},
+ {t:"A-R-R",stem:"After acknowledging an objection, what comes next in the three-step move?",o:["Reinforce, then refute","Refute, then reinforce","Just move on to a new point"],a:1,
+  fb:["The order is Acknowledge → Refute → Reinforce, not the reverse.","Correct. <b>Refute</b> the objection, then <b>Reinforce</b> your now-stronger claim.","Dropping the objection unanswered weakens your argument."]},
+ {t:"A-R-R",stem:"Why does Assessment 1 expect this counterargument move even though the brief never uses the word 'counterargument'?",o:["It doesn't — it's optional decoration","Because 'to what extent' and 'argument' at every rubric band require you to weigh other views","Because longer reports always score higher"],a:1,
+  fb:["It is genuinely expected, not optional.","Correct. The 'to what extent' framing and the word 'argument' at every grade band mean you must weigh and answer opposing views — at paragraph level.","Length isn't the criterion; reasoning is."]},
+ {t:"Synthesis",stem:"Best order for turning a topic into a defensible paragraph?",o:["Write claim → invent evidence → add objection","Search & judge sources (CRAAP) → claim + cited evidence + warrant → acknowledge/refute/reinforce","Acknowledge an objection → find a claim → stop"],a:1,
+  fb:["Never invent evidence — that's fabrication.","Correct. Gather and judge first, build the C-E-W core, then stress-test it with the counterargument move.","That skips building the argument itself."]}
+];
+
+let idx=0,correct=0,answered=0,total=Q.filter(q=>q.o).length;
+const quiz=document.getElementById('quiz');
+Q.forEach((q,i)=>{
+  if(q.seg){const h=document.createElement('div');h.className='seg';h.textContent=q.seg;quiz.appendChild(h);return;}
+  const card=document.createElement('div');card.className='q';
+  const n=Q.slice(0,i).filter(x=>x.o).length+1;
+  card.innerHTML=`<span class="qtag">${q.t}</span><span class="qnum">Activity ${n}</span><div class="stem">${q.stem}</div>`;
+  const opts=document.createElement('div');
+  q.o.forEach((txt,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.innerHTML=txt;
+    b.onclick=()=>choose(card,opts,fb,q,oi,b);
+    opts.appendChild(b);
+  });
+  const fb=document.createElement('div');fb.className='fb';
+  card.appendChild(opts);card.appendChild(fb);
+  card.dataset.done="0";
+  quiz.appendChild(card);
+});
+
+function choose(card,opts,fb,q,oi,btn){
+  if(card.dataset.locked==="1")return;
+  [...opts.children].forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const right=oi===q.a;
+  if(right){
+    btn.classList.add('correct');card.dataset.locked="1";
+    [...opts.children].forEach(b=>b.disabled=true);
+    fb.className='fb ok';fb.style.display='block';fb.innerHTML='<b>Correct.</b> '+q.fb[oi].replace(/^Correct\. ?/,'');
+    if(card.dataset.scored!=="1"){correct++;card.dataset.scored="1";}
+    if(card.dataset.counted!=="1"){answered++;card.dataset.counted="1";}
+    update();
+  } else {
+    btn.classList.add('wrong');btn.disabled=true;
+    fb.className='fb no';fb.style.display='block';
+    fb.innerHTML=q.fb[oi]+'<br><button class="retry">Try again</button>';
+    fb.querySelector('.retry').onclick=()=>{fb.style.display='none';btn.classList.remove('wrong','sel');};
+    if(card.dataset.counted!=="1"){answered++;card.dataset.counted="1";}
+    update();
+  }
+}
+function update(){
+  document.getElementById('score').textContent=correct+' / '+total;
+  document.getElementById('fill').style.width=(answered/total*100)+'%';
+  if(answered===total){
+    const d=document.getElementById('done');d.style.display='block';
+    document.getElementById('donetxt').textContent=
+      `You scored ${correct} out of ${total} on first or later attempts. Now apply these three frameworks to your own Assessment 1 paragraph: judge your sources with CRAAP, build with Claim–Evidence–Warrant, and defend with Acknowledge–Refute–Reinforce.`;
+  }
+}
+</script>
+</body>
+</html>

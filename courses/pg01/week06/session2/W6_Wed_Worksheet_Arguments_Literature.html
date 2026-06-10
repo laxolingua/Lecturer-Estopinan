@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PG01 W6 Wed e-Worksheet — Building an Argument from the Literature</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css">
+<style>
+  :root{ --navy:#15293F; --orange:#D84315; --teal:#0E7C86; --amber:#F0A500;
+    --green:#1E8E3E; --ink:#333; --gray:#6C7680; --lt:#F4F6F8; }
+  *{box-sizing:border-box;}
+  body{font-family:'Roboto',sans-serif;color:var(--ink);line-height:1.6;max-width:880px;margin:0 auto;padding:40px 32px 80px;background:#fff;font-size:16px;}
+  header{border-bottom:3px solid var(--orange);padding-bottom:18px;margin-bottom:8px;}
+  .eyebrow{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);}
+  h1{font-size:30px;color:var(--navy);margin:6px 0 4px;line-height:1.2;}
+  .meta-row{display:flex;gap:18px;flex-wrap:wrap;align-items:center;color:var(--gray);font-size:14px;margin-top:8px;}
+  .meta-row label{font-weight:500;color:var(--navy);}
+  .meta-row input{font-family:inherit;font-size:14px;border:none;border-bottom:1.5px solid #cfd6dd;padding:3px 6px;min-width:200px;background:#fff;color:var(--ink);}
+  .meta-row input:focus{outline:none;border-bottom-color:var(--orange);}
+  h2{font-size:21px;color:var(--orange);margin:34px 0 6px;display:flex;align-items:center;gap:10px;}
+  h2 i{color:var(--orange);}
+  h3{font-size:16px;color:var(--navy);margin:20px 0 6px;}
+  .box{background:var(--lt);border-radius:6px;padding:18px 20px;margin:16px 0;}
+  .key{background:#FFF8F0;border-radius:6px;padding:16px 20px;margin:16px 0;font-weight:500;}
+  .key strong{color:var(--orange);}
+  table{width:100%;border-collapse:collapse;margin:14px 0;}
+  th,td{border:1px solid #d3d9df;padding:9px 11px;text-align:left;vertical-align:top;font-size:14.5px;}
+  th{background:var(--navy);color:#fff;font-weight:500;}
+  td.lab{background:var(--lt);font-weight:700;color:var(--navy);width:150px;}
+  ol li,ul li{margin:7px 0;}
+  .pill{display:inline-block;background:var(--teal);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;}
+  footer{margin-top:40px;border-top:1px solid #e0e0e0;padding-top:14px;color:var(--gray);font-size:12.5px;}
+
+  /* editable fields */
+  textarea.ans{width:100%;font-family:'Roboto',sans-serif;font-size:15px;color:var(--ink);border:1.5px solid #d7dde2;border-radius:6px;padding:9px 11px;resize:vertical;min-height:60px;background:#fff;line-height:1.55;}
+  textarea.ans:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,134,.10);}
+  td textarea.ans{min-height:46px;border:none;border-radius:0;padding:6px 4px;box-shadow:none;}
+  td textarea.ans:focus{box-shadow:inset 0 0 0 2px rgba(14,124,134,.25);}
+  input.lineinput{width:100%;font-family:'Roboto Mono',monospace;font-size:13.5px;color:#555;border:1px solid #e0e0e0;border-radius:4px;padding:9px 11px;background:#fff;}
+  input.lineinput:focus{outline:none;border-color:var(--teal);}
+  .para textarea.ans{min-height:160px;}
+  .choice{display:flex;align-items:center;gap:10px;margin:8px 0;cursor:pointer;}
+  .choice input{width:18px;height:18px;accent-color:var(--orange);flex:none;cursor:pointer;}
+  .yn{display:inline-flex;gap:14px;margin:0 8px;}
+  .yn label{display:inline-flex;align-items:center;gap:5px;font-weight:500;color:var(--navy);cursor:pointer;}
+
+  /* sticky toolbar */
+  .toolbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e7ebee;
+    display:flex;align-items:center;gap:10px;padding:10px 0;margin:0 0 6px;flex-wrap:wrap;}
+  .btn{font-family:inherit;font-weight:600;font-size:14px;border:none;border-radius:6px;padding:9px 15px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;}
+  .btn i{font-size:15px;}
+  .btn-pdf{background:var(--orange);color:#fff;}
+  .btn-pdf:hover{background:#B8340D;}
+  .btn-doc{background:var(--teal);color:#fff;}
+  .btn-doc:hover{background:#0A6068;}
+  .btn-clear{background:#fff;color:var(--gray);border:1.5px solid #d7dde2;}
+  .btn-clear:hover{border-color:var(--orange);color:var(--orange);}
+  .saved{font-size:12.5px;color:var(--green);margin-left:auto;display:flex;align-items:center;gap:6px;}
+  .saved i{font-size:13px;}
+  .hint{font-size:13px;color:var(--gray);background:#E8EEF4;border-radius:6px;padding:10px 14px;margin:8px 0 0;}
+
+  @media print{
+    .toolbar,.hint{display:none!important;}
+    body{padding:0;font-size:12pt;max-width:100%;}
+    h2{margin-top:22px;}
+    .box,.key,table,.para{break-inside:avoid;}
+    textarea.ans,input.lineinput{border:none!important;box-shadow:none!important;padding:2px 0!important;resize:none;overflow:visible;}
+    td textarea.ans{padding:2px 0!important;}
+    .meta-row input{border-bottom:1px solid #999;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar" id="toolbar">
+  <button class="btn btn-pdf" onclick="saveAsPDF()"><i class="fi fi-br-file-pdf"></i> Save as PDF</button>
+  <button class="btn btn-doc" onclick="saveAsDoc()"><i class="fi fi-br-file-word"></i> Download as Word</button>
+  <button class="btn btn-clear" onclick="clearAll()"><i class="fi fi-br-trash"></i> Clear answers</button>
+  <span class="saved" id="savedNote"><i class="fi fi-br-disk"></i> Answers save automatically in this browser</span>
+</div>
+
+<header>
+  <div class="eyebrow">PG01 · Week 6 · Wednesday · e-Worksheet</div>
+  <h1>Building an Argument from the Literature</h1>
+  <div class="meta-row">
+    <span><label>Name:</label> <input type="text" data-k="name" placeholder="your name"></span>
+    <span><label>Date:</label> <input type="text" data-k="date" placeholder="dd / mm / yyyy" style="min-width:140px;"></span>
+  </div>
+</header>
+
+<p>Type your answers directly into the boxes below. Your work saves automatically in this browser as you go. When you are finished, use <strong>Save as PDF</strong> or <strong>Download as Word</strong> at the top to submit on Moodle. <strong>Act 1:</strong> find and judge sources. <strong>Act 2:</strong> turn them into an argument that survives an objection.</p>
+<div class="hint">Tip: "Save as PDF" opens your browser's print window — choose "Save as PDF" as the destination. Your typed answers are included.</div>
+
+<h2><i class="fi fi-br-search"></i> Act 1 · Task A — Find &amp; judge sources</h2>
+<h3>Step 1 — Choose your claim (select one)</h3>
+<div class="box">
+  <label class="choice"><input type="radio" name="claim" value="Online learning is not effective for students with ADHD" data-k="claim"> Online learning is not effective for students with ADHD</label>
+  <label class="choice"><input type="radio" name="claim" value="Vaping is much less harmful to health than smoking cigarettes" data-k="claim"> Vaping is much less harmful to health than smoking cigarettes</label>
+  <label class="choice"><input type="radio" name="claim" value="A high-protein, low-carb diet is the healthiest way to lose weight" data-k="claim"> A high-protein, low-carb diet is the healthiest way to lose weight</label>
+  <label class="choice"><input type="radio" name="claim" value="Four-day work weeks increase overall productivity" data-k="claim"> Four-day work weeks increase overall productivity</label>
+</div>
+
+<h3>Step 2 — Build a search string</h3>
+<p>Pull out 2–4 keywords. Add synonyms. Combine with Boolean operators (AND, OR, NOT) and truncation (*).</p>
+<p style="margin:6px 0 4px;font-size:14px;color:var(--navy);font-weight:500;">My search string:</p>
+<input class="lineinput" type="text" data-k="search1" placeholder='e.g. ("four-day week" OR "compressed week") AND productivity'>
+<p style="margin:12px 0 4px;font-size:14px;color:var(--navy);font-weight:500;">A second, narrower version:</p>
+<input class="lineinput" type="text" data-k="search2" placeholder="add a filter, a synonym, or NOT to exclude something">
+
+<h3>Step 3 — Record two sources (use citation chaining for the second)</h3>
+<table>
+  <tr><th style="width:130px;">Source</th><th>Full reference (author, year, title, where published)</th><th style="width:150px;">Primary / Secondary / Tertiary?</th></tr>
+  <tr><td class="lab">1</td><td><textarea class="ans" data-k="src1ref"></textarea></td><td><textarea class="ans" data-k="src1type"></textarea></td></tr>
+  <tr><td class="lab">2 (found by chaining)</td><td><textarea class="ans" data-k="src2ref"></textarea></td><td><textarea class="ans" data-k="src2type"></textarea></td></tr>
+</table>
+
+<h3>Step 4 — Run the full CRAAP test on ONE source</h3>
+<table>
+  <tr><th style="width:150px;">CRAAP test</th><th>Your judgement (one line each) — Pass / Concern?</th></tr>
+  <tr><td class="lab">Currency</td><td><textarea class="ans" data-k="craapC"></textarea></td></tr>
+  <tr><td class="lab">Relevance</td><td><textarea class="ans" data-k="craapR"></textarea></td></tr>
+  <tr><td class="lab">Authority</td><td><textarea class="ans" data-k="craapA1"></textarea></td></tr>
+  <tr><td class="lab">Accuracy</td><td><textarea class="ans" data-k="craapA2"></textarea></td></tr>
+  <tr><td class="lab">Purpose</td><td><textarea class="ans" data-k="craapP"></textarea></td></tr>
+</table>
+<div class="key"><strong>Decision:</strong> Is this source good enough to use as evidence in your report?
+  <span class="yn">
+    <label><input type="radio" name="decision" value="Yes" data-k="decision"> Yes</label>
+    <label><input type="radio" name="decision" value="No" data-k="decision"> No</label>
+  </span><br>
+  Because: <textarea class="ans" data-k="decisionWhy" style="margin-top:6px;"></textarea>
+</div>
+
+<h2><i class="fi fi-br-balance-scale-right"></i> Act 2 · Task B — Build &amp; defend your argument</h2>
+<p>Use your claim and sources from Task A. First plan in note form, then write the full paragraph.</p>
+
+<h3>Plan sheet (notes, not full sentences)</h3>
+<table>
+  <tr><td class="lab">Claim</td><td><textarea class="ans" data-k="planClaim"></textarea></td></tr>
+  <tr><td class="lab">Evidence (+ citation)</td><td><textarea class="ans" data-k="planEv"></textarea></td></tr>
+  <tr><td class="lab">Warrant<br><span style="font-weight:400;font-size:12px;color:var(--gray)">the link — write it out!</span></td><td><textarea class="ans" data-k="planWar"></textarea></td></tr>
+  <tr><td class="lab">Objection to acknowledge</td><td><textarea class="ans" data-k="planObj"></textarea></td></tr>
+  <tr><td class="lab">How you refute it</td><td><textarea class="ans" data-k="planRef"></textarea></td></tr>
+  <tr><td class="lab">Reinforced claim</td><td><textarea class="ans" data-k="planRein"></textarea></td></tr>
+</table>
+
+<h3>Write your full paragraph</h3>
+<div class="para"><textarea class="ans" data-k="paragraph" placeholder="Write your full argument paragraph here: claim, evidence with a citation, the warrant written out, then acknowledge–refute–reinforce an objection. Hedge any contested evidence."></textarea></div>
+
+<div class="key"><strong>Self-check before you stop:</strong>
+<ul style="margin:6px 0 0;">
+  <li>Is my claim a single, clear point?</li>
+  <li>Is my evidence sourced and cited?</li>
+  <li>Have I actually <em>written</em> the warrant (not assumed it)?</li>
+  <li>Did I name a real objection, refute it, and reinforce?</li>
+  <li>Did I hedge any contested evidence (may, suggests, tends to…)?</li>
+</ul></div>
+
+<h2><i class="fi fi-br-comment-user"></i> Peer evaluation (swap with a partner)</h2>
+<p>You are the sceptical reader. Point to the exact sentence — don't just write "good".</p>
+<table>
+  <tr><th style="width:230px;">Question</th><th>Your feedback to your partner</th></tr>
+  <tr><td class="lab">Claim clear &amp; single?</td><td><textarea class="ans" data-k="peer1"></textarea></td></tr>
+  <tr><td class="lab">Evidence appropriate &amp; cited?</td><td><textarea class="ans" data-k="peer2"></textarea></td></tr>
+  <tr><td class="lab">Warrant written out?</td><td><textarea class="ans" data-k="peer3"></textarea></td></tr>
+  <tr><td class="lab">Objection acknowledged?</td><td><textarea class="ans" data-k="peer4"></textarea></td></tr>
+  <tr><td class="lab">Refuted then reinforced?</td><td><textarea class="ans" data-k="peer5"></textarea></td></tr>
+  <tr><td class="lab">Are you persuaded?</td><td><textarea class="ans" data-k="peer6"></textarea></td></tr>
+</table>
+
+<h2><i class="fi fi-br-arrow-right"></i> Exit ticket</h2>
+<div class="box"><span class="pill">HAND IN</span> &nbsp; In one sentence: what is a <em>warrant</em>, and why did the "schools should start later" argument fail without one?
+<textarea class="ans" data-k="exit" style="margin-top:10px;"></textarea></div>
+
+<footer>PG01 Advanced English &amp; Academic Skills · SRH International College Berlin · Frameworks: CRAAP · Claim–Evidence–Warrant · Acknowledge–Refute–Reinforce</footer>
+
+<script>
+const STORE_KEY = "pg01_w6_wed_worksheet";
+const fields = Array.from(document.querySelectorAll('[data-k]'));
+
+// ---- autosave / restore ----
+function save(){
+  const data={};
+  fields.forEach(el=>{
+    if(el.type==='radio'){ if(el.checked) data[el.dataset.k]=el.value; }
+    else data[el.dataset.k]=el.value;
+  });
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }catch(e){}
+  flashSaved();
+}
+function restore(){
+  let data={};
+  try{ data=JSON.parse(localStorage.getItem(STORE_KEY)||"{}"); }catch(e){}
+  fields.forEach(el=>{
+    const v=data[el.dataset.k];
+    if(v===undefined) return;
+    if(el.type==='radio'){ if(el.value===v) el.checked=true; }
+    else el.value=v;
+  });
+  autosizeAll();
+}
+let flashTimer;
+function flashSaved(){
+  const n=document.getElementById('savedNote');
+  n.innerHTML='<i class="fi fi-br-check"></i> Saved';
+  clearTimeout(flashTimer);
+  flashTimer=setTimeout(()=>{ n.innerHTML='<i class="fi fi-br-disk"></i> Answers save automatically in this browser'; },1400);
+}
+fields.forEach(el=>{
+  el.addEventListener('input',save);
+  el.addEventListener('change',save);
+  if(el.tagName==='TEXTAREA') el.addEventListener('input',()=>autosize(el));
+});
+
+// ---- textarea autosize (so PDF/Word show everything) ----
+function autosize(el){ el.style.height='auto'; el.style.height=(el.scrollHeight+2)+'px'; }
+function autosizeAll(){ document.querySelectorAll('textarea.ans').forEach(autosize); }
+
+// ---- Save as PDF (browser print) ----
+function saveAsPDF(){ autosizeAll(); window.print(); }
+
+// ---- Clear ----
+function clearAll(){
+  if(!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+  fields.forEach(el=>{ if(el.type==='radio') el.checked=false; else el.value=''; });
+  try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+  autosizeAll();
+}
+
+// ---- Download as Word (.doc, opens in Word) ----
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+function val(k){
+  const el=fields.find(f=>f.dataset.k===k && (f.type!=='radio'));
+  if(el) return el.value||'';
+  const r=fields.find(f=>f.dataset.k===k && f.type==='radio' && f.checked);
+  return r? r.value : '';
+}
+function saveAsDoc(){
+  const name=val('name'), date=val('date');
+  const row=(label,k)=>`<tr><td style="background:#F4F6F8;font-weight:bold;width:30%;border:1px solid #ccc;padding:6px;">${label}</td><td style="border:1px solid #ccc;padding:6px;">${esc(val(k))}</td></tr>`;
+  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'><title>PG01 W6 Wed Worksheet</title></head>
+  <body style="font-family:Calibri,Arial,sans-serif;color:#333;font-size:11pt;">
+  <h1 style="color:#15293F;font-size:18pt;margin-bottom:2px;">Building an Argument from the Literature</h1>
+  <p style="color:#666;margin-top:0;">PG01 Week 6 Wednesday e-Worksheet &nbsp;|&nbsp; Name: <b>${esc(name)}</b> &nbsp; Date: <b>${esc(date)}</b></p>
+
+  <h2 style="color:#D84315;font-size:14pt;">Act 1 &middot; Task A — Find &amp; judge sources</h2>
+  <p><b>Chosen claim:</b> ${esc(val('claim'))}</p>
+  <p><b>Search string:</b> ${esc(val('search1'))}<br><b>Narrower version:</b> ${esc(val('search2'))}</p>
+  <table style="border-collapse:collapse;width:100%;">
+    <tr><td style="background:#15293F;color:#fff;border:1px solid #ccc;padding:6px;">Source</td><td style="background:#15293F;color:#fff;border:1px solid #ccc;padding:6px;">Reference</td><td style="background:#15293F;color:#fff;border:1px solid #ccc;padding:6px;">Type</td></tr>
+    <tr><td style="border:1px solid #ccc;padding:6px;">1</td><td style="border:1px solid #ccc;padding:6px;">${esc(val('src1ref'))}</td><td style="border:1px solid #ccc;padding:6px;">${esc(val('src1type'))}</td></tr>
+    <tr><td style="border:1px solid #ccc;padding:6px;">2 (chaining)</td><td style="border:1px solid #ccc;padding:6px;">${esc(val('src2ref'))}</td><td style="border:1px solid #ccc;padding:6px;">${esc(val('src2type'))}</td></tr>
+  </table>
+  <h3 style="color:#15293F;">CRAAP test</h3>
+  <table style="border-collapse:collapse;width:100%;">
+    ${row('Currency','craapC')}${row('Relevance','craapR')}${row('Authority','craapA1')}${row('Accuracy','craapA2')}${row('Purpose','craapP')}
+  </table>
+  <p><b>Decision — usable as evidence?</b> ${esc(val('decision'))}<br><b>Because:</b> ${esc(val('decisionWhy'))}</p>
+
+  <h2 style="color:#D84315;font-size:14pt;">Act 2 &middot; Task B — Build &amp; defend your argument</h2>
+  <h3 style="color:#15293F;">Plan sheet</h3>
+  <table style="border-collapse:collapse;width:100%;">
+    ${row('Claim','planClaim')}${row('Evidence (+ citation)','planEv')}${row('Warrant','planWar')}${row('Objection to acknowledge','planObj')}${row('How you refute it','planRef')}${row('Reinforced claim','planRein')}
+  </table>
+  <h3 style="color:#15293F;">Full paragraph</h3>
+  <p style="border:1px solid #ccc;padding:10px;">${esc(val('paragraph'))}</p>
+
+  <h2 style="color:#D84315;font-size:14pt;">Peer evaluation</h2>
+  <table style="border-collapse:collapse;width:100%;">
+    ${row('Claim clear &amp; single?','peer1')}${row('Evidence appropriate &amp; cited?','peer2')}${row('Warrant written out?','peer3')}${row('Objection acknowledged?','peer4')}${row('Refuted then reinforced?','peer5')}${row('Are you persuaded?','peer6')}
+  </table>
+
+  <h2 style="color:#D84315;font-size:14pt;">Exit ticket</h2>
+  <p style="border:1px solid #ccc;padding:10px;">${esc(val('exit'))}</p>
+  </body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:'application/msword'});
+  const a=document.createElement('a');
+  const safe=(name||'student').replace(/[^a-z0-9]+/gi,'_');
+  a.href=URL.createObjectURL(blob);
+  a.download=`PG01_W6_Wed_Worksheet_${safe}.doc`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+
+restore();
+</script>
+</body>
+</html>

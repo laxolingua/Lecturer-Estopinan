@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PG01 W6 Thu — 20 Practice Activities: Reading &amp; Listening</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css">
+<style>
+  :root{ --navy:#15293F; --orange:#D84315; --teal:#0E7C86; --amber:#F0A500; --green:#1E8E3E; --red:#C62828;
+    --ink:#333; --gray:#6C7680; --lt:#F4F6F8; }
+  *{box-sizing:border-box;}
+  body{font-family:'Roboto',sans-serif;color:var(--ink);line-height:1.6;max-width:760px;margin:0 auto;padding:0 18px 80px;background:#fff;font-size:16px;}
+  .hero{background:var(--teal);color:#fff;margin:0 -18px 18px;padding:38px 32px 30px;}
+  .hero .eyebrow{color:#fff;opacity:.85;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+  .hero h1{font-size:26px;margin:8px 0 8px;}
+  .hero p{color:#e2f4f5;font-size:15px;margin:0;}
+  .bar{position:sticky;top:0;background:#fff;border-bottom:1px solid #e0e0e0;padding:10px 0;margin-bottom:10px;z-index:5;display:flex;align-items:center;gap:14px;}
+  .track{flex:1;height:9px;background:var(--lt);border-radius:6px;overflow:hidden;}
+  .fillbar{height:100%;width:0;background:var(--teal);transition:width .3s;}
+  .score{font-weight:700;color:var(--navy);font-size:14px;white-space:nowrap;}
+  .q{border:1px solid #e3e7eb;border-radius:8px;padding:18px 20px;margin:16px 0;}
+  .qnum{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--teal);}
+  .qtag{float:right;font-size:11px;font-weight:700;color:#fff;background:var(--orange);padding:2px 9px;border-radius:20px;letter-spacing:.5px;}
+  .stem{font-weight:500;margin:8px 0 12px;font-size:16.5px;}
+  .stem em{color:var(--navy);font-style:italic;}
+  .opt{display:block;width:100%;text-align:left;border:1.5px solid #d7dde2;background:#fff;border-radius:7px;padding:11px 14px;margin:7px 0;font-size:15px;cursor:pointer;font-family:inherit;transition:.15s;}
+  .opt:hover{border-color:var(--teal);background:#f3fafb;}
+  .opt.sel{border-color:var(--navy);}
+  .opt.correct{border-color:var(--green);background:#E6F2EA;}
+  .opt.wrong{border-color:var(--red);background:#FBEAEA;}
+  .fb{display:none;margin-top:12px;padding:13px 15px;border-radius:7px;font-size:14.5px;line-height:1.55;}
+  .fb.ok{background:#E6F2EA;border:1px solid var(--green);}
+  .fb.no{background:#FFF4E5;border:1px solid var(--amber);}
+  .fb b{color:var(--navy);}
+  .retry{margin-top:10px;background:none;border:1.5px solid var(--teal);color:var(--teal);font-weight:700;border-radius:6px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13.5px;}
+  .retry:hover{background:var(--teal);color:#fff;}
+  .done{background:var(--navy);color:#fff;border-radius:8px;padding:24px;margin-top:24px;text-align:center;display:none;}
+  .done h2{margin:0 0 6px;color:var(--amber);}
+  .seg{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin:26px 0 4px;border-top:2px solid var(--lt);padding-top:14px;}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="eyebrow">PG01 · Week 6 · Thursday · Practice</div>
+  <h1>20 Activities — Exam Reading &amp; Listening</h1>
+  <p>Active reading · source credibility · note-taking · listening for structure · contested vs uncontested evidence · paraphrasing · the 5-band rubric. Theme: sustainable farming. Wrong answers can be retried, and every answer explains itself.</p>
+</div>
+<div class="bar"><div class="track"><div class="fillbar" id="fill"></div></div><div class="score" id="score">0 / 20</div></div>
+<div id="quiz"></div>
+<div class="done" id="done"><h2>Set complete</h2><p id="donetxt"></p></div>
+
+<script>
+const Q=[
+ {seg:"Active reading"},
+ {t:"Reading",stem:"What should you do BEFORE reading a comprehension text closely?",o:["Skim the questions so you know what to look for","Memorise the first paragraph","Translate every unfamiliar word first"],a:0,
+  fb:["Correct. Reading the questions first changes how you read — you read with purpose.","Memorising wastes time and isn't the task.","Translating every word breaks your flow; use context first."]},
+ {t:"Reading",stem:"A comprehension answer should usually be written:",o:["Copied word-for-word from the text","In your own words (paraphrased)","As a single word only"],a:1,
+  fb:["Copying shows recognition, not understanding — and risks integrity issues.","Correct. Paraphrasing demonstrates that you actually understood the idea.","Most comprehension answers need a full idea, not one word."]},
+ {t:"Reading",stem:"Underlining the sentence that answers each question, and marking confusing parts, is a strategy called:",o:["Transcribing","Active reading","Skimming only"],a:1,
+  fb:["Transcribing is copying everything — not selective.","Correct. <b>Active reading</b> turns a wall of text into a navigable map.","Skimming is fast surface reading; marking up is more deliberate."]},
+ {seg:"Source credibility"},
+ {t:"CRAAP",stem:"The reading is published by UNEP (a UN body) in 2024. Which two CRAAP dimensions does this most support?",o:["Authority and Currency","Relevance and Purpose","Accuracy and Relevance"],a:0,
+  fb:["Correct. A reputable UN publisher = <b>Authority</b>; a 2024 date = <b>Currency</b>.","Relevance and purpose aren't established just by the publisher and date.","Accuracy needs you to check the evidence; relevance depends on your question."]},
+ {t:"CRAAP",stem:"The article aims to inform the public about sustainable agriculture, not to sell a product. This is a strong score on:",o:["Currency","Purpose","Authority"],a:1,
+  fb:["Currency is about how recent it is.","Correct. A source that informs rather than sells scores well on <b>Purpose</b> (low bias).","Authority is about credentials and publisher."]},
+ {seg:"Note-taking & listening"},
+ {t:"Listening",stem:"On the FIRST listening of a talk you'll hear only a limited number of times, you should:",o:["Write down every word you can","Listen more than you write, capturing the gist","Close your eyes to concentrate"],a:1,
+  fb:["Trying to write everything means you miss the next sentence.","Correct. First pass = gist; leave gaps to fill on the second pass.","The on-screen visuals are useful cues — keep your eyes open."]},
+ {t:"Listening",stem:"Knowing the talk's eight signposts in advance helps you because:",o:["You can slot details under headings instead of scrambling","You can skip listening entirely","You'll memorise the transcript"],a:0,
+  fb:["Correct. Signposts give you a structure to organise what you hear — listening for organisation is a real exam skill.","You still need to listen for the details under each signpost.","Signposts are headings, not the full content."]},
+ {t:"Listening",stem:"Which note-taking habit is most effective under time pressure?",o:["Full grammatical sentences","Abbreviations and symbols","Writing in two languages at once"],a:1,
+  fb:["Full sentences are too slow while listening.","Correct. Abbreviate and use symbols; expand into sentences when you answer.","That adds load rather than reducing it."]},
+ {t:"Listening",stem:"A long-answer listening response should be:",o:["A copy of the speaker's exact phrasing","40–70 words, in complete sentences, paraphrased","A bullet list of single words"],a:1,
+  fb:["Copying the speaker verbatim is an exam weakness.","Correct. Paraphrase the key points in complete sentences within the word range.","Long answers need connected prose, not fragments."]},
+ {seg:"Contested vs uncontested"},
+ {t:"Evidence",stem:"\"Intensive antibiotic use in livestock contributes to antimicrobial resistance.\" This is best treated as:",o:["Well-established (state directly)","Highly contested (hedge heavily)"],a:0,
+  fb:["Correct. The mechanism is well-supported, so you can state it fairly directly.","This is broadly accepted in the literature, so heavy hedging would actually understate it."]},
+ {t:"Evidence",stem:"\"Genetically modified food is harmful to human health.\" In an academic argument you should:",o:["State it as plain fact","Hedge it — the health effects are contested","Ignore the topic entirely"],a:1,
+  fb:["The health effects of GM food are debated, so stating it as fact overreaches.","Correct. This is <b>contested</b> evidence — use cautious language and cite more than one source.","It's a legitimate topic; just handle the evidence carefully."]},
+ {t:"Evidence",stem:"Which sentence hedges contested evidence appropriately?",o:["Reducing meat consumption eliminates all farming emissions.","Reducing meat consumption may lower the environmental footprint of food."],a:1,
+  fb:["'Eliminates all' is an absolute the evidence can't support.","Correct. 'May lower' matches the language to the strength of the evidence."]},
+ {seg:"Paraphrasing"},
+ {t:"Paraphrase",stem:"Original: \"Sustainable agriculture conserves water and protects soil health.\" Best paraphrase:",o:["Sustainable agriculture conserves water and protects soil health.","Farming sustainably helps save water and keeps soil healthy.","Water and soil."],a:1,
+  fb:["That's identical wording — not a paraphrase.","Correct. Same meaning, genuinely different wording.","Too reduced — it loses the meaning."]},
+ {t:"Paraphrase",stem:"Why does paraphrasing matter in an exam comprehension answer?",o:["It shows understanding, not just copying","It always makes answers longer","It lets you avoid reading the text"],a:0,
+  fb:["Correct. Paraphrasing demonstrates you understood the idea, which is what comprehension marks reward.","Good paraphrases are often more concise, not longer.","You still must read and understand the text first."]},
+ {seg:"The 5-band rubric"},
+ {t:"Rubric",stem:"A long answer that captures every key point, briefly and with no language errors, earns:",o:["Band 5","Band 3","Band 1"],a:0,
+  fb:["Correct. All key points + succinct + error-free = <b>Band 5</b>.","Band 3 is 'most key points with some accuracy'.","Band 1 is an attempt with no key points."]},
+ {t:"Rubric",stem:"An answer with at least two key points but several errors and gaps is around:",o:["Band 5","Band 2","Band 4"],a:1,
+  fb:["Band 5 needs all key points, error-free.","Correct. 'At least two key points with some accuracy' is <b>Band 2</b>.","Band 4 has all key points with only minor issues."]},
+ {t:"Rubric",stem:"What raises your band the most?",o:["Adding more words / padding","Completeness and accuracy of key points","Using longer vocabulary"],a:1,
+  fb:["Padding doesn't raise your band.","Correct. The bands reward <b>completeness and accuracy</b>, not length.","Fancy words don't help if the key points are missing."]},
+ {seg:"Connecting to your writing"},
+ {t:"Synthesis",stem:"As you listen to the talk's argument about better farming, the Wednesday question to ask is:",o:["How long is the talk?","Is the warrant stated, or am I being asked to take a leap?","What's the speaker wearing?"],a:1,
+  fb:["Length isn't the analytical question.","Correct. Checking whether the <b>warrant</b> is stated is the same critical move you used to build your own argument.","Not relevant to evaluating the argument."]},
+ {t:"Synthesis",stem:"A sustainable-farming idea you found well-supported today could later be used in your report as:",o:["Uncontested evidence, stated directly","Something you must always hedge heavily","Evidence you can invent details for"],a:0,
+  fb:["Correct. Well-established ideas can be stated directly as uncontested evidence.","Only contested points need heavy hedging.","Never invent details — that's fabrication."]},
+ {t:"Synthesis",stem:"What links Wednesday (writing) and Thursday (reading/listening) in this week?",o:["Nothing — they're separate skills","The same critical muscle: building and analysing arguments","Only the timetable"],a:1,
+  fb:["They're deeply connected.","Correct. Producing an argument and analysing someone else's draw on the <b>same critical thinking</b> — and both feed Assessment 1 and Assessment 3.","The connection is the skill, not just scheduling."]}
+];
+
+let correct=0,answered=0;
+const total=Q.filter(q=>q.o).length;
+const quiz=document.getElementById('quiz');
+Q.forEach((q,i)=>{
+  if(q.seg){const h=document.createElement('div');h.className='seg';h.textContent=q.seg;quiz.appendChild(h);return;}
+  const card=document.createElement('div');card.className='q';
+  const n=Q.slice(0,i).filter(x=>x.o).length+1;
+  card.innerHTML=`<span class="qtag">${q.t}</span><span class="qnum">Activity ${n}</span><div class="stem">${q.stem}</div>`;
+  const opts=document.createElement('div');
+  q.o.forEach((txt,oi)=>{
+    const b=document.createElement('button');b.className='opt';b.innerHTML=txt;
+    b.onclick=()=>choose(card,opts,fb,q,oi,b);
+    opts.appendChild(b);
+  });
+  const fb=document.createElement('div');fb.className='fb';
+  card.appendChild(opts);card.appendChild(fb);
+  quiz.appendChild(card);
+});
+function choose(card,opts,fb,q,oi,btn){
+  if(card.dataset.locked==="1")return;
+  [...opts.children].forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  if(oi===q.a){
+    btn.classList.add('correct');card.dataset.locked="1";
+    [...opts.children].forEach(b=>b.disabled=true);
+    fb.className='fb ok';fb.style.display='block';fb.innerHTML='<b>Correct.</b> '+q.fb[oi].replace(/^Correct\. ?/,'');
+    if(card.dataset.scored!=="1"){correct++;card.dataset.scored="1";}
+    if(card.dataset.counted!=="1"){answered++;card.dataset.counted="1";}
+    update();
+  } else {
+    btn.classList.add('wrong');btn.disabled=true;
+    fb.className='fb no';fb.style.display='block';
+    fb.innerHTML=q.fb[oi]+'<br><button class="retry">Try again</button>';
+    fb.querySelector('.retry').onclick=()=>{fb.style.display='none';btn.classList.remove('wrong','sel');};
+    if(card.dataset.counted!=="1"){answered++;card.dataset.counted="1";}
+    update();
+  }
+}
+function update(){
+  document.getElementById('score').textContent=correct+' / '+total;
+  document.getElementById('fill').style.width=(answered/total*100)+'%';
+  if(answered===total){
+    const d=document.getElementById('done');d.style.display='block';
+    document.getElementById('donetxt').textContent=
+      `You scored ${correct} out of ${total}. These are the exact skills Assessment 3 tests — read with the questions in mind, listen for structure, paraphrase the key points, and match your language to the strength of the evidence.`;
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PG01 W6 Thu e-Worksheet — Exam Practice: Reading &amp; Listening</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css">
+<style>
+  :root{ --navy:#15293F; --orange:#D84315; --teal:#0E7C86; --amber:#F0A500; --green:#1E8E3E; --ink:#333; --gray:#6C7680; --lt:#F4F6F8; }
+  *{box-sizing:border-box;}
+  body{font-family:'Roboto',sans-serif;color:var(--ink);line-height:1.6;max-width:880px;margin:0 auto;padding:40px 32px 80px;background:#fff;font-size:16px;}
+  header{border-bottom:3px solid var(--orange);padding-bottom:18px;margin-bottom:8px;}
+  .eyebrow{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);}
+  h1{font-size:30px;color:var(--navy);margin:6px 0 4px;line-height:1.2;}
+  .meta-row{display:flex;gap:18px;flex-wrap:wrap;align-items:center;color:var(--gray);font-size:14px;margin-top:8px;}
+  .meta-row label{font-weight:500;color:var(--navy);}
+  .meta-row input{font-family:inherit;font-size:14px;border:none;border-bottom:1.5px solid #cfd6dd;padding:3px 6px;min-width:200px;background:#fff;color:var(--ink);}
+  .meta-row input:focus{outline:none;border-bottom-color:var(--orange);}
+  h2{font-size:21px;color:var(--orange);margin:34px 0 6px;display:flex;align-items:center;gap:10px;}
+  h2 i{color:var(--orange);}
+  h3{font-size:16px;color:var(--navy);margin:20px 0 6px;}
+  .box{background:var(--lt);border-radius:6px;padding:16px 20px;margin:14px 0;}
+  ol{padding-left:22px;} ol li{margin:16px 0;}
+  table{width:100%;border-collapse:collapse;margin:14px 0;}
+  th,td{border:1px solid #d3d9df;padding:9px 11px;text-align:left;vertical-align:top;font-size:14.5px;}
+  th{background:var(--navy);color:#fff;font-weight:500;}
+  td.lab{background:var(--lt);font-weight:700;color:var(--navy);width:230px;}
+  .pill{display:inline-block;background:var(--teal);color:#fff;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;}
+  footer{margin-top:40px;border-top:1px solid #e0e0e0;padding-top:14px;color:var(--gray);font-size:12.5px;}
+
+  textarea.ans{width:100%;font-family:'Roboto',sans-serif;font-size:15px;color:var(--ink);border:1.5px solid #d7dde2;border-radius:6px;padding:9px 11px;resize:vertical;min-height:54px;background:#fff;line-height:1.55;}
+  textarea.ans:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(14,124,134,.10);}
+  td textarea.ans{min-height:46px;border:none;border-radius:0;padding:6px 4px;box-shadow:none;}
+  td textarea.ans:focus{box-shadow:inset 0 0 0 2px rgba(14,124,134,.25);}
+  .long textarea.ans{min-height:120px;}
+  .band-input{width:60px;font-family:inherit;font-size:15px;text-align:center;border:1.5px solid #d7dde2;border-radius:6px;padding:6px;}
+  .band-input:focus{outline:none;border-color:var(--teal);}
+
+  .toolbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid #e7ebee;display:flex;align-items:center;gap:10px;padding:10px 0;margin:0 0 6px;flex-wrap:wrap;}
+  .btn{font-family:inherit;font-weight:600;font-size:14px;border:none;border-radius:6px;padding:9px 15px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;}
+  .btn i{font-size:15px;}
+  .btn-pdf{background:var(--orange);color:#fff;} .btn-pdf:hover{background:#B8340D;}
+  .btn-doc{background:var(--teal);color:#fff;} .btn-doc:hover{background:#0A6068;}
+  .btn-clear{background:#fff;color:var(--gray);border:1.5px solid #d7dde2;} .btn-clear:hover{border-color:var(--orange);color:var(--orange);}
+  .saved{font-size:12.5px;color:var(--green);margin-left:auto;display:flex;align-items:center;gap:6px;} .saved i{font-size:13px;}
+  .hint{font-size:13px;color:var(--gray);background:#E8EEF4;border-radius:6px;padding:10px 14px;margin:8px 0 0;}
+
+  @media print{
+    .toolbar,.hint{display:none!important;}
+    body{padding:0;font-size:12pt;max-width:100%;}
+    h2{margin-top:22px;}
+    .box,table,.long,ol li{break-inside:avoid;}
+    textarea.ans{border:none!important;box-shadow:none!important;padding:2px 0!important;resize:none;overflow:visible;}
+    td textarea.ans{padding:2px 0!important;}
+    .meta-row input,.band-input{border:none;border-bottom:1px solid #999;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar" id="toolbar">
+  <button class="btn btn-pdf" onclick="saveAsPDF()"><i class="fi fi-br-file-pdf"></i> Save as PDF</button>
+  <button class="btn btn-doc" onclick="saveAsDoc()"><i class="fi fi-br-file-word"></i> Download as Word</button>
+  <button class="btn btn-clear" onclick="clearAll()"><i class="fi fi-br-trash"></i> Clear answers</button>
+  <span class="saved" id="savedNote"><i class="fi fi-br-disk"></i> Answers save automatically in this browser</span>
+</div>
+
+<header>
+  <div class="eyebrow">PG01 · Week 6 · Thursday · e-Worksheet</div>
+  <h1>Exam Practice: Reading &amp; Listening</h1>
+  <div class="meta-row">
+    <span><label>Name:</label> <input type="text" data-k="name" placeholder="your name"></span>
+    <span><label>Date:</label> <input type="text" data-k="date" placeholder="dd / mm / yyyy" style="min-width:140px;"></span>
+    <span style="color:var(--gray);">Theme: sustainable farming</span>
+  </div>
+</header>
+
+<p>Type your answers directly into the boxes. Your work saves automatically in this browser. When finished, use <strong>Save as PDF</strong> or <strong>Download as Word</strong> at the top to submit on Moodle. This rehearses the two receptive skills tested in <strong>Assessment 3</strong>.</p>
+<div class="hint">Tip: "Save as PDF" opens your browser's print window — choose "Save as PDF" as the destination. Your typed answers are included.</div>
+
+<h2><i class="fi fi-br-book-alt"></i> Part 1 — Reading</h2>
+<p><em>Text: "A beginner's guide to sustainable farming" (UNEP, 2024). Read individually first.</em></p>
+<h3>As you read, watch for four threads</h3>
+<div class="box">Environment &nbsp;·&nbsp; Cost &nbsp;·&nbsp; Health &nbsp;·&nbsp; Diet &amp; access</div>
+<h3>Comprehension questions (answer in your own words)</h3>
+<ol>
+  <li>Do you think this is a credible source? Why? (Apply the CRAAP test from Wednesday.)<textarea class="ans" data-k="r1"></textarea></li>
+  <li>What is the purpose of this article?<textarea class="ans" data-k="r2"></textarea></li>
+  <li>What are the Sustainable Development Goals and the Zero Hunger initiative?<textarea class="ans" data-k="r3"></textarea></li>
+  <li>How does sustainable agriculture make a difference to the environment?<textarea class="ans" data-k="r4"></textarea></li>
+  <li>What makes sustainably produced food more expensive?<textarea class="ans" data-k="r5"></textarea></li>
+  <li>What is the impact on health of chemicals, medicine and genetic modification?<textarea class="ans" data-k="r6"></textarea></li>
+  <li>What does the article say about veganism?<textarea class="ans" data-k="r7"></textarea></li>
+  <li>What are the economic benefits of sustainable agriculture in developing countries?<textarea class="ans" data-k="r8"></textarea></li>
+  <li>What can make sustainably produced food affordable to everyone?<textarea class="ans" data-k="r9"></textarea></li>
+  <li>What are the two main reasons for the lack of sustainable farming worldwide?<textarea class="ans" data-k="r10"></textarea></li>
+</ol>
+<div class="box"><strong>Pair discussion:</strong> compare your answers. Where you disagree, point to the sentence in the text that supports your reading.</div>
+
+<h2><i class="fi fi-br-headphones"></i> Part 2 — Listening</h2>
+<p><em>Talk: "Can we create the 'perfect' farm?" — Brent Loken (TED). Watch once for gist, then again for detail.</em></p>
+<h3>Note-taking guide — fill in notes for each signpost</h3>
+<table>
+  <tr><td class="lab">1. Beginning of farming</td><td><textarea class="ans" data-k="n1"></textarea></td></tr>
+  <tr><td class="lab">2. First agricultural revolution</td><td><textarea class="ans" data-k="n2"></textarea></td></tr>
+  <tr><td class="lab">3. Technology in crop growing</td><td><textarea class="ans" data-k="n3"></textarea></td></tr>
+  <tr><td class="lab">4. Costa Rica &amp; the US</td><td><textarea class="ans" data-k="n4"></textarea></td></tr>
+  <tr><td class="lab">5. Rice production</td><td><textarea class="ans" data-k="n5"></textarea></td></tr>
+  <tr><td class="lab">6. Zambia</td><td><textarea class="ans" data-k="n6"></textarea></td></tr>
+  <tr><td class="lab">7. Infrastructure &amp; storage in India</td><td><textarea class="ans" data-k="n7"></textarea></td></tr>
+  <tr><td class="lab">8. The future of farming</td><td><textarea class="ans" data-k="n8"></textarea></td></tr>
+</table>
+
+<h3>Short-answer questions</h3>
+<p class="box">Your teacher will give you the 10 short-answer questions (multiple choice, matching, true/false, fill-in). Note your answers here.</p>
+<textarea class="ans" data-k="shortAnswers" style="min-height:120px;" placeholder="1. &#10;2. &#10;3. ..."></textarea>
+
+<h3>Long-answer questions (40–70 words each, complete sentences, paraphrase)</h3>
+<p><strong>A. Why does the speaker say we need to rethink farming?</strong></p>
+<div class="long"><textarea class="ans" data-k="longA"></textarea></div>
+<p><strong>B. Give two examples the speaker uses of farming done better, and why.</strong></p>
+<div class="long"><textarea class="ans" data-k="longB"></textarea></div>
+
+<h3>Self-mark your long answers (5-band scale)</h3>
+<div class="box">
+<strong>5</strong> All key points, accurate, succinct, error-free &nbsp;·&nbsp; <strong>4</strong> All key points; minor gaps/errors &nbsp;·&nbsp; <strong>3</strong> Most key points, some accuracy &nbsp;·&nbsp; <strong>2</strong> At least two key points &nbsp;·&nbsp; <strong>1</strong> Attempted; no key points; hard to follow<br><br>
+My band for A: <input class="band-input" type="text" data-k="bandA" maxlength="1"> &nbsp;&nbsp; My band for B: <input class="band-input" type="text" data-k="bandB" maxlength="1">
+</div>
+
+<h2><i class="fi fi-br-arrow-right"></i> Exit ticket</h2>
+<div class="box"><span class="pill">HAND IN</span> &nbsp; Which sustainable-farming idea from today could you imagine using as evidence in an academic argument — and is it <em>contested</em> or <em>uncontested</em>?
+<textarea class="ans" data-k="exit" style="margin-top:10px;"></textarea></div>
+
+<footer>PG01 Advanced English &amp; Academic Skills · SRH International College Berlin · Week 6, Thursday. Prepares for Assessment 3 (Listening &amp; Reading exam).</footer>
+
+<script>
+const STORE_KEY = "pg01_w6_thu_worksheet";
+const fields = Array.from(document.querySelectorAll('[data-k]'));
+function save(){
+  const data={};
+  fields.forEach(el=>{ if(el.type==='radio'){ if(el.checked) data[el.dataset.k]=el.value; } else data[el.dataset.k]=el.value; });
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }catch(e){}
+  flashSaved();
+}
+function restore(){
+  let data={}; try{ data=JSON.parse(localStorage.getItem(STORE_KEY)||"{}"); }catch(e){}
+  fields.forEach(el=>{ const v=data[el.dataset.k]; if(v===undefined) return;
+    if(el.type==='radio'){ if(el.value===v) el.checked=true; } else el.value=v; });
+  autosizeAll();
+}
+let flashTimer;
+function flashSaved(){ const n=document.getElementById('savedNote');
+  n.innerHTML='<i class="fi fi-br-check"></i> Saved'; clearTimeout(flashTimer);
+  flashTimer=setTimeout(()=>{ n.innerHTML='<i class="fi fi-br-disk"></i> Answers save automatically in this browser'; },1400); }
+fields.forEach(el=>{ el.addEventListener('input',save); el.addEventListener('change',save);
+  if(el.tagName==='TEXTAREA') el.addEventListener('input',()=>autosize(el)); });
+function autosize(el){ el.style.height='auto'; el.style.height=(el.scrollHeight+2)+'px'; }
+function autosizeAll(){ document.querySelectorAll('textarea.ans').forEach(autosize); }
+function saveAsPDF(){ autosizeAll(); window.print(); }
+function clearAll(){ if(!confirm('Clear all your answers on this worksheet? This cannot be undone.')) return;
+  fields.forEach(el=>{ if(el.type==='radio') el.checked=false; else el.value=''; });
+  try{ localStorage.removeItem(STORE_KEY); }catch(e){} autosizeAll(); }
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+function val(k){ const el=fields.find(f=>f.dataset.k===k); return el? el.value||'' : ''; }
+function saveAsDoc(){
+  const name=val('name'), date=val('date');
+  const qrow=(num,q,k)=>`<tr><td style="background:#F4F6F8;border:1px solid #ccc;padding:6px;width:55%;"><b>${num}.</b> ${q}</td><td style="border:1px solid #ccc;padding:6px;">${esc(val(k))}</td></tr>`;
+  const nrow=(label,k)=>`<tr><td style="background:#F4F6F8;font-weight:bold;border:1px solid #ccc;padding:6px;width:32%;">${label}</td><td style="border:1px solid #ccc;padding:6px;">${esc(val(k))}</td></tr>`;
+  const RQ=[
+    "Do you think this is a credible source? Why?","What is the purpose of this article?",
+    "What are the SDGs and the Zero Hunger initiative?","How does sustainable agriculture help the environment?",
+    "What makes sustainably produced food more expensive?","Health impact of chemicals, medicine and GM?",
+    "What does the article say about veganism?","Economic benefits in developing countries?",
+    "What can make sustainable food affordable to everyone?","Two main reasons for the lack of sustainable farming?"];
+  let rrows=''; RQ.forEach((q,i)=>rrows+=qrow(i+1,q,'r'+(i+1)));
+  const NL=["Beginning of farming","First agricultural revolution","Technology in crop growing","Costa Rica & the US","Rice production","Zambia","Infrastructure & storage in India","The future of farming"];
+  let nrows=''; NL.forEach((l,i)=>nrows+=nrow((i+1)+'. '+l,'n'+(i+1)));
+  const html=`<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+  <head><meta charset='utf-8'><title>PG01 W6 Thu Worksheet</title></head>
+  <body style="font-family:Calibri,Arial,sans-serif;color:#333;font-size:11pt;">
+  <h1 style="color:#15293F;font-size:18pt;margin-bottom:2px;">Exam Practice: Reading &amp; Listening</h1>
+  <p style="color:#666;margin-top:0;">PG01 Week 6 Thursday e-Worksheet &nbsp;|&nbsp; Name: <b>${esc(name)}</b> &nbsp; Date: <b>${esc(date)}</b></p>
+  <h2 style="color:#D84315;font-size:14pt;">Part 1 — Reading (UNEP, 2024)</h2>
+  <table style="border-collapse:collapse;width:100%;">${rrows}</table>
+  <h2 style="color:#D84315;font-size:14pt;">Part 2 — Listening notes</h2>
+  <table style="border-collapse:collapse;width:100%;">${nrows}</table>
+  <h3 style="color:#15293F;">Short answers</h3>
+  <p style="border:1px solid #ccc;padding:10px;">${esc(val('shortAnswers'))}</p>
+  <h3 style="color:#15293F;">Long answer A — why rethink farming?</h3>
+  <p style="border:1px solid #ccc;padding:10px;">${esc(val('longA'))}</p>
+  <p><b>Self-mark band A:</b> ${esc(val('bandA'))}</p>
+  <h3 style="color:#15293F;">Long answer B — two examples of farming done better</h3>
+  <p style="border:1px solid #ccc;padding:10px;">${esc(val('longB'))}</p>
+  <p><b>Self-mark band B:</b> ${esc(val('bandB'))}</p>
+  <h2 style="color:#D84315;font-size:14pt;">Exit ticket</h2>
+  <p style="border:1px solid #ccc;padding:10px;">${esc(val('exit'))}</p>
+  </body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:'application/msword'});
+  const a=document.createElement('a'); const safe=(name||'student').replace(/[^a-z0-9]+/gi,'_');
+  a.href=URL.createObjectURL(blob); a.download=`PG01_W6_Thu_Worksheet_${safe}.doc`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+}
+restore();
+</script>
+</body>
+</html>
