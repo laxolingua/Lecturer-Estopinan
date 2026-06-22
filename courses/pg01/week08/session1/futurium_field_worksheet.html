@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PG01 Futurium Field Worksheet — Week 8</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css">
+<style>
+:root{
+  --orange:#D84315; --orange-d:#B8340D; --orange-tint:#FBEBE4;
+  --navy:#15293F; --navy-tint:#E8EEF4;
+  --teal:#0E7C86; --teal-tint:#E3F1F2;
+  --amber:#F0A500; --amber-tint:#FCF3DD;
+  --green:#1E8E3E; --green-tint:#E6F2EA;
+  --red:#C62828; --blue:#1565C0;
+  --ink:#333; --grey:#6C7680; --lgrey:#F8F9FA; --line:#e0e0e0;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Roboto',sans-serif; color:var(--ink); background:#eef1f4;
+  line-height:1.6; font-size:16px; margin:0; padding:0 0 80px;
+}
+
+/* ---------- Toolbar ---------- */
+#toolbar{
+  position:sticky; top:0; z-index:100; background:var(--navy);
+  display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  padding:10px 18px; box-shadow:0 2px 10px rgba(0,0,0,.18);
+}
+#toolbar .brandmark{color:#fff; font-weight:700; letter-spacing:.5px; margin-right:auto; font-size:.95em;}
+#toolbar .brandmark span{color:var(--amber);}
+.tbtn{
+  font-family:'Roboto',sans-serif; font-weight:600; font-size:.82em;
+  border:none; border-radius:5px; padding:9px 14px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:7px; color:#fff;
+}
+.tbtn i{font-size:1em; line-height:0;}
+.tbtn.pdf{background:var(--orange);} .tbtn.pdf:hover{background:var(--orange-d);}
+.tbtn.word{background:var(--teal);} .tbtn.word:hover{background:#0a606a;}
+.tbtn.clear{background:var(--grey);} .tbtn.clear:hover{background:#505a63;}
+#saveflag{color:#cfe6d6; font-size:.78em; margin-left:4px; min-width:96px;}
+
+/* ---------- Name bar ---------- */
+#namebar{
+  background:#fff; border-bottom:1px solid var(--line);
+  padding:14px 18px; display:flex; flex-wrap:wrap; gap:18px; align-items:center;
+}
+#namebar label{font-weight:600; font-size:.82em; color:var(--grey); text-transform:uppercase; letter-spacing:1px;}
+#namebar input{
+  font-family:'Roboto',sans-serif; font-size:.95em; padding:7px 10px;
+  border:1px solid var(--line); border-left:4px solid var(--orange); border-radius:4px; min-width:200px;
+}
+
+/* ---------- Layout ---------- */
+.wrap{max-width:900px; margin:0 auto; padding:0 20px;}
+
+/* ---------- Cover ---------- */
+.cover{
+  background:var(--navy); color:#fff; border-radius:10px; margin:24px auto 0;
+  max-width:900px; padding:34px 38px; position:relative; overflow:hidden;
+}
+.cover .kick{font-size:.72em; letter-spacing:3px; text-transform:uppercase; color:var(--amber); font-weight:700;}
+.cover h1{font-size:2em; margin:10px 0 6px; line-height:1.15;}
+.cover .sub{color:#c7d4e2; font-size:.98em; max-width:600px;}
+.cover .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px;}
+.cover .chip{
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
+  border-radius:20px; padding:6px 13px; font-size:.78em; display:inline-flex; align-items:center; gap:7px;
+}
+.cover .chip i{color:var(--amber); line-height:0;}
+.cover .circ{position:absolute; border-radius:50%; background:rgba(255,255,255,.04);}
+.cover .c1{width:240px; height:240px; right:-70px; top:-90px;}
+.cover .c2{width:150px; height:150px; right:60px; bottom:-80px; background:rgba(216,67,21,.16);}
+
+/* ---------- Why bar ---------- */
+.whybar{
+  max-width:900px; margin:16px auto 0; background:var(--orange-tint);
+  border-left:5px solid var(--orange); border-radius:6px; padding:16px 20px; font-size:.93em;
+}
+.whybar strong{color:var(--orange-d);}
+
+/* ---------- Section ---------- */
+section{
+  background:#fff; border-radius:10px; margin:22px auto 0; max-width:900px;
+  padding:26px 30px; box-shadow:0 1px 4px rgba(0,0,0,.05);
+}
+.shead{display:flex; align-items:center; gap:14px; margin-bottom:4px;}
+.snum{
+  flex:none; width:42px; height:42px; border-radius:50%; background:var(--orange);
+  color:#fff; font-weight:700; font-size:1.15em; display:flex; align-items:center; justify-content:center;
+}
+.shead.teal .snum{background:var(--teal);}
+.shead.navy .snum{background:var(--navy);}
+.shead.green .snum{background:var(--green);}
+.skick{font-size:.7em; letter-spacing:2.5px; text-transform:uppercase; color:var(--grey); font-weight:700;}
+.shead h2{font-size:1.3em; margin:2px 0 0; color:var(--navy);}
+.slead{color:var(--grey); font-size:.92em; margin:10px 0 18px;}
+
+/* ---------- Field cards ---------- */
+.zone{
+  border:1px solid var(--line); border-left:4px solid var(--teal); border-radius:6px;
+  padding:16px 18px; margin:14px 0; background:var(--lgrey);
+}
+.zone .ztag{
+  display:inline-flex; align-items:center; gap:7px; font-size:.72em; font-weight:700;
+  text-transform:uppercase; letter-spacing:1px; color:var(--teal); margin-bottom:8px;
+}
+.zone .ztag i{line-height:0;}
+.zone h3{margin:2px 0 4px; font-size:1.05em; color:var(--ink);}
+.zone .find{font-size:.84em; color:var(--grey); margin-bottom:12px;}
+.zone .find b{color:var(--ink);}
+
+.q{margin:14px 0;}
+.q .lbl{font-weight:500; font-size:.92em; margin-bottom:6px; display:block;}
+.q .lbl .n{color:var(--orange); font-weight:700; margin-right:6px;}
+.hint{font-size:.8em; color:var(--grey); font-style:italic; margin:3px 0 7px;}
+
+textarea, input.txt{
+  width:100%; font-family:'Roboto',sans-serif; font-size:.93em; color:var(--ink);
+  border:1px solid var(--line); border-radius:5px; padding:10px 12px; resize:vertical; background:#fff;
+}
+textarea:focus, input.txt:focus{outline:none; border-color:var(--orange); box-shadow:0 0 0 3px rgba(216,67,21,.12);}
+textarea{min-height:70px;}
+textarea.lg{min-height:120px;}
+
+/* ---------- Data table ---------- */
+.datatable{width:100%; border-collapse:collapse; margin:10px 0; font-size:.88em;}
+.datatable th{background:var(--navy); color:#fff; text-align:left; padding:9px 10px; font-size:.82em;}
+.datatable td{border:1px solid var(--line); padding:4px;}
+.datatable input{width:100%; border:none; padding:7px 8px; font-family:'Roboto',sans-serif; font-size:.95em; background:transparent;}
+.datatable input:focus{outline:none; background:var(--amber-tint);}
+.datatable tr:nth-child(even) td{background:var(--lgrey);}
+
+/* ---------- Callouts ---------- */
+.callout{border-radius:6px; padding:13px 16px; margin:14px 0; font-size:.88em; display:flex; gap:11px; align-items:flex-start;}
+.callout i{line-height:0; font-size:1.1em; margin-top:2px; flex:none;}
+.callout.info{background:var(--navy-tint); border-left:4px solid var(--blue);}
+.callout.info i{color:var(--blue);}
+.callout.warn{background:var(--amber-tint); border-left:4px solid var(--amber);}
+.callout.warn i{color:#b9810a;}
+.callout.tip{background:var(--green-tint); border-left:4px solid var(--green);}
+.callout.tip i{color:var(--green);}
+
+/* ---------- Rubric map ---------- */
+.rmap{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:6px;}
+.rmap .rc{border:1px solid var(--line); border-top:4px solid var(--orange); border-radius:6px; padding:13px 15px;}
+.rmap .rc h4{margin:0 0 5px; font-size:.92em; color:var(--navy);}
+.rmap .rc p{margin:0; font-size:.82em; color:var(--grey);}
+
+/* ---------- Checklist ---------- */
+.check{list-style:none; padding:0; margin:8px 0;}
+.check li{display:flex; align-items:flex-start; gap:10px; padding:7px 0; border-bottom:1px dashed var(--line); font-size:.9em;}
+.check li:last-child{border-bottom:none;}
+.check input[type=checkbox]{width:19px; height:19px; accent-color:var(--orange); margin-top:1px; flex:none;}
+
+/* ---------- Answer key (teacher) ---------- */
+details.akey{margin:18px 0 0; border:1px solid var(--green); border-radius:8px; overflow:hidden; background:var(--green-tint);}
+details.akey>summary{
+  cursor:pointer; padding:13px 18px; font-weight:700; color:var(--green); font-size:.9em;
+  display:flex; align-items:center; gap:9px; list-style:none;
+}
+details.akey>summary::-webkit-details-marker{display:none;}
+details.akey>summary i{line-height:0;}
+details.akey .akbody{padding:4px 20px 18px; font-size:.88em; background:#fff;}
+details.akey .akbody p{margin:10px 0;}
+.note{background:var(--navy); color:#dbe6f2; border-radius:6px; padding:12px 15px; font-size:.84em; margin:14px 0;}
+.note .nt{color:var(--amber); font-weight:700; text-transform:uppercase; letter-spacing:1px; font-size:.85em; display:block; margin-bottom:5px;}
+
+footer.foot{max-width:900px; margin:26px auto 0; text-align:center; color:var(--grey); font-size:.8em; padding:0 20px;}
+
+@media(max-width:680px){
+  .rmap{grid-template-columns:1fr;}
+  .cover{padding:26px 22px;} .cover h1{font-size:1.55em;}
+  section{padding:20px 18px;}
+}
+
+/* ---------- Print ---------- */
+@media print{
+  body{background:#fff; padding:0; font-size:11.5pt;}
+  #toolbar{display:none !important;}
+  #namebar{border-bottom:2px solid var(--orange);}
+  .cover, section, .whybar{box-shadow:none; break-inside:avoid; page-break-inside:avoid; margin-top:14px;}
+  .cover{background:#fff !important; color:var(--navy); border:2px solid var(--navy);}
+  .cover .kick{color:var(--orange);} .cover .sub,.cover .chip{color:var(--ink);}
+  .cover .circ{display:none;}
+  .cover .chip{background:#fff; border:1px solid var(--line);}
+  textarea, input.txt{border:1px solid #999;}
+  details.akey{break-inside:avoid;}
+  details.akey[open]{} /* keep keys if teacher prints with them open */
+  .tbtn{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <div class="brandmark">PG01 · <span>Futurium Field Worksheet</span></div>
+  <span id="saveflag"></span>
+  <button class="tbtn pdf" onclick="window.print()"><i class="fi fi-br-print"></i>Save as PDF</button>
+  <button class="tbtn word" onclick="downloadWord()"><i class="fi fi-br-file-word"></i>Download as Word</button>
+  <button class="tbtn clear" onclick="clearAll()"><i class="fi fi-br-trash"></i>Clear answers</button>
+</div>
+
+<div id="namebar">
+  <label for="stuName">Name</label>
+  <input class="txt" id="stuName" data-k="stuName" placeholder="Your full name">
+  <label for="stuDate">Date</label>
+  <input class="txt" id="stuDate" data-k="stuDate" placeholder="Visit date" style="min-width:140px;">
+  <label for="stuCase">Assessment 1 case study</label>
+  <input class="txt" id="stuCase" data-k="stuCase" placeholder="e.g. food systems / mobility / energy" style="min-width:240px;">
+</div>
+
+<div class="cover">
+  <div class="circ c1"></div><div class="circ c2"></div>
+  <div class="kick">Week 8 · Field Visit · Primary Source</div>
+  <h1>Futurium Berlin Field Worksheet</h1>
+  <p class="sub">Turn what you see today into evidence you can cite and a dataset you can chart in your Written Report. You submit Assessment 1 this week — leave the building with material, not just memories.</p>
+  <div class="meta">
+    <span class="chip"><i class="fi fi-br-marker"></i>Alexanderufer 2, 10117 Berlin</span>
+    <span class="chip"><i class="fi fi-br-clock"></i>13:00–17:00</span>
+    <span class="chip"><i class="fi fi-br-document"></i>Feeds Assessment 1 (40%)</span>
+  </div>
+</div>
+
+<div class="whybar">
+  <strong>Before you read on:</strong> a museum visit is not "research" unless you record it like a researcher. The Futurium is a <em>primary source</em> — when you note what an exhibit claims, who made it, and what evidence it shows, you can cite it in APA exactly like a journal article. This sheet is how you do that.
+</div>
+
+<!-- SECTION 1 -->
+<section>
+  <div class="shead">
+    <div class="snum">1</div>
+    <div><span class="skick">Before you walk in · 10 minutes</span><h2>Lock your focus</h2></div>
+  </div>
+  <p class="slead">You can't observe everything. Decide what you're hunting for, so the visit stays tied to your report instead of becoming a general day out.</p>
+
+  <div class="q">
+    <span class="lbl"><span class="n">1.1</span>In one sentence, what is your Assessment 1 case study about?</span>
+    <p class="hint">A specific company, industry aspect, or country example within sustainability — not "the environment" in general.</p>
+    <textarea data-k="q11" placeholder="My report analyses…"></textarea>
+  </div>
+
+  <div class="q">
+    <span class="lbl"><span class="n">1.2</span>Write the working thesis you will defend.</span>
+    <p class="hint">A claim you can argue, not a topic. Pattern: "[Case] is / is not sustainable because…, although…"</p>
+    <textarea data-k="q12" placeholder="My thesis is that…"></textarea>
+  </div>
+
+  <div class="q">
+    <span class="lbl"><span class="n">1.3</span>Three things you will actively look for today.</span>
+    <p class="hint">Tie each to your case: a statistic, a competing viewpoint, a real-world example, a counterargument, a future scenario.</p>
+    <textarea data-k="q13" placeholder="1.&#10;2.&#10;3."></textarea>
+  </div>
+
+  <div class="callout info"><i class="fi fi-br-info"></i><div>The Futurium has three core areas — <b>Nature</b>, <b>Human</b>, and <b>Technology</b> (the Futurium "Worlds"), plus the hands-on <b>Futurium Lab</b> in the basement. The zones below map to these. Don't try to do all of them deeply — go where your case study lives.</div></div>
+
+  <div class="note"><span class="nt">Teacher note</span>Run 1.1–1.3 on the train or at the entrance before tickets. Students who skip this wander. If a student still has no case study confirmed, pair them with someone in the same theme for the visit and tell them to choose by the end of the Nature zone.</div>
+</section>
+
+<!-- SECTION 2 -->
+<section>
+  <div class="shead teal">
+    <div class="snum">2</div>
+    <div><span class="skick">Inside · the core of the visit</span><h2>Evidence capture by zone</h2></div>
+  </div>
+  <p class="slead">At each zone that's relevant to your case, complete one evidence card. You only need the zones that connect to your report — quality over coverage. Aim for at least three completed cards.</p>
+
+  <!-- Zone A -->
+  <div class="zone">
+    <div class="ztag"><i class="fi fi-br-leaf"></i>Zone A · Nature World</div>
+    <h3>Food, water, energy, climate, materials</h3>
+    <p class="find"><b>Look for:</b> exhibits on food systems, circular materials, energy transition, climate scenarios.</p>
+    <div class="q"><span class="lbl">Exhibit title / what it is</span><input class="txt" data-k="zaTitle" placeholder="Name of the installation or display"></div>
+    <div class="q"><span class="lbl">The claim it makes (in your own words)</span><textarea data-k="zaClaim" placeholder="This exhibit argues that…"></textarea></div>
+    <div class="q"><span class="lbl">Evidence shown (a number, source, example you can quote)</span><textarea data-k="zaEvid" placeholder="It states / shows…"></textarea></div>
+    <div class="q"><span class="lbl">How this supports OR challenges my thesis</span><textarea data-k="zaUse" placeholder="I can use this to…"></textarea></div>
+  </div>
+
+  <!-- Zone B -->
+  <div class="zone" style="border-left-color:var(--orange);">
+    <div class="ztag" style="color:var(--orange);"><i class="fi fi-br-user"></i>Zone B · Human World</div>
+    <h3>Cities, mobility, health, work, society</h3>
+    <p class="find"><b>Look for:</b> urban living, transport futures, how people adapt, social trade-offs of "green" choices.</p>
+    <div class="q"><span class="lbl">Exhibit title / what it is</span><input class="txt" data-k="zbTitle" placeholder="Name of the installation or display"></div>
+    <div class="q"><span class="lbl">The claim it makes (in your own words)</span><textarea data-k="zbClaim" placeholder="This exhibit argues that…"></textarea></div>
+    <div class="q"><span class="lbl">Evidence shown (a number, source, example you can quote)</span><textarea data-k="zbEvid" placeholder="It states / shows…"></textarea></div>
+    <div class="q"><span class="lbl">How this supports OR challenges my thesis</span><textarea data-k="zbUse" placeholder="I can use this to…"></textarea></div>
+  </div>
+
+  <!-- Zone C -->
+  <div class="zone" style="border-left-color:var(--navy);">
+    <div class="ztag" style="color:var(--navy);"><i class="fi fi-br-microchip"></i>Zone C · Technology World</div>
+    <h3>AI, biotech, digital systems, innovation</h3>
+    <p class="find"><b>Look for:</b> the technologies proposed as solutions — and the risks or limits the exhibit admits.</p>
+    <div class="q"><span class="lbl">Exhibit title / what it is</span><input class="txt" data-k="zcTitle" placeholder="Name of the installation or display"></div>
+    <div class="q"><span class="lbl">The claim it makes (in your own words)</span><textarea data-k="zcClaim" placeholder="This exhibit argues that…"></textarea></div>
+    <div class="q"><span class="lbl">Evidence shown (a number, source, example you can quote)</span><textarea data-k="zcEvid" placeholder="It states / shows…"></textarea></div>
+    <div class="q"><span class="lbl">How this supports OR challenges my thesis</span><textarea data-k="zcUse" placeholder="I can use this to…"></textarea></div>
+  </div>
+
+  <div class="callout warn"><i class="fi fi-br-triangle-warning"></i><div><b>The counterargument hunt.</b> Your rubric rewards a "sophisticated argument" — that means you handle the opposing view. Find one exhibit that complicates your thesis or shows a trade-off, and record it below. This is often the single most valuable thing you collect today.</div></div>
+
+  <div class="q">
+    <span class="lbl"><span class="n">2.x</span>The strongest objection or trade-off I saw today</span>
+    <textarea class="lg" data-k="counter" placeholder="One exhibit suggested that… This complicates my thesis because… I will respond to it in my report by…"></textarea>
+  </div>
+
+  <div class="note"><span class="nt">Teacher note</span>Circulate and ask "what's the claim, what's the evidence?" at each card. The frequent failure is description ("there was a cool wall about oceans") instead of argument extraction. Push them from <em>what they saw</em> to <em>what it argues</em>. The counterargument box is the differentiator between a 60% and an 80% Content score — give it five focused minutes as a group near the end.</div>
+</section>
+
+<!-- SECTION 3 -->
+<section>
+  <div class="shead navy">
+    <div class="snum">3</div>
+    <div><span class="skick">Inside · 15 minutes at one exhibit</span><h2>Build your own data table</h2></div>
+  </div>
+  <p class="slead">Assessment 1 requires <b>one self-created graph or table from Excel</b>. Collect the raw numbers here today, then build the chart at home. Find any exhibit that shows quantities over time, or a comparison between options — energy mixes, emissions by sector, transport modes, costs, years.</p>
+
+  <div class="q"><span class="lbl">What does this data measure? (your table title)</span><input class="txt" data-k="dtTitle" placeholder="e.g. Share of renewable energy in Germany, 2010–2024 (%)"></div>
+  <div class="q"><span class="lbl">Where in the Futurium did you find it? (for your APA citation)</span><input class="txt" data-k="dtSrc" placeholder="Zone / exhibit name — you'll cite this as a museum exhibit"></div>
+
+  <table class="datatable">
+    <thead><tr><th style="width:50%;">Category / Year / Label</th><th>Value (with unit)</th></tr></thead>
+    <tbody>
+      <tr><td><input data-k="dr1a" placeholder="e.g. 2015"></td><td><input data-k="dr1b" placeholder="e.g. 31%"></td></tr>
+      <tr><td><input data-k="dr2a"></td><td><input data-k="dr2b"></td></tr>
+      <tr><td><input data-k="dr3a"></td><td><input data-k="dr3b"></td></tr>
+      <tr><td><input data-k="dr4a"></td><td><input data-k="dr4b"></td></tr>
+      <tr><td><input data-k="dr5a"></td><td><input data-k="dr5b"></td></tr>
+      <tr><td><input data-k="dr6a"></td><td><input data-k="dr6b"></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip"><i class="fi fi-br-bulb"></i><div>Tonight: drop these into Excel, make a column or line chart, give it a numbered caption ("Figure 1. …"), and refer to it in your body text ("As Figure 1 shows…"). That single move satisfies a required element and lifts your Formatting score.</div></div>
+
+  <div class="note"><span class="nt">Teacher note</span>If an exhibit gives a graphic but no exact numbers, tell students to estimate values from the visual and label the table "approximate values read from exhibit display." That is honest and still citable. The skill being practised is data extraction, not precision to the decimal.</div>
+</section>
+
+<!-- SECTION 4 -->
+<section>
+  <div class="shead green">
+    <div class="snum">4</div>
+    <div><span class="skick">On the way out · 20 minutes</span><h2>From visit to paragraph</h2></div>
+  </div>
+  <p class="slead">Don't wait until tonight. While it's fresh, draft one real body paragraph using the structure you practised in Weeks 5–6: <b>Claim → Evidence → Warrant → Objection → Refutation</b>.</p>
+
+  <div class="q">
+    <span class="lbl"><span class="n">4.1</span>Draft a body paragraph built from today's evidence</span>
+    <p class="hint">Use one evidence card from Section 2. Aim for 90–120 words — roughly one paragraph of your 650-word body.</p>
+    <textarea class="lg" data-k="para" style="min-height:170px;" placeholder="Claim: …&#10;Evidence (from Futurium): …&#10;Warrant (why this proves the claim): …&#10;Objection (the trade-off I saw): …&#10;Refutation (my response): …"></textarea>
+  </div>
+
+  <div class="q">
+    <span class="lbl"><span class="n">4.2</span>Draft APA reference for the Futurium as a source</span>
+    <p class="hint">Pattern for an exhibition: <span style="font-family:'Roboto Mono',monospace; font-size:.85em;">Futurium. (2026). <i>[Exhibit / exhibition name]</i> [Exhibition]. Futurium, Berlin.</span> Adjust to what you actually viewed.</p>
+    <input class="txt" data-k="apa" placeholder="Futurium. (2026). … [Exhibition]. Futurium, Berlin.">
+  </div>
+
+  <div class="q">
+    <span class="lbl"><span class="n">4.3</span>Two academic sources I still need to find to back this up</span>
+    <p class="hint">The museum is one source. Your report needs 6+ (2 journal articles minimum). What will you search for tonight?</p>
+    <textarea data-k="gaps" placeholder="1. A journal article on…&#10;2. A report / statistic on…"></textarea>
+  </div>
+
+  <h4 style="color:var(--navy); margin:22px 0 4px;">Rubric self-check — what today gave you</h4>
+  <div class="rmap">
+    <div class="rc"><h4>Content</h4><p>An argument with real evidence + a counterargument you can refute. Sections 2 and 4.1.</p></div>
+    <div class="rc"><h4>Structure</h4><p>A C-E-W-O-R body paragraph already drafted. Section 4.1.</p></div>
+    <div class="rc"><h4>Referencing</h4><p>One primary source cited in APA, plus a search plan for the rest. Sections 4.2–4.3.</p></div>
+    <div class="rc"><h4>Formatting</h4><p>Raw data for your required self-made figure. Section 3.</p></div>
+  </div>
+
+  <h4 style="color:var(--navy); margin:24px 0 4px;">Before you leave the building</h4>
+  <ul class="check">
+    <li><input type="checkbox" data-k="ck1"><span>At least 3 evidence cards completed (Section 2)</span></li>
+    <li><input type="checkbox" data-k="ck2"><span>One counterargument / trade-off recorded</span></li>
+    <li><input type="checkbox" data-k="ck3"><span>Data table has at least 4 rows of numbers</span></li>
+    <li><input type="checkbox" data-k="ck4"><span>One body paragraph drafted</span></li>
+    <li><input type="checkbox" data-k="ck5"><span>Futurium APA reference written</span></li>
+    <li><input type="checkbox" data-k="ck6"><span>Photo taken of any exhibit data I'm using (check photography is allowed)</span></li>
+  </ul>
+
+  <div class="note"><span class="nt">Teacher note</span>Collect the room for the last 15 minutes if there's a café or bench space. Run 4.1 as quiet individual drafting, then a 60-second pair share: "read your claim and your evidence sentence aloud." Hearing it exposes description-not-argument instantly. This is the bridge into the Week 8 peer-feedback session — drafts written here become the drafts they swap.</div>
+</section>
+
+<!-- ANSWER KEY / TEACHER MODEL -->
+<section>
+  <div class="shead">
+    <div class="snum" style="background:var(--green);"><i class="fi fi-br-key" style="font-size:.8em;"></i></div>
+    <div><span class="skick">Teacher reference · models, not marks</span><h2>Worked exemplars &amp; expected responses</h2></div>
+  </div>
+  <p class="slead">There are no fixed "correct" answers to a field worksheet, but students need to see what a strong response looks like. Use these as models to show on a phone/tablet or to recognise quality while circulating.</p>
+
+  <details class="akey">
+    <summary><i class="fi fi-br-key"></i>Model: a strong evidence card (Section 2)</summary>
+    <div class="akbody">
+      <p><b>Exhibit:</b> Interactive display on urban food production / vertical farming (Nature World).</p>
+      <p><b>Claim (student's words):</b> The exhibit argues that growing food inside cities could cut the emissions caused by transporting produce long distances.</p>
+      <p><b>Evidence:</b> It shows that food can travel thousands of kilometres before reaching a plate, and presents vertical farms using a fraction of the water of field agriculture.</p>
+      <p><b>Use:</b> Supports my thesis that localised food systems improve sustainability — but I must check the energy cost of indoor lighting, which the exhibit downplays.</p>
+      <p style="color:var(--green);"><b>Why it's strong:</b> it extracts a claim and evidence (not just "there was a farming wall"), and it already spots a limitation. That last move is what earns Content marks.</p>
+    </div>
+  </details>
+
+  <details class="akey">
+    <summary><i class="fi fi-br-key"></i>Model: the counterargument box (Section 2.x)</summary>
+    <div class="akbody">
+      <p>"One exhibit suggested that electric mobility still depends on mining for batteries, which carries its own environmental and human cost. This complicates my thesis that EVs are clearly sustainable, because it shifts the harm rather than removing it. I will respond in my report by arguing that sustainability should be judged across the whole supply chain, not just at the point of use."</p>
+      <p style="color:var(--green);"><b>Why it's strong:</b> names a real trade-off, states how it threatens the thesis, and gives a refutation strategy — the full Objection–Refutation move.</p>
+    </div>
+  </details>
+
+  <details class="akey">
+    <summary><i class="fi fi-br-key"></i>Model: body paragraph (Section 4.1)</summary>
+    <div class="akbody">
+      <p><b>Claim.</b> Bringing food production into cities offers a measurable sustainability gain. <b>Evidence.</b> An exhibit at the Futurium (2026) demonstrated that conventional produce can travel long distances to market, while indoor systems use far less water. <b>Warrant.</b> Shorter supply chains reduce transport emissions, a core driver of the food system's footprint. <b>Objection.</b> However, indoor farms rely on artificial lighting, which can raise energy demand. <b>Refutation.</b> Where that energy is drawn from renewable sources, the net effect remains positive, suggesting the model is sustainable only when paired with clean power.</p>
+      <p style="color:var(--green);"><b>Why it's strong:</b> every move is present and ordered; the source is cited in-text; the conclusion is conditional rather than absolute, which reads as "sophisticated reasoning."</p>
+    </div>
+  </details>
+
+  <details class="akey">
+    <summary><i class="fi fi-br-key"></i>APA guidance for citing the museum</summary>
+    <div class="akbody">
+      <p>In-text: <span style="font-family:'Roboto Mono',monospace;">(Futurium, 2026)</span>.</p>
+      <p>Reference list pattern for an exhibition: <span style="font-family:'Roboto Mono',monospace;">Futurium. (2026). <i>Title of the exhibit or permanent exhibition</i> [Exhibition]. Futurium, Berlin.</span></p>
+      <p>Remind students the museum counts as <b>one</b> source and is primary, not academic — it does not satisfy the "2 journal articles" requirement. It works best as illustration alongside peer-reviewed sources, not as the backbone of the argument.</p>
+      <p><b>Open flag for you:</b> course materials mix APA 6 and APA 7. Confirm which edition you want them citing before they submit this week, and state it once on the board.</p>
+    </div>
+  </details>
+
+  <details class="akey">
+    <summary><i class="fi fi-br-key"></i>What "done well" looks like overall</summary>
+    <div class="akbody">
+      <p>A successful sheet leaves the building with: 3+ evidence cards that extract claim + evidence, one genuine counterargument, 4+ rows of real numbers for a chart, one drafted C-E-W-O-R paragraph, and an APA reference. A weak sheet has descriptions of exhibits with no argument and no numbers. The fastest diagnostic while circulating: point at any card and ask "what does it <em>argue</em>?" If they restate what they <em>saw</em>, redirect.</p>
+    </div>
+  </details>
+</section>
+
+<footer class="foot">
+  PG01 Advanced English Language &amp; Academic Skills · SRH International College Berlin · Week 8 Field Visit · Your answers autosave in this browser on this device.
+</footer>
+
+<script>
+/* ---------- Autosave ---------- */
+var KEY='pg01_futurium_v1';
+function fields(){return document.querySelectorAll('[data-k]');}
+function flash(msg){var f=document.getElementById('saveflag'); f.textContent=msg; }
+function save(){
+  var d={};
+  fields().forEach(function(el){
+    d[el.dataset.k] = (el.type==='checkbox')? el.checked : el.value;
+  });
+  try{ localStorage.setItem(KEY, JSON.stringify(d)); flash('Saved \u2713'); }
+  catch(e){ flash('Save unavailable'); }
+}
+function load(){
+  var raw; try{ raw=localStorage.getItem(KEY); }catch(e){ return; }
+  if(!raw) return;
+  var d=JSON.parse(raw);
+  fields().forEach(function(el){
+    if(d[el.dataset.k]===undefined) return;
+    if(el.type==='checkbox') el.checked=d[el.dataset.k];
+    else el.value=d[el.dataset.k];
+  });
+  flash('Loaded \u2713');
+}
+var t;
+document.addEventListener('input', function(){ clearTimeout(t); flash('Saving\u2026'); t=setTimeout(save,500); });
+document.addEventListener('change', function(e){ if(e.target.type==='checkbox') save(); });
+window.addEventListener('load', load);
+
+function clearAll(){
+  if(!confirm('Clear all your answers on this device? This cannot be undone.')) return;
+  fields().forEach(function(el){ if(el.type==='checkbox') el.checked=false; else el.value=''; });
+  try{ localStorage.removeItem(KEY); }catch(e){}
+  flash('Cleared');
+}
+
+/* ---------- Word export ---------- */
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function downloadWord(){
+  var name=document.getElementById('stuName').value || 'student';
+  var safe=name.replace(/[^a-z0-9]+/gi,'_');
+  var html='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>Futurium Field Worksheet</title></head><body style="font-family:Calibri,Arial,sans-serif;color:#222;">';
+  html+='<h1 style="color:#15293F;">Futurium Field Worksheet — PG01 Week 8</h1>';
+  html+='<p><b>Name:</b> '+esc(document.getElementById('stuName').value)+' &nbsp; <b>Date:</b> '+esc(document.getElementById('stuDate').value)+'<br><b>Case study:</b> '+esc(document.getElementById('stuCase').value)+'</p><hr>';
+
+  document.querySelectorAll('section').forEach(function(sec){
+    var h=sec.querySelector('.shead h2'); if(h && !/exemplar/i.test(h.textContent)) html+='<h2 style="color:#D84315;">'+esc(h.textContent)+'</h2>';
+    if(h && /exemplar/i.test(h.textContent)) return;
+    sec.querySelectorAll('.q, .zone').forEach(function(q){
+      var lbl=q.querySelector('.lbl, h3'); 
+      q.querySelectorAll('[data-k]').forEach(function(el){
+        var caption = el.previousElementSibling && el.previousElementSibling.classList.contains('lbl') ? el.previousElementSibling.textContent : (lbl?lbl.textContent:'');
+        var v = el.value||'';
+        if(v.trim()!=='') html+='<p style="margin:6px 0;"><b style="color:#0E7C86;">'+esc(caption)+'</b><br>'+esc(v).replace(/\n/g,'<br>')+'</p>';
+      });
+    });
+  });
+  html+='</body></html>';
+  var blob=new Blob(['\ufeff',html],{type:'application/msword'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download='Futurium_Worksheet_'+safe+'.doc';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
