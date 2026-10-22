@@ -1,0 +1,815 @@
+<title>Using Sources Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one reading column of task cards under a sticky session tab bar; PG01 brand (SRH orange, neutral greys, Roboto) */
+:root {
+  --bg: #FFFFFF; --surface: #F8F9FA; --raised: #FFFFFF; --ink: #333333; --muted: #5F6973; --line: #E0E0E0;
+  --accent: #D84315; --accent-hover: #B8340D; --on-accent: #FFFFFF; --tint: #FFF1EB;
+  --ok: #1E7E34; --ok-tint: #E8F5EC; --bad: #C82333; --bad-tint: #FDECEE; --warn: #FFC107; --warn-ink: #333333; --warn-tint: #FFF7DB;
+  --dark: #2E3236; --on-dark: #FFFFFF; --shadow: 0 1px 3px rgba(0,0,0,.08), 0 2px 8px rgba(0,0,0,.05);
+  --f-body: 'Roboto', Arial, Helvetica, sans-serif; --f-mono: 'Roboto Mono', 'Courier New', monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1B1E21; --surface: #24282C; --raised: #2A2F34; --ink: #ECEEF0; --muted: #A9B2BB; --line: #3A4046;
+  --accent: #FF7A4D; --accent-hover: #FF9670; --on-accent: #1B1E21; --tint: #3A2620;
+  --ok: #6FD08B; --ok-tint: #1E3326; --bad: #FF7A86; --bad-tint: #3B2226; --warn: #FFC107; --warn-ink: #1B1E21; --warn-tint: #3A321A;
+  --dark: #111315; --on-dark: #ECEEF0; --shadow: 0 1px 3px rgba(0,0,0,.4); color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #1B1E21; --surface: #24282C; --raised: #2A2F34; --ink: #ECEEF0; --muted: #A9B2BB; --line: #3A4046;
+  --accent: #FF7A4D; --accent-hover: #FF9670; --on-accent: #1B1E21; --tint: #3A2620;
+  --ok: #6FD08B; --ok-tint: #1E3326; --bad: #FF7A86; --bad-tint: #3B2226; --warn: #FFC107; --warn-ink: #1B1E21; --warn-tint: #3A321A;
+  --dark: #111315; --on-dark: #ECEEF0; --shadow: 0 1px 3px rgba(0,0,0,.4); color-scheme: dark; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 860px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { text-wrap: balance; line-height: 1.25; margin: 0; }
+.ic { width: 1em; height: 1em; fill: currentColor; flex: none; display: inline-block; vertical-align: -0.125em; }
+/* header */
+.top { padding-block: 28px 12px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+.kicker { font-size: 12.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+.top h1 { font-size: clamp(28px, 6vw, 38px); font-weight: 700; margin-top: 4px; }
+.top p { margin: 4px 0 0; color: var(--muted); max-width: 60ch; }
+.who { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.who label { font-size: 13px; font-weight: 500; color: var(--muted); }
+input[type=text], textarea, select { font: inherit; color: var(--ink); background: var(--raised); border: 1.5px solid var(--line); border-radius: 5px; padding: 8px 10px; width: 100%; }
+textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-color: var(--accent); }
+.who input { width: 220px; max-width: 100%; }
+.iconbtn { font: inherit; background: var(--surface); color: var(--ink); border: 1.5px solid var(--line); border-radius: 5px; padding: 8px 10px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+/* tabs */
+.tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.tabs .wrap { display: flex; gap: 4px; overflow-x: auto; }
+.tab { font: inherit; font-weight: 500; font-size: 15px; background: none; border: 0; color: var(--muted); padding: 12px 14px; cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; display: inline-flex; gap: 8px; align-items: center; }
+.tab[aria-selected=true] { color: var(--accent); border-bottom-color: var(--accent); }
+main { padding-block: 24px 64px; }
+.panel { display: grid; gap: 22px; }
+.intro { background: var(--dark); color: var(--on-dark); border-radius: 8px; padding: 22px; display: grid; gap: 10px; }
+.intro .q { font-size: clamp(19px, 4vw, 23px); font-weight: 700; }
+.intro .kicker { color: var(--warn); }
+.intro p { margin: 0; color: var(--on-dark); opacity: .9; }
+/* task card */
+.task { background: var(--raised); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 20px; display: grid; gap: 14px; min-width: 0; }
+.task.activity { border-color: var(--warn); }
+.thead { display: flex; gap: 14px; align-items: flex-start; }
+.circle { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-size: 20px; flex: none; }
+.activity .circle { background: var(--warn); color: var(--warn-ink); }
+.thead h2 { font-size: 20px; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.tag { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 99px; padding: 2px 10px; background: var(--surface); color: var(--muted); border: 1px solid var(--line); }
+.tag.slide { background: var(--tint); color: var(--accent); border-color: transparent; }
+.task p { margin: 0; }
+.how { color: var(--muted); font-size: 15px; }
+.src { background: var(--surface); border-radius: 6px; padding: 14px 16px; font-size: 15.5px; }
+.src b.lab { display: block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+.src cite { display: block; font-style: normal; font-size: 13px; color: var(--muted); margin-top: 6px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field > label, .flabel { font-size: 14px; font-weight: 500; }
+.count { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.count.over { color: var(--bad); font-weight: 700; }
+/* ranking */
+.rank { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.rank li { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: start; background: var(--surface); border-radius: 6px; padding: 12px; }
+.rank .pos { font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; min-width: 2ch; padding-top: 2px; }
+.rank .body { display: grid; gap: 8px; min-width: 0; }
+.rank .ver { font-size: 15px; }
+.rank .ver b { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--dark); color: var(--on-dark); font-size: 13px; margin-right: 6px; }
+.rank .moves { display: grid; gap: 6px; }
+.rank .moves button { font: inherit; width: 40px; height: 40px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--raised); color: var(--ink); cursor: pointer; display: grid; place-items: center; font-size: 18px; }
+.rank .moves button:disabled { opacity: .35; cursor: default; }
+/* chips */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: inherit; font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 6px 14px; border-radius: 99px; cursor: pointer; background: var(--raised); color: var(--ink); border: 1.5px solid var(--line); }
+.chip[data-tone=ok][aria-pressed=true] { background: var(--ok); border-color: var(--ok); color: var(--bg); }
+.chip[data-tone=bad][aria-pressed=true] { background: var(--bad); border-color: var(--bad); color: var(--bg); }
+.chip[data-tone=warn][aria-pressed=true] { background: var(--warn); border-color: var(--warn); color: var(--warn-ink); }
+.row { display: grid; gap: 10px; padding: 12px; border-radius: 6px; background: var(--surface); }
+.row .stmt { font-size: 15px; }
+.row .num { font-weight: 700; color: var(--accent); margin-right: 6px; }
+/* checks */
+.checks { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.checks label { display: inline-flex; gap: 8px; align-items: center; font-size: 15px; cursor: pointer; }
+.checks input { width: 18px; height: 18px; accent-color: var(--accent); }
+/* reveal */
+details.reveal { border-radius: 6px; border: 1.5px dashed var(--line); }
+details.reveal > summary { cursor: pointer; list-style: none; padding: 12px 14px; font-weight: 500; display: flex; gap: 10px; align-items: center; color: var(--muted); }
+details.reveal > summary::-webkit-details-marker { display: none; }
+details.reveal[open] { border-style: solid; border-color: var(--ok); background: var(--ok-tint); }
+details.reveal[open] > summary { color: var(--ok); }
+details.lock > summary { color: var(--accent); }
+.rv { padding: 0 16px 16px; display: grid; gap: 10px; font-size: 15px; }
+.rv p, .rv ul, .rv ol { margin: 0; }
+.rv ul, .rv ol { padding-left: 20px; display: grid; gap: 4px; }
+.model { background: var(--raised); border-radius: 6px; padding: 12px 14px; }
+.twist { background: var(--dark); color: var(--on-dark); border-radius: 6px; padding: 12px 14px; font-weight: 500; }
+.vt { display: grid; gap: 8px; }
+.vt div { display: grid; grid-template-columns: 30px auto auto 1fr; gap: 8px; align-items: center; background: var(--raised); border-radius: 6px; padding: 8px 10px; }
+.vt b.l { width: 26px; height: 26px; border-radius: 50%; background: var(--dark); color: var(--on-dark); display: grid; place-items: center; font-size: 13px; }
+.pill { font-size: 11.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; border-radius: 99px; padding: 2px 9px; white-space: nowrap; }
+.pill.ok { background: var(--ok); color: var(--bg); } .pill.bad { background: var(--bad); color: var(--bg); } .pill.warn { background: var(--warn); color: var(--warn-ink); }
+@media (max-width: 560px) { .vt div { grid-template-columns: 30px 1fr; } .vt div span:last-child { grid-column: 1 / -1; } }
+/* grid table */
+.tablewrap { overflow-x: auto; }
+table.grid { border-collapse: collapse; width: 100%; min-width: 540px; font-size: 14.5px; }
+table.grid th { text-align: left; background: var(--surface); padding: 8px; font-weight: 700; border-bottom: 2px solid var(--line); }
+table.grid td { padding: 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.grid td input { padding: 6px 8px; }
+/* builder output */
+.out { background: var(--tint); border-radius: 6px; padding: 14px 16px; font-size: 16px; min-height: 52px; }
+.out .ph { color: var(--muted); }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 12px; }
+.btn { font: inherit; font-weight: 700; background: var(--accent); color: var(--on-accent); border: 0; border-radius: 5px; padding: 10px 18px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+.btn:hover { background: var(--accent-hover); }
+.btn.ghost { background: var(--surface); color: var(--ink); border: 1.5px solid var(--line); }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.status { font-size: 14px; color: var(--ok); font-weight: 500; }
+.w4 { display: flex; flex-wrap: wrap; gap: 8px; }
+.w4 span { font-size: 12.5px; font-weight: 700; letter-spacing: .06em; border-radius: 99px; padding: 3px 12px; background: var(--surface); color: var(--muted); border: 1.5px solid var(--line); }
+.w4 span.on { background: var(--ok); color: var(--bg); border-color: var(--ok); }
+/* quiz */
+.quiz { display: grid; gap: 16px; }
+.qq { display: grid; gap: 8px; }
+.qq .qt { font-weight: 500; }
+.qq .opts { display: grid; gap: 6px; }
+.opt { font: inherit; font-size: 15px; text-align: left; background: var(--surface); color: var(--ink); border: 1.5px solid var(--line); border-radius: 6px; padding: 10px 12px; cursor: pointer; display: grid; grid-template-columns: 28px 1fr; gap: 8px; align-items: start; }
+.opt b { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--raised); border: 1.5px solid var(--line); font-size: 12.5px; }
+.opt.right { border-color: var(--ok); background: var(--ok-tint); }
+.opt.right b { background: var(--ok); border-color: var(--ok); color: var(--bg); }
+.opt.wrong { border-color: var(--bad); background: var(--bad-tint); }
+.opt.wrong b { background: var(--bad); border-color: var(--bad); color: var(--bg); }
+.opt:disabled { cursor: default; }
+.fb { font-size: 14.5px; border-radius: 6px; padding: 10px 12px; }
+.fb.ok { background: var(--ok-tint); } .fb.bad { background: var(--bad-tint); }
+.fb strong { display: block; }
+.score { display: grid; gap: 8px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 50px); background: var(--raised); z-index: 2; padding-block: 6px; }
+.bar { height: 10px; border-radius: 99px; background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .3s; }
+.score .lbl { display: flex; justify-content: space-between; font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; }
+/* toolkit */
+.letters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); gap: 10px; }
+.letter { background: var(--surface); border-radius: 6px; padding: 12px; display: grid; gap: 4px; }
+.letter .big { width: 46px; height: 46px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-weight: 700; font-size: 22px; }
+.letter b { font-size: 15px; } .letter span { font-size: 14px; color: var(--muted); }
+.flags { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; }
+.flag { border-radius: 6px; padding: 12px 14px; }
+.flag.g { background: var(--ok-tint); } .flag.r { background: var(--bad-tint); }
+.flag h3 { font-size: 15px; display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
+.flag.g h3 { color: var(--ok); } .flag.r h3 { color: var(--bad); }
+.flag ul { margin: 0; padding-left: 20px; display: grid; gap: 4px; font-size: 14.5px; }
+.ref { font-size: 15px; padding-left: 2em; text-indent: -2em; }
+
+.task > *, .rv > *, .thead > div, .row > * { min-width: 0; }
+.ref, .src, .stmt, .model, .out, .opt span, .fb, .flag li, .letter span { overflow-wrap: anywhere; }
+.mono { font-family: var(--f-mono); font-size: 14px; }
+.foot { color: var(--muted); font-size: 13px; padding-block: 8px 28px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-angle-small-up" viewBox="56 -245 188 188"><g transform="scale(1,-1)"><path d="M238 132 181 189Q168 202 150.0 202.0Q132 202 119 189L62 132Q56 127 56.0 119.0Q56 111 61.5 105.5Q67 100 75.0 100.0Q83 100 88 105L146 163Q147 165 150.0 165.0Q153 165 154 163L212 105Q217 100 225.0 100.0Q233 100 238.5 105.5Q244 111 244.0 119.0Q244 127 238 132Z"/></g></symbol><symbol id="i-angle-small-down" viewBox="56 -250 188 188"><g transform="scale(1,-1)"><path d="M238 202Q233 207 225.0 207.0Q217 207 212 202L154 145Q153 143 150.0 143.0Q147 143 146 145L88 202Q83 207 75.0 207.0Q67 207 61.5 201.5Q56 196 56.0 188.5Q56 181 62 175L119 118Q132 105 150.0 105.0Q168 105 181 118L238 175Q244 181 244.0 188.5Q244 196 238 202Z"/></g></symbol><symbol id="i-moon" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M188 0Q143 0 105.5 24.5Q68 49 50.0 90.5Q32 132 39.5 176.0Q47 220 78.0 252.5Q109 285 152.5 295.5Q196 306 238 291Q248 288 254.0 280.0Q260 272 262.0 262.5Q264 253 260.0 243.5Q256 234 248 228Q201 191 201.0 150.0Q201 109 248 72Q256 66 260.0 56.5Q264 47 262.0 37.5Q260 28 254.0 20.0Q248 12 238 9Q214 0 188 0ZM188 263Q154 263 126.0 244.5Q98 226 84.5 195.5Q71 165 76.5 131.5Q82 98 104.5 73.5Q127 49 159.5 41.0Q192 33 224 44Q184 75 170.0 112.5Q156 150 170.0 187.5Q184 225 224 256Q206 262 188 263Z"/></g></symbol><symbol id="i-sun" viewBox="-0 -300 300 300"><g transform="scale(1,-1)"><path d="M281 169H242Q238 187 228 202L256 230Q261 235 261.0 242.5Q261 250 255.5 255.5Q250 261 242.5 261.0Q235 261 229 256L202 228Q187 238 169 242V281Q169 289 163.5 294.5Q158 300 150.0 300.0Q142 300 136.5 294.5Q131 289 131 281V242Q113 238 98 228L70 256Q65 261 57.5 261.0Q50 261 44.5 255.5Q39 250 39.0 242.5Q39 235 44 230L72 202Q62 187 58 169H19Q11 169 5.5 163.5Q0 158 0.0 150.0Q0 142 5.5 136.5Q11 131 19 131H58Q62 113 72 98L44 70Q39 65 39.0 57.5Q39 50 44.5 44.5Q50 39 57.5 39.0Q65 39 70 44L98 72Q113 62 131 58V19Q131 11 136.5 5.5Q142 0 150.0 0.0Q158 0 163.5 5.5Q169 11 169 19V58Q187 62 202 72L230 44Q235 39 242.5 39.0Q250 39 255.5 44.5Q261 50 261.0 57.5Q261 65 256 70L228 98Q238 114 242 131H281Q289 132 294.0 137.5Q299 143 299.0 150.5Q299 158 294.0 163.0Q289 168 281 169ZM150 94Q127 94 110.5 110.5Q94 127 94.0 150.0Q94 173 110.5 189.5Q127 206 150.0 206.0Q173 206 189.5 189.5Q206 173 206.0 150.0Q206 127 189.5 110.5Q173 94 150 94Z"/></g></symbol><symbol id="i-rotate-left" viewBox="1 -300 300 300"><g transform="scale(1,-1)"><path d="M20 150Q27 150 32.5 145.5Q38 141 39 134Q43 107 58.5 85.0Q74 63 98.0 50.0Q122 37 150 37Q184 38 211.5 56.0Q239 74 253.0 104.5Q267 135 261 170Q257 195 242.0 215.5Q227 236 204 249Q172 266 137.5 262.0Q103 258 77 235L91 221Q95 218 95.0 212.5Q95 207 91.5 203.5Q88 200 82 200H25Q20 200 16.0 203.5Q12 207 13 213V270Q13 275 16.5 278.5Q20 282 25.0 282.0Q30 282 34 279L50 262Q85 292 131.0 298.5Q177 305 220 282Q252 266 272.5 237.0Q293 208 298 173Q305 128 286.5 88.0Q268 48 231.5 24.0Q195 0 150 0Q113 0 81.0 17.0Q49 34 28.0 63.0Q7 92 2 128Q0 137 5.5 143.5Q11 150 20 150Z"/></g></symbol><symbol id="i-clipboard" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M206 275H202Q196 286 185.5 293.0Q175 300 163 300H138Q125 300 114.5 293.0Q104 286 98 275H94Q75 275 59.5 265.5Q44 256 34.5 240.5Q25 225 25 206V69Q25 50 34.5 34.5Q44 19 59.5 9.5Q75 0 94 0H206Q225 0 240.5 9.5Q256 19 265.5 34.5Q275 50 275 69V206Q275 225 265.5 240.5Q256 256 240.5 265.5Q225 275 206 275ZM238 69Q238 56 228.5 47.0Q219 38 206 38H94Q81 38 71.5 47.0Q62 56 62 69V206Q63 219 72.0 228.5Q81 238 94 238H98Q104 226 114.5 219.5Q125 213 137 213H163Q175 213 185.5 219.5Q196 226 202 237H206Q219 237 228.0 228.0Q237 219 237 206V69Z"/></g></symbol><symbol id="i-unlock" viewBox="-0 -300 300 300"><g transform="scale(1,-1)"><path d="M206 200H100V210Q100 232 115.5 247.0Q131 262 153 262Q167 262 179.5 255.0Q192 248 199 235Q203 228 210.5 226.0Q218 224 224.5 228.0Q231 232 233.5 239.5Q236 247 232 253Q220 275 199.5 287.0Q179 299 155.0 300.0Q131 301 109.5 289.0Q88 277 75.5 255.5Q63 234 63 210V192Q45 184 35.0 167.5Q25 151 25 131V69Q25 50 34.5 34.5Q44 19 59.5 9.5Q75 0 94 0H206Q225 0 240.5 9.5Q256 19 265.5 34.5Q275 50 275 69V131Q275 150 265.5 165.5Q256 181 240.5 190.5Q225 200 206 200ZM237 69Q237 56 228.0 46.5Q219 37 206 37H94Q81 37 72.0 46.5Q63 56 63 69V131Q63 144 72.0 153.0Q81 162 94 162H206Q219 162 228.0 153.0Q237 144 237 131ZM144 125H156Q164 125 169.5 119.5Q175 114 175 106Q175 98 169.5 92.5Q164 87 156 87H144Q136 87 130.5 92.5Q125 98 125 106Q125 114 130.5 119.5Q136 125 144 125Z"/></g></symbol><symbol id="i-quote-right" viewBox="0 -288 300 300"><g transform="scale(1,-1)"><path d="M100 250H50Q29 250 14.5 235.5Q0 221 0 200V150Q0 140 7.5 132.5Q15 125 25 125H88Q87 108 79.0 93.5Q71 79 56.5 71.0Q42 63 25 62Q17 63 11.5 57.5Q6 52 6.0 44.0Q6 36 11.5 30.5Q17 25 25 25Q52 25 75.0 38.5Q98 52 111.5 75.0Q125 98 125 125V225Q125 235 117.5 242.5Q110 250 100 250ZM275 250H225Q204 250 189.5 235.5Q175 221 175 200V150Q175 140 182.5 132.5Q190 125 200 125H263Q262 108 254.0 93.5Q246 79 231.5 71.0Q217 63 200 62Q192 63 186.5 57.5Q181 52 181.0 44.0Q181 36 186.5 30.5Q192 25 200 25Q227 25 250.0 38.5Q273 52 286.5 75.0Q300 98 300 125V225Q300 235 292.5 242.5Q285 250 275 250Z"/></g></symbol><symbol id="i-shuffle" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M230 201V180Q230 176 232.0 173.0Q234 170 237.5 168.5Q241 167 245.0 168.0Q249 169 252 171L296 216Q300 220 300.0 225.0Q300 230 296 234L252 279Q249 281 245.0 282.0Q241 283 237.5 281.5Q234 280 232.0 277.0Q230 274 230 270V240Q202 234 176 216Q158 202 136 178Q112 206 89 220Q59 239 23 243H19Q11 243 5.5 238.0Q0 233 0.0 225.5Q0 218 5.0 212.0Q10 206 17 206Q47 203 71 187Q89 175 111 150Q89 125 71 113Q47 97 17 94Q10 93 5.0 87.5Q0 82 0.5 74.5Q1 67 6.0 62.0Q11 57 19 57H20Q51 60 76 73Q98 84 118 103Q131 115 152 139Q175 166 188 177Q208 195 230 201ZM252 129Q249 131 245.0 132.0Q241 133 237.5 131.5Q234 130 232.0 127.0Q230 124 230 120V99Q206 106 187 124Q181 128 173.5 127.5Q166 127 161 122V121Q156 115 156.5 107.5Q157 100 163 95Q192 69 230 60V30Q230 26 232.0 23.0Q234 20 237.5 18.5Q241 17 245.0 18.0Q249 19 252 21L296 66Q300 70 300.0 75.0Q300 80 296 84Z"/></g></symbol><symbol id="i-layers" viewBox="0 -303 300 300"><g transform="scale(1,-1)"><path d="M11 168 128 98Q138 92 150.0 92.0Q162 92 173 98L289 168Q294 171 297.0 176.0Q300 181 300.0 187.5Q300 194 297.0 199.0Q294 204 289 207L173 277Q162 283 150.0 283.0Q138 283 128 277L11 208Q6 204 3.0 199.0Q0 194 0.0 187.5Q0 181 3.0 176.0Q6 171 11 168ZM147 245Q150 247 153 245L249 188L153 130Q150 128 147 130L51 188ZM166 65Q159 60 150.0 60.0Q141 60 134 65L28 128Q24 131 19.0 131.0Q14 131 9.5 128.5Q5 126 2.5 121.5Q0 117 0 112Q0 107 2.5 102.5Q5 98 9 96L115 33Q131 23 150.0 23.0Q169 23 185 32L291 96Q300 101 300 112Q300 117 297.5 121.5Q295 126 290.5 128.5Q286 131 281.0 131.0Q276 131 272 128Z"/></g></symbol><symbol id="i-list" viewBox="0 -297 300 300"><g transform="scale(1,-1)"><path d="M100 213H281Q289 213 294.5 218.0Q300 223 300.0 231.0Q300 239 294.5 244.5Q289 250 281 250H100Q92 250 86.5 244.5Q81 239 81.0 231.0Q81 223 86.5 217.5Q92 212 100 212ZM281 163H100Q92 163 86.5 157.5Q81 152 81.0 144.0Q81 136 86.5 130.5Q92 125 100 125H281Q289 125 294.5 130.5Q300 136 300.0 144.0Q300 152 294.5 157.5Q289 163 281 163ZM281 75H100Q92 75 86.5 69.5Q81 64 81.0 56.0Q81 48 86.5 43.0Q92 38 100 38H281Q289 38 294.5 43.0Q300 48 300.0 56.0Q300 64 294.5 69.5Q289 75 281 75ZM0 231Q0 218 9.0 209.0Q18 200 31.0 200.0Q44 200 53.5 209.0Q63 218 63.0 231.0Q63 244 53.5 253.5Q44 263 31.0 262.5Q18 262 9.0 253.0Q0 244 0 231ZM0 150Q0 137 9.0 128.0Q18 119 31.0 119.0Q44 119 53.0 128.0Q62 137 62.5 150.0Q63 163 53.5 172.0Q44 181 31.0 181.0Q18 181 9.0 172.0Q0 163 0 150ZM0 63Q0 50 9.0 40.5Q18 31 31.0 31.0Q44 31 53.5 40.5Q63 50 63.0 62.5Q63 75 53.5 84.5Q44 94 31.0 94.0Q18 94 9.0 84.5Q0 75 0 62Z"/></g></symbol><symbol id="i-list-check" viewBox="0 -306 300 300"><g transform="scale(1,-1)"><path d="M56 213Q38 212 25 225L6 242Q0 247 0.0 255.0Q0 263 5.0 269.0Q10 275 17.5 275.0Q25 275 31 270L51 253Q53 250 56.0 250.0Q59 250 61 252L106 295Q111 300 119.0 299.5Q127 299 132.0 293.5Q137 288 137.0 280.5Q137 273 132 268L87 225Q74 212 56 212ZM300 256Q300 264 294.5 269.5Q289 275 281 275H181Q173 275 167.5 269.5Q162 264 162.5 256.0Q163 248 168.0 242.5Q173 237 181 237H281Q289 237 294.5 242.5Q300 248 300 256ZM87 125 132 168Q137 173 137.0 180.5Q137 188 132.0 193.5Q127 199 119.0 199.5Q111 200 106 195L61 152Q59 150 56.5 150.0Q54 150 52 152L32 172Q27 177 19.0 177.0Q11 177 5.5 171.5Q0 166 0.0 158.5Q0 151 5 145L25 125Q38 113 56.0 112.5Q74 112 87 125ZM300 156Q300 164 294.5 169.5Q289 175 281 175H181Q173 175 167.5 169.5Q162 164 162.5 156.0Q163 148 168.0 142.5Q173 137 181 138H281Q289 138 294.5 143.0Q300 148 300 156ZM87 25 132 68Q137 73 137.0 80.5Q137 88 132.0 93.5Q127 99 119.0 99.5Q111 100 106 95L61 52Q59 50 56.0 50.0Q53 50 51 53L31 70Q25 75 17.5 75.0Q10 75 5.0 69.0Q0 63 0.0 55.0Q0 47 6 42L25 25Q38 13 56.0 12.5Q74 12 87 25ZM300 56Q300 64 294.5 69.5Q289 75 281 75H181Q173 75 167.5 69.5Q162 64 162.5 56.0Q163 48 168.0 43.0Q173 38 181 38H281Q289 38 294.5 43.0Q300 48 300 56Z"/></g></symbol><symbol id="i-balance-scale-left" viewBox="-0 -300 300 300"><g transform="scale(1,-1)"><path d="M188 156Q188 129 207 113Q224 100 247.0 101.0Q270 102 285 117Q301 134 299 161L268 273Q263 287 250.5 294.5Q238 302 224 299L168 287Q165 296 156.0 298.5Q147 301 139.0 296.0Q131 291 131 281V279L75 267Q59 263 47.5 253.0Q36 243 32 228L1 124Q-2 108 5.5 94.0Q13 80 26.5 71.0Q40 62 56.0 62.0Q72 62 86.0 71.0Q100 80 107.0 94.5Q114 109 112 124L79 229L131 241V38H69Q57 37 52.5 28.0Q48 19 52.5 9.5Q57 0 69 0H231Q243 0 247.5 9.5Q252 19 247.5 28.0Q243 37 231 38H169V249L218 260L188 162Q188 159 188 156ZM56 177 72 125H40ZM244 218 260 163H228Z"/></g></symbol><symbol id="i-search" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M295 32 236 90Q258 119 262.0 153.5Q266 188 252.5 220.0Q239 252 210.0 273.5Q181 295 146.5 299.0Q112 303 80.0 289.5Q48 276 26.5 247.5Q5 219 1.0 184.0Q-3 149 10.5 117.0Q24 85 53 64Q76 46 103.5 40.0Q131 34 159.0 40.0Q187 46 210 64L268 5Q274 0 281.5 0.0Q289 0 294.5 5.5Q300 11 300.0 18.5Q300 26 295 32ZM132 75Q106 75 85.0 87.5Q64 100 51.0 121.5Q38 143 38.0 168.5Q38 194 51.0 215.0Q64 236 85.0 249.0Q106 262 131.5 262.0Q157 262 178.5 249.0Q200 236 212.5 215.0Q225 194 225.0 168.5Q225 143 212.5 121.5Q200 100 178.5 87.5Q157 75 132 75Z"/></g></symbol><symbol id="i-eye" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M288 189Q265 224 228.5 244.0Q192 264 150.0 264.0Q108 264 71.5 244.0Q35 224 12 189Q0 171 0.0 150.0Q0 129 12 111Q35 76 71.5 56.0Q108 36 150.0 36.0Q192 36 228.5 56.0Q265 76 288 111Q300 129 300.0 150.0Q300 171 288 189ZM257 132Q240 105 211.5 89.0Q183 73 150.0 73.0Q117 73 88.5 89.0Q60 105 43 132Q38 140 38.0 150.0Q38 160 43 168Q60 195 88.5 211.0Q117 227 150.0 227.0Q183 227 211.5 211.0Q240 195 257 168Q262 160 262.0 150.0Q262 140 257 132ZM100 150Q100 129 114.5 114.5Q129 100 150.0 100.0Q171 100 185.5 114.5Q200 129 200.0 150.0Q200 171 185.5 185.5Q171 200 150.0 200.0Q129 200 114.5 185.5Q100 171 100 150Z"/></g></symbol><symbol id="i-pencil" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M285 285Q270 300 249.5 300.0Q229 300 214 285L20 91Q10 81 5.0 68.5Q0 56 0 42V19Q0 11 5.5 5.5Q11 0 19 0H43Q56 0 68.5 5.0Q81 10 91 20L285 214Q300 229 300.0 250.0Q300 271 285 285ZM65 47Q55 38 43 38H38V43Q38 55 47 65L191 209L209 191ZM259 241 236 218 218 236 241 259Q245 262 250.0 262.0Q255 262 258.5 258.5Q262 255 262.0 250.0Q262 245 259 241Z"/></g></symbol><symbol id="i-users" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M94 138Q70 138 53.5 154.0Q37 170 37.5 193.5Q38 217 54.0 233.5Q70 250 93.5 250.0Q117 250 133.5 233.5Q150 217 150.0 193.5Q150 170 133.5 154.0Q117 138 94 138ZM94 213Q86 213 80.5 207.5Q75 202 75.0 194.0Q75 186 80.5 180.5Q86 175 94.0 175.0Q102 175 107.0 180.5Q112 186 112.0 194.0Q112 202 107.0 207.5Q102 213 94 213ZM188 19Q188 44 175.0 65.5Q162 87 140.5 100.0Q119 113 93.5 113.0Q68 113 46.5 100.0Q25 87 12.5 65.5Q0 44 0 19Q0 11 5.5 5.5Q11 0 19.0 0.0Q27 0 32.5 5.5Q38 11 38 19Q38 42 54.0 58.5Q70 75 93.5 75.0Q117 75 133.5 58.5Q150 42 150 19Q150 11 155.5 5.5Q161 0 169.0 0.0Q177 0 182.5 5.5Q188 11 188 19ZM300 75Q300 100 286.5 121.5Q273 143 250.0 154.0Q227 165 201.5 162.0Q176 159 157 143Q151 138 150.0 130.0Q149 122 154.0 116.0Q159 110 167.0 109.5Q175 109 181 114Q195 125 213 125Q233 125 248.0 110.5Q263 96 263 75Q263 67 268.0 61.5Q273 56 281.0 56.0Q289 56 294.5 61.5Q300 67 300 75ZM219 188Q195 188 179.0 204.0Q163 220 163.0 243.5Q163 267 179.0 283.5Q195 300 218.5 300.0Q242 300 258.5 283.5Q275 267 275.0 243.5Q275 220 258.5 204.0Q242 188 219 188ZM219 263Q211 263 205.5 257.5Q200 252 200.0 244.0Q200 236 205.5 230.5Q211 225 219.0 225.0Q227 225 232.5 230.5Q238 236 238.0 244.0Q238 252 232.5 257.5Q227 263 219 262Z"/></g></symbol><symbol id="i-user" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M143 125Q117 122 95.5 107.5Q74 93 62.0 70.5Q50 48 50 21V19Q50 11 55.5 5.5Q61 0 69 0Q77 0 82.5 5.5Q88 11 88 19V22Q87 47 103.0 65.5Q119 84 144 87Q161 89 176.0 82.0Q191 75 201.0 61.5Q211 48 212 31L213 19Q213 11 218.0 5.5Q223 0 231 0Q239 0 244.5 5.5Q250 11 250 19V25Q250 52 236.5 75.0Q223 98 200.0 111.5Q177 125 150 125ZM150 150Q170 150 187.5 160.0Q205 170 215.0 187.5Q225 205 225.0 225.0Q225 245 215.0 262.5Q205 280 187.5 290.0Q170 300 150.0 300.0Q130 300 112.5 290.0Q95 280 85.0 262.5Q75 245 75.0 225.0Q75 205 85.0 187.5Q95 170 112.5 160.0Q130 150 150 150ZM150 263Q166 263 177.0 252.0Q188 241 188.0 225.0Q188 209 177.0 198.5Q166 188 150.0 188.0Q134 188 123.5 198.5Q113 209 113.0 225.0Q113 241 123.5 252.0Q134 263 150 262Z"/></g></symbol><symbol id="i-check" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M97 42Q84 42 74 51L6 120Q0 125 0.0 133.0Q0 141 6 146Q11 152 19.0 152.0Q27 152 32 146L97 82L268 253Q273 258 281.0 258.0Q289 258 294 253Q300 247 300.0 239.5Q300 232 294 226L120 51Q110 42 97 42Z"/></g></symbol><symbol id="i-cross" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M177 150 295 268Q300 273 300.0 281.0Q300 289 294.5 294.5Q289 300 281.0 300.0Q273 300 268 295L150 177L32 295Q27 300 19.0 300.0Q11 300 5.5 294.5Q0 289 0.0 281.0Q0 273 5 268L123 150L5 32Q0 27 0.0 19.0Q0 11 5.5 5.5Q11 0 19.0 0.0Q27 0 32 5L150 123L268 5Q273 0 281.0 0.0Q289 0 294.5 5.5Q300 11 300.0 19.0Q300 27 295 32Z"/></g></symbol><symbol id="i-triangle-warning" viewBox="0 -306 300 300"><g transform="scale(1,-1)"><path d="M169 169V106Q169 98 163.5 93.0Q158 88 150.0 88.0Q142 88 136.5 93.0Q131 98 131 106V169Q131 177 136.5 182.5Q142 188 150.0 188.0Q158 188 163.5 182.5Q169 177 169 169ZM150 63Q142 63 136.5 57.5Q131 52 131.0 44.0Q131 36 136.5 30.5Q142 25 150.0 25.0Q158 25 163.5 30.5Q169 36 169.0 44.0Q169 52 163.5 57.5Q158 63 150 63ZM288 115 191 266Q184 276 173.0 282.0Q162 288 150.0 288.0Q138 288 127.0 282.0Q116 276 108 265L12 116Q2 101 0.5 84.5Q-1 68 6.0 54.0Q13 40 27.0 32.5Q41 25 60 25H81Q89 25 94.5 30.5Q100 36 100.0 44.0Q100 52 94.5 57.5Q89 63 81 63H60Q44 63 39 71Q37 76 38.0 82.0Q39 88 44 95L139 245Q143 250 150.0 250.0Q157 250 160 245L257 94Q261 88 262.0 82.0Q263 76 261 71Q256 63 240 63H219Q211 63 205.5 57.5Q200 52 200.0 44.0Q200 36 205.5 30.5Q211 25 219 25H240Q259 25 273.0 32.5Q287 40 294.0 54.0Q301 68 299.5 84.5Q298 101 288 115Z"/></g></symbol><symbol id="i-shield-check" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M140 154 131 163Q125 169 117.5 169.0Q110 169 104 164Q98 158 98.0 150.5Q98 143 104 137L118 122Q127 113 139 113Q152 113 160 121L210 171Q215 176 215.0 184.0Q215 192 210 197Q204 203 196.5 203.0Q189 203 183 197ZM150 0Q146 0 142 2Q128 8 109 20Q75 43 54 70Q24 108 24 150V209Q24 232 37.0 250.0Q50 268 71 275L144 299Q150 301 156 299L229 275Q250 268 263.0 250.0Q276 232 276 209V150Q276 102 246 64Q224 36 189 16Q171 6 156 1Q153 0 150 0ZM150 261 83 239Q73 236 67.0 228.0Q61 220 61 209V150Q61 112 98 77Q120 55 151 39Q181 52 203 72Q239 106 239 150V209Q239 220 233.0 228.0Q227 236 217 239Z"/></g></symbol><symbol id="i-link" viewBox="-0 -300 300 300"><g transform="scale(1,-1)"><path d="M130 55Q115 40 93.5 38.5Q72 37 56 51Q46 59 41.0 71.5Q36 84 38 97Q40 116 55 130L91 166Q96 172 96.0 179.5Q96 187 91 193Q85 198 77.5 198.0Q70 198 64 193L29 157Q17 146 9.5 131.0Q2 116 0 99Q-2 75 8.5 53.0Q19 31 38.5 17.0Q58 3 82 1Q103 -1 122.0 6.0Q141 13 155 27L192 64Q198 70 198.0 77.5Q198 85 192 91Q187 96 179.0 96.0Q171 96 166 91ZM265 282Q246 295 224.0 298.5Q202 302 180.5 295.0Q159 288 143 272L108 236Q102 231 102.0 223.0Q102 215 108 210Q113 204 121.0 204.0Q129 204 134 210L170 246Q185 261 205.5 262.5Q226 264 243.0 250.5Q260 237 262.0 215.0Q264 193 250 176L209 134Q204 129 204.0 121.0Q204 113 209 108Q215 102 222.5 102.0Q230 102 236 108L274 146Q291 163 297.0 186.5Q303 210 297.0 233.5Q291 257 273 274Q269 278 265 282ZM108 134 166 193Q171 198 179.0 198.0Q187 198 192 193Q198 187 198.0 179.5Q198 172 192 166L134 108Q129 102 121.0 102.0Q113 102 108 108Q102 113 102.0 121.0Q102 129 108 134Z"/></g></symbol><symbol id="i-calendar" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M231 275H225V281Q225 289 219.5 294.5Q214 300 206 300Q198 300 192.5 294.5Q187 289 187 281V275H113V281Q112 289 107.0 294.5Q102 300 94 300Q86 300 80.5 294.5Q75 289 75 281V275H69Q50 275 34.0 266.0Q18 257 9.0 241.0Q0 225 0 206V69Q0 50 9.0 34.0Q18 18 34.0 9.0Q50 0 69 0H231Q250 0 266.0 9.0Q282 18 291.0 34.0Q300 50 300 69V206Q300 225 291.0 241.0Q282 257 266.0 266.0Q250 275 231 275ZM231 38H69Q56 38 47.0 47.0Q38 56 38 69V175H263V69Q262 56 253.0 47.0Q244 38 231 38Z"/></g></symbol><symbol id="i-document" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M213 144Q213 136 207.5 130.5Q202 125 194 125H106Q98 125 93.0 130.5Q88 136 88.0 144.0Q88 152 93.0 157.0Q98 162 106 163H194Q202 163 207.5 157.5Q213 152 213 144ZM156 100H106Q98 100 93.0 94.5Q88 89 88.0 81.0Q88 73 93.0 68.0Q98 63 106 63H156Q164 63 169.5 68.0Q175 73 175.0 81.0Q175 89 169.5 94.5Q164 100 156 100ZM275 198V69Q275 50 265.5 34.5Q256 19 240.5 9.5Q225 0 206 0H94Q75 0 59.5 9.5Q44 19 34.5 34.5Q25 50 25 69V231Q25 250 34.5 265.5Q44 281 59.5 290.5Q75 300 94 300H173Q187 300 199.5 295.0Q212 290 222 280L255 247Q265 237 270.0 224.5Q275 212 275 198ZM238 69V188H188Q177 188 170.0 195.0Q163 202 163 213V263H94Q81 262 72.0 253.0Q63 244 63 231V69Q63 56 72.0 47.0Q81 38 94 38H206Q219 38 228.0 47.0Q237 56 238 69Z"/></g></symbol><symbol id="i-book" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M206 300H106Q84 300 65.5 289.0Q47 278 36.0 259.5Q25 241 25 219V56Q25 33 41.5 16.5Q58 0 81 0H206Q225 0 240.5 9.5Q256 19 265.5 34.5Q275 50 275 69V231Q275 250 265.5 265.5Q256 281 240.5 290.5Q225 300 206 300ZM100 262V113H81Q72 112 63 109V219Q63 235 73.5 247.5Q84 260 100 262ZM238 69Q238 56 228.5 47.0Q219 38 206 38H81Q73 38 68.0 43.0Q63 48 63.0 56.0Q63 64 68.0 69.5Q73 75 81 75H238ZM138 113V263H206Q219 263 228.0 253.5Q237 244 237 231V113Z"/></g></symbol><symbol id="i-books" viewBox="-3 -300 300 300"><g transform="scale(1,-1)"><path d="M150 100H88V200H150ZM63 200H0V100H63ZM150 238V275Q150 285 142.5 292.5Q135 300 125 300H113Q102 300 95.0 292.5Q88 285 88 275V238ZM88 63V25Q88 15 95.0 7.5Q102 0 113 0H125Q135 0 142.5 7.5Q150 15 150 25V63ZM0 63V25Q0 15 7.5 7.5Q15 0 25 0H38Q48 0 55.5 7.5Q63 15 63 25V63ZM63 238V275Q63 285 55.5 292.5Q48 300 38 300H25Q15 300 7.5 292.5Q0 285 0 275V238ZM239 210 180 190 212 88 272 107ZM228 245 215 283Q212 292 203.0 297.0Q194 302 184 299L172 295Q162 292 157.5 282.5Q153 273 156 264L168 226ZM224 52 234 17Q237 8 246.5 3.0Q256 -2 266 1L278 5Q287 8 292.0 17.5Q297 27 294 36L283 71Z"/></g></symbol><symbol id="i-marker" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M150 300Q114 300 84.0 282.5Q54 265 36.5 234.5Q19 204 19 169Q19 115 101 22Q110 12 123.0 6.0Q136 0 150.0 0.0Q164 0 177.0 6.0Q190 12 200 22Q281 115 281 169Q281 204 263.5 234.5Q246 265 216.0 282.5Q186 300 150 300ZM171 47Q163 38 150.0 38.0Q137 38 129 47Q94 86 75.0 118.0Q56 150 56 169Q56 194 68.5 215.5Q81 237 102.5 249.5Q124 262 149.5 262.0Q175 262 196.5 249.5Q218 237 231.0 215.5Q244 194 244 169Q244 150 225.0 118.0Q206 86 171 47ZM150 224Q127 224 111.0 208.0Q95 192 95.0 169.5Q95 147 111.0 131.0Q127 115 150.0 115.0Q173 115 189.0 131.0Q205 147 205.0 169.5Q205 192 189.0 208.0Q173 224 150 224ZM150 153Q145 153 140.5 155.5Q136 158 134.0 163.0Q132 168 133.0 173.0Q134 178 138.0 181.5Q142 185 147.0 186.0Q152 187 156.5 185.5Q161 184 164.0 179.5Q167 175 167.0 169.0Q167 163 162.0 158.0Q157 153 150 153Z"/></g></symbol><symbol id="i-exchange" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M281 106H53L73 127Q77 130 78.5 135.0Q80 140 78.5 145.0Q77 150 73.5 153.5Q70 157 65.0 158.5Q60 160 55.0 158.5Q50 157 47 153L12 118Q0 105 0.0 87.5Q0 70 12 57L47 22Q52 17 59.5 17.0Q67 17 72.5 22.0Q78 27 78.5 35.0Q79 43 73 48L53 69H281Q289 69 294.5 74.5Q300 80 300.0 87.5Q300 95 294.5 100.5Q289 106 281 106ZM19 194H247L227 173Q223 170 221.5 165.0Q220 160 221.5 155.0Q223 150 226.5 146.5Q230 143 235.0 141.5Q240 140 245.0 141.5Q250 143 253 147L288 182Q300 195 300.0 212.5Q300 230 288 243L253 278Q248 283 240.5 283.0Q233 283 227.5 278.0Q222 273 221.5 265.0Q221 257 227 252L247 231H19Q11 231 5.5 225.5Q0 220 0.0 212.5Q0 205 5.5 199.5Q11 194 19 194Z"/></g></symbol><symbol id="i-interrogation" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M150 300Q109 300 74.5 280.0Q40 260 20.0 225.5Q0 191 0.0 150.0Q0 109 20.0 74.5Q40 40 74.5 20.0Q109 0 150.0 0.0Q191 0 225.5 20.0Q260 40 280.0 74.5Q300 109 300.0 150.0Q300 191 280.0 225.5Q260 260 225.5 280.0Q191 300 150 300ZM150 38Q119 38 93.5 53.0Q68 68 52.5 93.5Q37 119 37.5 150.0Q38 181 53.0 206.5Q68 232 93.5 247.5Q119 263 150.0 262.5Q181 262 206.5 247.0Q232 232 247.5 206.5Q263 181 262.5 150.0Q262 119 247.0 93.5Q232 68 206.5 53.0Q181 38 150 37ZM131 81Q131 73 136.5 67.5Q142 62 150.0 62.5Q158 63 163.5 68.0Q169 73 169.0 81.0Q169 89 163.5 94.5Q158 100 150.0 100.0Q142 100 136.5 94.5Q131 89 131 81ZM159 238Q148 240 136.5 237.0Q125 234 116.0 226.5Q107 219 102.0 208.0Q97 197 97 185Q97 178 102.5 172.5Q108 167 115.5 167.0Q123 167 128.5 172.5Q134 178 134.0 184.5Q134 191 138.0 195.5Q142 200 147.5 201.0Q153 202 158.0 199.0Q163 196 165.0 190.5Q167 185 165.0 179.5Q163 174 158 172Q146 167 139.0 156.0Q132 145 132 132Q132 124 137.5 118.5Q143 113 151.0 113.0Q159 113 164.5 118.5Q170 124 170 132V135Q172 137 176 139Q190 147 197.5 162.0Q205 177 202.5 194.0Q200 211 188.0 223.0Q176 235 160 238Z"/></g></symbol><symbol id="i-arrow-right" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M239 70 288 119Q300 132 300.0 150.0Q300 168 288 181L239 230Q234 235 226.0 235.0Q218 235 212.5 229.5Q207 224 207.0 216.5Q207 209 213 203L247 169L19 168Q11 168 5.5 162.5Q0 157 0 150Q0 142 5.5 136.5Q11 131 19 131H247L213 97Q207 91 207.0 83.5Q207 76 212.5 70.5Q218 65 225.5 65.0Q233 65 239 70Z"/></g></symbol><symbol id="i-lock" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M238 194V212Q238 236 226.0 256.0Q214 276 194.0 288.0Q174 300 150.0 300.0Q126 300 106.0 288.0Q86 276 74.0 256.0Q62 236 62 212V194Q45 185 34.5 168.5Q24 152 24 132V69Q24 50 33.5 34.5Q43 19 59.0 9.5Q75 0 93 0H207Q225 0 241.0 9.5Q257 19 266.5 34.5Q276 50 276 69V132Q276 152 265.5 168.5Q255 185 238 194ZM150 262Q171 262 185.5 247.5Q200 233 200 212V201H100V212Q100 233 114.5 247.5Q129 262 150 262ZM238 69Q238 56 229.0 47.0Q220 38 207 38H93Q80 38 71.0 47.0Q62 56 62 69V132Q62 145 71.0 154.5Q80 164 93 164H207Q220 164 229.0 154.5Q238 145 238 132ZM144 126H156Q164 126 169.5 120.5Q175 115 175 107Q175 99 169.5 93.5Q164 88 156 88H144Q136 88 130.5 93.5Q125 99 125 107Q125 115 130.5 120.5Q136 126 144 126Z"/></g></symbol><symbol id="i-copy" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M169 63H69Q50 63 34.5 72.0Q19 81 9.5 97.0Q0 113 0 131V231Q0 250 9.5 265.5Q19 281 34.5 290.5Q50 300 69 300H169Q187 300 203.0 290.5Q219 281 228.0 265.5Q237 250 237 231V131Q237 113 228.0 97.0Q219 81 203.0 72.0Q187 63 169 63ZM69 263Q56 262 47.0 253.0Q38 244 38 231V131Q38 118 47.0 109.0Q56 100 69 100H169Q182 100 191.0 109.0Q200 118 200 131V231Q200 244 191.0 253.5Q182 263 169 263ZM300 69V213Q300 220 294.5 225.5Q289 231 281.0 231.0Q273 231 267.5 225.5Q262 220 262 212V69Q263 56 253.5 47.0Q244 38 231 38H88Q80 38 74.5 32.5Q69 27 69.0 19.0Q69 11 74.5 5.5Q80 0 88 0H231Q250 0 265.5 9.5Q281 19 290.5 34.5Q300 50 300 69Z"/></g></symbol><symbol id="i-arrows-repeat" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M0 156Q0 185 14.5 209.5Q29 234 53.0 248.5Q77 263 106 262H238V283Q238 289 241.5 292.5Q245 296 250.0 296.0Q255 296 259 292L296 253Q300 249 300.0 244.0Q300 239 296 235L259 195Q255 192 250.0 192.0Q245 192 241.0 195.5Q237 199 237 204V225H106Q88 225 72.0 215.5Q56 206 47.0 190.5Q38 175 38 156Q38 148 32.5 142.5Q27 137 19.0 137.0Q11 137 5.5 142.5Q0 148 0 156ZM281 163Q273 163 268.0 157.5Q263 152 263 144Q263 125 253.5 109.5Q244 94 228.0 84.5Q212 75 194 75H63V96Q63 101 59.0 104.5Q55 108 50.0 108.0Q45 108 41 105L4 65Q0 61 0.0 56.0Q0 51 4 47L41 8Q45 4 50.0 4.0Q55 4 58.5 7.5Q62 11 62 17V38H194Q223 38 247.0 52.0Q271 66 285.5 90.5Q300 115 300 144Q300 152 294.5 157.5Q289 163 281 163Z"/></g></symbol><symbol id="i-stats" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M69 38Q56 38 47.0 47.0Q38 56 38 69V281Q38 289 32.5 294.5Q27 300 19 300Q11 300 5.5 294.5Q0 289 0 281V69Q0 50 9.0 34.0Q18 18 34.0 9.0Q50 0 69 0H281Q289 0 294.5 5.5Q300 11 300 19Q300 27 294.5 32.5Q289 38 281 38ZM244 75Q252 75 257.5 80.5Q263 86 263 94V169Q263 177 257.5 182.5Q252 188 244.0 188.0Q236 188 230.5 182.5Q225 177 225 169V94Q225 86 230.5 80.5Q236 75 244 75ZM94 75Q102 75 107.5 80.5Q113 86 113 94V169Q112 177 107.0 182.5Q102 188 94.0 188.0Q86 188 80.5 182.5Q75 177 75 169V94Q75 86 80.5 80.5Q86 75 94 75ZM169 75Q177 75 182.5 80.5Q188 86 188 94V231Q188 239 182.5 244.5Q177 250 169.0 250.0Q161 250 155.5 244.5Q150 239 150 231V94Q150 86 155.5 80.5Q161 75 169 75Z"/></g></symbol><symbol id="i-newspaper" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M231 300H131Q113 300 97.0 290.5Q81 281 71.5 265.5Q62 250 62 231V225H56Q33 225 16.5 208.5Q0 192 0 169V50Q0 29 14.5 14.5Q29 0 50 0H231Q250 0 265.5 9.5Q281 19 290.5 34.5Q300 50 300 69V231Q300 250 290.5 265.5Q281 281 265.5 290.5Q250 300 231 300ZM63 50Q62 45 58.5 41.5Q55 38 50.0 38.0Q45 38 41.5 41.5Q38 45 38 50V169Q38 177 43.0 182.0Q48 187 56 187H63ZM263 69Q263 56 253.5 47.0Q244 38 231 38H98Q100 44 100 50V231Q100 244 109.0 253.5Q118 263 131 263H231Q244 263 253.5 253.5Q263 244 263 231ZM238 206Q238 198 232.5 193.0Q227 188 219 188H194Q186 188 180.5 193.0Q175 198 175.0 206.0Q175 214 180.5 219.5Q186 225 194 225H219Q227 225 232.0 219.5Q237 214 237 206ZM238 144Q238 136 232.5 130.5Q227 125 219 125H144Q136 125 130.5 130.5Q125 136 125.0 144.0Q125 152 130.5 157.5Q136 163 144 163H219Q227 163 232.0 157.5Q237 152 237 144ZM238 81Q238 73 232.5 67.5Q227 62 219 62H144Q136 63 130.5 68.0Q125 73 125.0 81.0Q125 89 130.5 94.5Q136 100 144 100H219Q227 100 232.0 94.5Q237 89 237 81ZM125 206Q125 214 130.5 219.5Q136 225 144.0 225.0Q152 225 157.5 219.5Q163 214 163.0 206.0Q163 198 157.5 192.5Q152 187 144.0 187.0Q136 187 130.5 192.5Q125 198 125 206Z"/></g></symbol><symbol id="i-lightbulb-on" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M217 225Q201 239 180.5 245.5Q160 252 138 249Q104 246 79.5 221.5Q55 197 51 163Q47 137 59 111Q69 87 86 72Q93 66 96.5 57.5Q100 49 100 39Q100 23 111.5 11.5Q123 0 139 0H159Q176 0 188.0 12.0Q200 24 200 41Q200 51 203.5 59.5Q207 68 214 73Q231 88 240.5 108.0Q250 128 250.0 149.5Q250 171 241.0 190.5Q232 210 216 225ZM190 102Q177 91 170 75H169V128Q181 134 187 147Q189 153 185.5 158.0Q182 163 176 163H124Q118 163 114.5 158.0Q111 153 113 147Q119 134 131 128V75H130Q123 90 111.5 100.0Q100 110 93 125Q86 142 88 158Q90 179 105.5 194.5Q121 210 142 212H150Q174 213 192 197Q201 188 206.5 175.5Q212 163 212.0 149.5Q212 136 206.5 123.5Q201 111 190 102ZM204 272 216 291Q220 298 227.5 299.5Q235 301 241.5 297.0Q248 293 250.0 285.5Q252 278 248 271L236 253Q231 244 220 244Q215 244 211 247Q204 251 202.0 258.5Q200 266 204 272ZM289 209 271 201Q267 199 262.5 199.0Q258 199 253.5 202.0Q249 205 246.0 211.0Q243 217 246.0 224.5Q249 232 256 235L274 243Q281 246 288.0 243.5Q295 241 298.5 233.5Q302 226 299.0 219.0Q296 212 289 209ZM51 271Q47 278 49.0 285.5Q51 293 57.5 297.0Q64 301 71.5 299.5Q79 298 83 291L94 272Q99 266 97.0 258.5Q95 251 88 247Q84 244 79 244Q68 244 63 253ZM52 209Q50 204 45.0 201.0Q40 198 35.5 198.0Q31 198 27 200L11 208Q4 211 1.5 218.5Q-1 226 2.0 233.0Q5 240 12.5 242.5Q20 245 27 242L43 234Q50 231 52.5 223.5Q55 216 52 209Z"/></g></symbol><symbol id="i-target" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M150 300Q109 300 74.5 280.0Q40 260 20.0 225.5Q0 191 0.0 150.0Q0 109 20.0 74.5Q40 40 74.5 20.0Q109 0 150.0 0.0Q191 0 225.5 20.0Q260 40 280.0 74.5Q300 109 300.0 150.0Q300 191 280.0 225.5Q260 260 225.5 280.0Q191 300 150 300ZM169 39V56Q169 64 163.5 69.5Q158 75 150.0 75.0Q142 75 136.5 69.5Q131 64 131 56V39Q96 45 70.5 70.5Q45 96 39 131H56Q64 131 69.5 136.5Q75 142 75.0 150.0Q75 158 69.5 163.5Q64 169 56 169H39Q45 204 70.5 229.5Q96 255 131 261V244Q131 236 136.5 230.5Q142 225 150.0 225.0Q158 225 163.5 230.5Q169 236 169 244V261Q204 255 229.5 229.5Q255 204 261 169H244Q236 169 230.5 163.5Q225 158 225.0 150.0Q225 142 230.5 136.5Q236 131 244 131H261Q255 96 229.5 70.5Q204 45 169 39ZM200 150Q200 142 194.5 136.5Q189 131 181 131H169V119Q169 111 163.5 105.5Q158 100 150.0 100.0Q142 100 136.5 105.5Q131 111 131 119V131H119Q111 131 105.5 136.5Q100 142 100.0 150.0Q100 158 105.5 163.5Q111 169 119 169H131V181Q131 189 136.5 194.5Q142 200 150.0 200.0Q158 200 163.5 194.5Q169 189 169 181V169H181Q189 169 194.5 163.5Q200 158 200 150Z"/></g></symbol><symbol id="i-info" viewBox="0 -300 300 300"><g transform="scale(1,-1)"><path d="M150 300Q109 300 74.5 280.0Q40 260 20.0 225.5Q0 191 0.0 150.0Q0 109 20.0 74.5Q40 40 74.5 20.0Q109 0 150.0 0.0Q191 0 225.5 20.0Q260 40 280.0 74.5Q300 109 300.0 150.0Q300 191 280.0 225.5Q260 260 225.5 280.0Q191 300 150 300ZM150 38Q119 38 93.5 53.0Q68 68 52.5 93.5Q37 119 37.5 150.0Q38 181 53.0 206.5Q68 232 93.5 247.5Q119 263 150.0 262.5Q181 262 206.5 247.0Q232 232 247.5 206.5Q263 181 262.5 150.0Q262 119 247.0 93.5Q232 68 206.5 53.0Q181 38 150 38ZM144 181H141Q133 181 127.0 176.0Q121 171 120.5 163.5Q120 156 125.0 150.0Q130 144 138 143V85Q138 77 143.0 71.5Q148 66 156.0 66.0Q164 66 169.5 71.5Q175 77 175 85V150Q175 163 166.0 172.0Q157 181 144 181ZM148 194Q157 194 163.0 200.5Q169 207 169.0 216.0Q169 225 163.0 231.0Q157 237 148.0 237.0Q139 237 132.5 231.0Q126 225 126.0 216.0Q126 207 132.5 200.5Q139 194 148 194Z"/></g></symbol><symbol id="i-graduation-cap" viewBox="-0 -300 300 300"><g transform="scale(1,-1)"><path d="M274 237Q274 237 184 279Q168 287 150.0 287.0Q132 287 116 279L26 237Q8 227 2.0 207.5Q-4 188 6 170Q13 157 26 150L63 133V74Q63 55 74.0 40.0Q85 25 103 19Q126 12 150.0 12.0Q174 12 197 19Q215 25 226.0 40.0Q237 55 238 74V133L263 145V56Q263 48 268.0 43.0Q273 38 281.0 37.5Q289 37 294.5 42.5Q300 48 300 56V194Q300 208 293.0 219.5Q286 231 274 237ZM200 74Q200 68 196.0 62.5Q192 57 186 55Q150 45 114 55Q108 57 104.0 62.5Q100 68 100 74V116L116 109Q132 100 150.0 100.0Q168 100 184 109L200 116ZM256 183Q211 163 166 142Q159 137 150.0 137.0Q141 137 134 142L44 183Q40 185 38.5 190.0Q37 195 39.0 199.0Q41 203 44 204L134 246Q141 250 150.0 250.0Q159 250 166 246L256 204Q260 202 261.5 197.5Q263 193 261.0 189.0Q259 185 256 183Z"/></g></symbol></svg>
+
+<header class="wrap top">
+  <div>
+    <div class="kicker">PG01 · Week 3 · Session 3</div>
+    <h1>Using Sources Lab</h1>
+    <p>Class page for both parts of today's session. Your answers stay in this browser only. Use "Copy my work" to paste them into Moodle.</p>
+  </div>
+  <div class="who">
+    <label for="studentName">Your name</label>
+    <input type="text" id="studentName" data-k="name" autocomplete="name" placeholder="First and last name">
+    <button class="iconbtn" id="themeBtn" type="button" aria-label="Switch light or dark mode"><svg class="ic"><use href="#i-moon"/></svg><span>Theme</span></button>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap" role="tablist">
+    <button class="tab" role="tab" id="tab-s1" aria-controls="s1" aria-selected="true"><svg class="ic"><use href="#i-quote-right"/></svg>Session 1</button>
+    <button class="tab" role="tab" id="tab-s2" aria-controls="s2" aria-selected="false"><svg class="ic"><use href="#i-link"/></svg>Session 2</button>
+    <button class="tab" role="tab" id="tab-practice" aria-controls="practice" aria-selected="false"><svg class="ic"><use href="#i-target"/></svg>Practice</button>
+    <button class="tab" role="tab" id="tab-toolkit" aria-controls="toolkit" aria-selected="false"><svg class="ic"><use href="#i-book"/></svg>Toolkit</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= SESSION 1 ================= -->
+<section class="panel" id="s1" role="tabpanel" aria-labelledby="tab-s1">
+  <div class="intro">
+    <div class="kicker">Part 1 · Whose words are these?</div>
+    <div class="q">How do you use another writer's ideas without stealing their words or changing their meaning?</div>
+    <p>By the end: choose between quoting, paraphrasing and summarising; paraphrase with SWAPS; synthesise two sources in one cited paragraph.</p>
+  </div>
+
+  <article class="task activity" data-task="1.1 Rank the four versions">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-list"/></svg></div>
+      <div><h2>Task 1.1 · Rank these four versions</h2><div class="meta"><span class="tag">Pairs</span><span class="tag">5 min</span><span class="tag slide">Slide 3</span></div></div></div>
+    <div class="src"><b class="lab">Original (BBC, 2021)</b>The BRT uses triple section bendy buses and it is cheaper to run than a tube system. It carries 2 million passengers a day; 80% of travellers use the BRT.</div>
+    <p class="how">Move the versions from most acceptable (top) to least acceptable (bottom) in an academic report. Write one reason for each.</p>
+    <ol class="rank" data-k="r11" data-label="My ranking (most to least acceptable)">
+      <li data-id="A"><span class="pos"></span><div class="body"><div class="ver"><b>A</b>The BRT uses triple section bendy buses and it is cheaper to run than a tube system. It carries 2 million passengers a day; 80% of travellers use the BRT (BBC, 2021).</div><input type="text" id="r11A" data-k="r11A" data-label="Reason A" placeholder="Reason for A"></div><div class="moves"></div></li>
+      <li data-id="B"><span class="pos"></span><div class="body"><div class="ver"><b>B</b>The BRT uses triple-section articulated buses and is less expensive to run than a metro system. It transports 2 million passengers daily; 80% of commuters use the BRT.</div><input type="text" id="r11B" data-k="r11B" data-label="Reason B" placeholder="Reason for B"></div><div class="moves"></div></li>
+      <li data-id="C"><span class="pos"></span><div class="body"><div class="ver"><b>C</b>Curitiba's bus network, which is cheaper to operate than an underground railway, is used by 8 out of 10 people and moves 2 million passengers every day (BBC, 2021).</div><input type="text" id="r11C" data-k="r11C" data-label="Reason C" placeholder="Reason for C"></div><div class="moves"></div></li>
+      <li data-id="D"><span class="pos"></span><div class="body"><div class="ver"><b>D</b>Curitiba's BRT runs on three-section articulated buses, which cost less to operate than an underground railway. The system moves two million passengers daily, and four out of five travellers in the city use it (BBC, 2021).</div><input type="text" id="r11D" data-k="r11D" data-label="Reason D" placeholder="Reason for D"></div><div class="moves"></div></li>
+    </ol>
+    <details class="reveal lock"><summary><svg class="ic"><use href="#i-lock"/></svg>Task 1.2 · Open when your lecturer says: the reveal</summary>
+      <div class="rv">
+        <p>Turnitin compares strings of words. Your marker compares meaning.</p>
+        <div class="vt">
+          <div><b class="l">A</b><span class="pill bad">High match</span><span class="pill bad">Plagiarism</span><span>Exact wording with no quotation marks. A citation does not fix copied wording.</span></div>
+          <div><b class="l">B</b><span class="pill warn">Partial match</span><span class="pill bad">Plagiarism</span><span>Words swapped, structure kept, no citation (patchwriting).</span></div>
+          <div><b class="l">C</b><span class="pill ok">Low match</span><span class="pill bad">Misrepresents</span><span>The BBC says 80% of travellers, not "8 out of 10 people".</span></div>
+          <div><b class="l">D</b><span class="pill ok">Low match</span><span class="pill ok">Acceptable</span><span>New structure, same meaning, cited.</span></div>
+        </div>
+        <p class="model"><strong>Model ranking:</strong> D, C, A, B. C and A are close; what matters is that only D is acceptable.</p>
+        <p class="twist">Version C would pass Turnitin with almost 0%. It still fails, because it says something the source never said.</p>
+      </div>
+    </details>
+  </article>
+
+  <article class="task" data-task="1.3 Spot the drift">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-search"/></svg></div>
+      <div><h2>Task 1.3 · Spot the drift</h2><div class="meta"><span class="tag">1 min silent, then pairs</span><span class="tag slide">Slide 5</span></div></div></div>
+    <div class="two">
+      <div class="src"><b class="lab">BBC News, 5 July 2024</b>"US jobs growth slowed last month although the economy still created more posts than expected, official figures show. Employers added 206,000 jobs in June ..."</div>
+      <div class="src"><b class="lab">Paraphrase on last year's slide</b>"Employers advertised over 205,000 jobs in June, adding to the 218,000 posts created in May. Unemployment in the US increased to just over 4% ... (BBC, 2024)."</div>
+    </div>
+    <div class="field"><span class="flabel">Is the meaning kept?</span>
+      <div class="chips" data-k="c13" data-label="Verdict"><button type="button" class="chip" data-v="Meaning kept" data-tone="ok">Meaning kept</button><button type="button" class="chip" data-v="Meaning changed" data-tone="bad">Meaning changed</button></div></div>
+    <div class="field"><label for="t13">Evidence: which word changes the meaning? Would Turnitin notice?</label><textarea id="t13" data-k="t13" data-label="Evidence"></textarea></div>
+    <details class="reveal lock"><summary><svg class="ic"><use href="#i-lock"/></svg>Open when your lecturer says</summary>
+      <div class="rv"><p><strong>Meaning changed.</strong> The BBC says employers <em>added</em> 206,000 jobs. <em>Advertised</em> means offered vacancies, which is a different thing: a job can be advertised and never filled. "Over 205,000" is also less precise than 206,000.</p>
+      <p>Turnitin would not notice: the words are different, so the similarity score is low. Only a reader who checks the source sees the error. Check every verb and every number against the original.</p></div>
+    </details>
+  </article>
+
+  <article class="task activity" data-task="1.4 Group paraphrase">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-shuffle"/></svg></div>
+      <div><h2>Task 1.4 · Paraphrase the Sustainable Transport paragraph</h2><div class="meta"><span class="tag">Groups of 3</span><span class="tag">15 min + 5 min peer check</span><span class="tag slide">Slides 11-12</span></div></div></div>
+    <div class="src"><b class="lab">Original</b>There are a number of ways a city can plan to make transport more sustainable. Firstly, cities can discourage the use of private transport. An example of this is the Bus Rapid Transport (BRT) System in Curitiba, Brazil. The BRT uses triple section bendy buses and it is cheaper to run than a tube system. It carries 2 million passengers a day; 80% of travellers use the BRT. The bus fare is the same wherever you go, and some employers subsidise their employees who use it. Nobody lives more than 400 metres from a bus stop. In London, they introduced a congestion charge for vehicles driving through certain areas.<cite>BBC. (2021). Sustainable living. BBC Bitesize. https://www.bbc.co.uk/bitesize/guides/zqvxdmn/revision/1</cite></div>
+    <p class="how">Roles: writer, SWAPS checker, meaning checker. Read once without writing. Then write, hide the original, reread, compare, cite.</p>
+    <div class="field"><label for="t14">Our paraphrase</label><textarea id="t14" data-k="t14" data-label="Group paraphrase" data-count="1" style="min-height:160px"></textarea><span class="count" data-for="t14"></span></div>
+    <div class="field"><span class="flabel">SWAPS levers we used</span>
+      <div class="checks" data-k="k14" data-label="SWAPS levers used">
+        <label><input type="checkbox" value="Synonyms">Synonyms</label><label><input type="checkbox" value="Word form">Word form</label><label><input type="checkbox" value="Active/passive">Active / passive</label><label><input type="checkbox" value="Position of ideas">Position of ideas</label><label><input type="checkbox" value="Statistics & time">Statistics &amp; time</label></div></div>
+    <div class="field"><span class="flabel">Peer check (the other group fills this in)</span>
+      <div class="row"><span class="stmt">Meaning kept?</span><div class="chips" data-k="p14a" data-label="Peer: meaning kept"><button type="button" class="chip" data-v="Yes" data-tone="ok">Yes</button><button type="button" class="chip" data-v="Not yet" data-tone="bad">Not yet</button></div></div>
+      <div class="row"><span class="stmt">Look changed? No copied strings?</span><div class="chips" data-k="p14b" data-label="Peer: look changed"><button type="button" class="chip" data-v="Yes" data-tone="ok">Yes</button><button type="button" class="chip" data-v="Not yet" data-tone="bad">Not yet</button></div></div>
+      <div class="row"><span class="stmt">Source cited in a suitable place?</span><div class="chips" data-k="p14c" data-label="Peer: cited"><button type="button" class="chip" data-v="Yes" data-tone="ok">Yes</button><button type="button" class="chip" data-v="Not yet" data-tone="bad">Not yet</button></div></div>
+    </div>
+    <details class="reveal"><summary><svg class="ic"><use href="#i-eye"/></svg>Compare with the model answer</summary>
+      <div class="rv"><p class="model">Cities have several options when they plan to make their transport systems more sustainable, and the first is to discourage people from using private vehicles. Curitiba, in Brazil, offers an example with its Bus Rapid Transport (BRT) system. Its three-section articulated buses are less expensive to operate than an underground railway, and the network moves two million passengers daily, with four out of five travellers in the city using it. Passengers pay one fare regardless of distance, some companies give their staff a subsidy for using the service, and every resident lives within 400 metres of a stop. In London, a congestion charge has been introduced for vehicles that drive through certain zones (BBC, 2021).</p>
+      <ul><li><strong>S</strong> less expensive, articulated, staff, zones</li><li><strong>W</strong> subsidise &gt; a subsidy</li><li><strong>A</strong> they introduced a congestion charge &gt; a congestion charge has been introduced</li><li><strong>P</strong> the 400 m fact and the fare moved</li><li><strong>S</strong> 2 million a day &gt; two million daily; 80% &gt; four out of five</li></ul>
+      <p>Keep exact: 400 metres, "some" employers, "travellers" (not "people").</p></div>
+    </details>
+  </article>
+
+  <article class="task" data-task="1.5 Sentence builder">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-pencil"/></svg></div>
+      <div><h2>Task 1.5 · Sentence builder</h2><div class="meta"><span class="tag">Individual</span><span class="tag">Use any time</span><span class="tag slide">Slide 17</span></div></div></div>
+    <p class="how">Choose a frame, fill in the details, and the builder drafts a cited sentence for your report. Then edit it in your own words.</p>
+    <div class="two">
+      <div class="field"><label for="sbFrame">Frame</label>
+        <select id="sbFrame" data-k="sbFrame" data-label="Frame">
+          <option value="acc">According to Author (Year), ...</option>
+          <option value="rep">Author (Year) reports that ...</option>
+          <option value="end">... (Author, Year).</option>
+          <option value="both">Both A (Year) and B (Year) highlight ...</option>
+          <option value="while">While A (Year) argues ..., B (Year) suggests ...</option>
+          <option value="semi">... (A, Year; B, Year).</option>
+          <option value="quote">Author (Year) defines X as "..." (p. n).</option>
+        </select></div>
+      <div class="field"><label for="sbVerb">Reporting verb</label>
+        <select id="sbVerb" data-k="sbVerb" data-label="Verb"><option>reports</option><option>argues</option><option>suggests</option><option>shows</option><option>notes</option><option>warns</option><option>claims</option></select></div>
+      <div class="field"><label for="sbA">Author A (surname or organisation)</label><input type="text" id="sbA" data-k="sbA" data-label="Author A" value="Walden University"></div>
+      <div class="field"><label for="sbAy">Year A</label><input type="text" id="sbAy" data-k="sbAy" data-label="Year A" value="2024"></div>
+      <div class="field"><label for="sbB">Author B (two-source frames)</label><input type="text" id="sbB" data-k="sbB" data-label="Author B" value="Shonubi"></div>
+      <div class="field"><label for="sbBy">Year B</label><input type="text" id="sbBy" data-k="sbBy" data-label="Year B" value="2023"></div>
+    </div>
+    <div class="field"><label for="sbC1">Idea from A (or the shared idea), in your own words</label><input type="text" id="sbC1" data-k="sbC1" data-label="Idea A" value="students who interact more with software than with teachers may feel isolated"></div>
+    <div class="field"><label for="sbC2">Idea from B (two-source frames) or page number (quote frame)</label><input type="text" id="sbC2" data-k="sbC2" data-label="Idea B" value="AI cannot replace the emotional support that teachers provide"></div>
+    <div class="out" id="sbOut" aria-live="polite"></div>
+    <div class="actions"><button class="btn ghost" type="button" id="sbCopy"><svg class="ic"><use href="#i-copy"/></svg>Copy sentence</button><span class="status" id="sbStatus"></span></div>
+  </article>
+
+  <article class="task activity" data-task="1.6 Synthesis">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-layers"/></svg></div>
+      <div><h2>Task 1.6 · Synthesise two texts: disadvantages of AI in education</h2><div class="meta"><span class="tag">Groups of 3</span><span class="tag">25 min</span><span class="tag slide">Slides 15-16</span></div></div></div>
+    <details class="reveal"><summary><svg class="ic"><use href="#i-document"/></svg>Read Text 1 and Text 2</summary>
+      <div class="rv">
+        <div class="src"><b class="lab">Text 1</b>Some teachers and instructors may see AI as a threat to their jobs, believing it will automate their tasks and make them redundant. But it is important to note that AI is not meant to replace teachers but rather to assist them in their work. AI is a tool and should be developed and used as such. There are also negatives to consider, one of which is the cost of developing and implementing AI-powered educational tools. This can be a significant barrier for schools and teachers who need more resources to invest in AI technology. There is also the lack of human interaction and emotional support that students receive when using AI-powered educational tools. While AI can provide personalized learning and instant feedback, it cannot replace the human and emotional support that students need to succeed, and relying too heavily on AI-powered educational tools may impact students negatively. Privacy concerns are also a limitation of AI in the classroom. AI-powered educational tools may collect and store sensitive personal data, which raises concerns about privacy and security.<cite>Shonubi, O. (2023, February 21). AI in the classroom: Pros, cons and the role of edtech companies. Forbes. (adapted)</cite></div>
+        <div class="src"><b class="lab">Text 2</b>Artificial intelligence is only as knowledgeable as the information it has been trained on. If a program like ChatGPT is trained on biased information, then when a student asks it a question, they could get a biased response, which can perpetuate stereotypes and social inequalities. If a biased AI tool is used for grading, students could receive low grades based on their race or gender. In addition to bias, artificial intelligence may generate misinformation. The data that AI draws from may have errors, be outdated, or spread misinformation. Neither students nor teachers should assume that information provided by AI is accurate. Another problem is that students can use ChatGPT to write entire essays, answer quiz questions, or do their homework. Ironically, now there are AI programs that can detect AI writing to help teachers determine if their students are cheating. But sometimes those programs may falsely identify a student's original work as plagiarism. As well potentially reducing learning, if students interact with a software program more than with a teacher, their social interaction is also reduced, and they can begin to feel disconnected and isolated. Their motivation and engagement may decrease, which could lead to an increase in dropout rates.<cite>Walden University. (2024). 5 pros and cons of AI in the education sector. (adapted)</cite></div>
+        <p><strong>Credibility check:</strong> Text 1 is a Forbes Councils post written by a business owner, not a Forbes journalist. Walden University sells degrees. Who has a vested interest?</p>
+      </div>
+    </details>
+    <div class="field"><span class="flabel">Step 1 · Synthesis grid: one theme per row</span>
+      <div class="tablewrap"><table class="grid"><thead><tr><th style="width:28%">Theme</th><th>Text 1 (Shonubi, 2023)</th><th>Text 2 (Walden University, 2024)</th></tr></thead><tbody id="gridBody"></tbody></table></div></div>
+    <div class="field"><label for="t16">Step 3 · Our paragraph (about 200 words)</label><textarea id="t16" data-k="t16" data-label="Synthesis paragraph" data-count="200" style="min-height:180px"></textarea><span class="count" data-for="t16"></span></div>
+    <details class="reveal"><summary><svg class="ic"><use href="#i-eye"/></svg>Compare with the model answer</summary>
+      <div class="rv">
+        <div class="tablewrap"><table class="grid"><thead><tr><th>Theme</th><th>Text 1</th><th>Text 2</th></tr></thead><tbody>
+          <tr><td>Less human contact</td><td>no emotional support</td><td>isolation, lower motivation, dropout</td></tr>
+          <tr><td>Bias</td><td></td><td>biased answers, stereotypes, unfair grades</td></tr>
+          <tr><td>Misinformation</td><td></td><td>errors, outdated data</td></tr>
+          <tr><td>Cheating and detection</td><td></td><td>AI-written essays; detectors falsely flag original work</td></tr>
+          <tr><td>Cost</td><td>barrier for schools with few resources</td><td></td></tr>
+          <tr><td>Privacy</td><td>sensitive personal data stored</td><td></td></tr>
+          <tr><td>Teacher jobs</td><td>feared, but AI is meant to assist</td><td></td></tr>
+        </tbody></table></div>
+        <p class="model">Although AI tools can support learning, several potential disadvantages of their use in education have been identified. Both sources warn that heavy reliance on AI may reduce human contact: AI cannot replace the emotional support that teachers provide (Shonubi, 2023), and students who interact more with software than with teachers may feel isolated, lose motivation and be more likely to drop out (Walden University, 2024). A second concern is the quality of the information AI produces. Because these systems depend on their training data, they may give biased answers that reinforce stereotypes, assign unfair grades, or spread inaccurate or outdated information (Walden University, 2024). Academic integrity is a further issue, since students can use tools such as ChatGPT to complete their work, while the programs designed to detect this may wrongly flag original writing (Walden University, 2024). In addition, the cost of developing and introducing AI tools may be a barrier for schools with limited resources, and these tools may collect and store sensitive personal data, which raises privacy and security concerns (Shonubi, 2023). However, the fear that AI will replace teachers appears less justified, as it is intended to assist them rather than make them redundant (Shonubi, 2023).</p>
+        <p>Notice: shared theme first with both sources cited; every borrowed point has its own citation; linking words carry the argument; the counter-point closes the paragraph.</p>
+      </div>
+    </details>
+  </article>
+
+  <article class="task" data-task="1.7 Summary (optional)">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-list"/></svg></div>
+      <div><h2>Task 1.7 · Summarise in under 70 words (optional or homework)</h2><div class="meta"><span class="tag">Individual</span><span class="tag">10 min</span><span class="tag slide">Slide 13</span></div></div></div>
+    <details class="reveal"><summary><svg class="ic"><use href="#i-document"/></svg>Read the text: Advantages of AI in the classroom</summary>
+      <div class="rv"><div class="src">One of the main advantages of AI in the classroom is personalized learning. AI-powered educational tools can analyse data on student performance and provide tailored support to improve their grades. AI can also provide instant feedback. For example, AI-powered educational tools can provide students with immediate feedback on their work, allowing them to identify and correct mistakes quickly. Another advantage of AI is its ability to automate repetitive tasks. It can grade assignments and quizzes, which can free up teachers' time for other tasks, such as lesson planning and providing more one-on-one attention to students. There are already a few AI tools that are supporting learning in classroom or workplace contexts. For example, Ahura is an AI-powered learning assistant that tracks learning habits by observing attention and engagement. Knewton offers an adaptive learning platform that provides personalized learning experiences for students. Querium is an AI-powered tutor that provides students with step-by-step tutoring on math problems and builds personalized lesson plans. ALEKS is an AI-powered learning platform that provides individualized learning paths based on students' strengths and weaknesses. Carnegie Learning offers an AI-powered tutor that helps students improve their math skills by providing personalized learning based on their performance. There's also Smart Sparrow, which allows users to provide constructive feedback that is unique to each student. Finally, Gradescope is an AI-powered grading tool that automates the grading process, which can free up teachers' time and allow them to provide more individualized attention to students.<cite>Shonubi, O. (2023, February 21). Forbes. (adapted)</cite></div></div>
+    </details>
+    <div class="field"><label for="t17">My summary</label><textarea id="t17" data-k="t17" data-label="Summary under 70 words" data-max="70"></textarea><span class="count" data-for="t17"></span></div>
+    <details class="reveal"><summary><svg class="ic"><use href="#i-eye"/></svg>Compare with the model answer</summary>
+      <div class="rv"><p class="model">AI offers several advantages in the classroom. It can personalise learning by analysing performance data, give students immediate feedback so they can correct mistakes quickly, and automate repetitive tasks such as grading, giving teachers more time for planning and individual support. Platforms such as Knewton, ALEKS and Gradescope already provide these functions (Shonubi, 2023). <span class="count">(56 words)</span></p>
+      <p>Selected: the three advantages. Left out: most of the tool list. Kept: tool names (names are not paraphrased).</p></div>
+    </details>
+  </article>
+
+  <article class="task activity" data-task="1.8 My Assessment 1 evidence">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-graduation-cap"/></svg></div>
+      <div><h2>Task 1.8 · On your own: your first paragraph of evidence</h2><div class="meta"><span class="tag">Individual</span><span class="tag">15 min</span><span class="tag slide">Slide 18</span></div></div></div>
+    <p class="how">Use one source on your Assessment 1 sustainability topic that passed your credibility check, or the BBC Sustainable Living text.</p>
+    <div class="field"><label for="t18src">Source (author, year, title, URL)</label><input type="text" id="t18src" data-k="t18src" data-label="Source"></div>
+    <div class="field"><label for="t18orig">Original paragraph (60-120 words)</label><textarea id="t18orig" data-k="t18orig" data-label="Original paragraph" data-count="1"></textarea><span class="count" data-for="t18orig"></span></div>
+    <div class="field"><label for="t18para">My paraphrase with a citation (three or more SWAPS levers)</label><textarea id="t18para" data-k="t18para" data-label="My paraphrase" data-count="1"></textarea><span class="count" data-for="t18para"></span></div>
+    <div class="field"><label for="t18sum">One-sentence summary with a citation</label><input type="text" id="t18sum" data-k="t18sum" data-label="One-sentence summary"></div>
+    <div class="field"><span class="flabel">3-check</span><div class="checks" data-k="k18" data-label="3-check"><label><input type="checkbox" value="Meaning kept">Meaning kept</label><label><input type="checkbox" value="Look changed">Look changed</label><label><input type="checkbox" value="Source cited">Source cited</label></div></div>
+  </article>
+
+  <article class="task" data-task="Exit ticket 1">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-check"/></svg></div>
+      <div><h2>Exit ticket · Before the break</h2><div class="meta"><span class="tag">3 min</span><span class="tag slide">Slide 19</span></div></div></div>
+    <div class="quiz" data-quiz="exit1"></div>
+  </article>
+
+  <div class="actions"><button class="btn" type="button" data-copy="s1"><svg class="ic"><use href="#i-clipboard"/></svg>Copy my work (Session 1)</button><span class="status" data-status="s1"></span></div>
+</section>
+
+<!-- ================= SESSION 2 ================= -->
+<section class="panel" id="s2" role="tabpanel" aria-labelledby="tab-s2" hidden>
+  <div class="intro">
+    <div class="kicker">Part 2 · Could your reader find it?</div>
+    <div class="q">If your marker checked every citation in your report, would each one lead to the right source?</div>
+    <p>By the end: place citations exactly; build APA 7 references with the 4W check; find and fix errors in app-generated and model references.</p>
+  </div>
+
+  <article class="task activity" data-task="2.1 Warm-up quiz">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-lightbulb-on"/></svg></div>
+      <div><h2>Task 2.1 · Recall from Week 2</h2><div class="meta"><span class="tag">Individual</span><span class="tag">3 min</span><span class="tag slide">Slide 3</span></div></div></div>
+    <div class="quiz" data-quiz="warm2"></div>
+  </article>
+
+  <article class="task activity" data-task="2.2 Be the marker">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-marker"/></svg></div>
+      <div><h2>Task 2.2 · Be the marker</h2><div class="meta"><span class="tag">Pairs</span><span class="tag">6 min</span><span class="tag slide">Slides 4-5</span></div></div></div>
+    <details class="reveal"><summary><svg class="ic"><use href="#i-document"/></svg>Reference list of the Culture Shock model report</summary>
+      <div class="rv">
+        <p class="ref">Crighton, A. (2011a). <em>A Different Way of Life</em>. Cambridge University</p>
+        <p class="ref">Crighton, A. (2011b, September 3). Living Abroad. <em>The Times,</em> 3.</p>
+        <p class="ref">Davies, P. (2008). <em>Culture Shock</em> (3rd ed.) London University Press.</p>
+        <p class="ref">Fredston, L. (1999). Different Country, Different Life. <em>The Journal of Travel, 3</em>(2), 58 – 94.</p>
+        <p class="ref">GoCulture (2009, March 12). <em>Live and Learn</em>. https://www.goculture.com/live_learn/123</p>
+        <p class="ref">Smith, T., Black, F., Jones, B. &amp; Grey, H. (2010). Homesickness Explained. <em>The Journal of Psychology, 23</em>(9), 5-12. https://doi.org/19.1980256845/qwesdft</p>
+        <p class="ref">Tropical Medical Bureau (2016, May 15). <em>How to combat culture shock: Culture Shock Curve</em>. https://www.tmb.ie/blog/how-to-combat-culture-shock</p>
+        <p class="ref">Young, K. and Black, J. (2009, January 18). Not Bad, Just Different. <em>The Guardian.</em> https://www.guardian.com/world/2009/jan/18/notbadjustdifferent</p>
+      </div>
+    </details>
+    <p class="how">For each citation from the report text, find its entry. Could a reader reach the source?</p>
+    <div class="row"><span class="stmt"><span class="num">1</span>... some highs and some lows (Smith, et al., 2010).</span>
+      <div class="chips" data-k="c22a" data-label="Citation 1"><button type="button" class="chip" data-v="Can reach it" data-tone="ok">Can reach it</button><button type="button" class="chip" data-v="Reachable, wrong format" data-tone="warn">Reachable, wrong format</button><button type="button" class="chip" data-v="Cannot reach it" data-tone="bad">Cannot reach it</button></div>
+      <input type="text" id="e22a" data-k="e22a" data-label="Evidence 1" placeholder="What stops you?"></div>
+    <div class="row"><span class="stmt"><span class="num">2</span>(Tropical Medicine Bureau, 2016)</span>
+      <div class="chips" data-k="c22b" data-label="Citation 2"><button type="button" class="chip" data-v="Can reach it" data-tone="ok">Can reach it</button><button type="button" class="chip" data-v="Reachable, wrong format" data-tone="warn">Reachable, wrong format</button><button type="button" class="chip" data-v="Cannot reach it" data-tone="bad">Cannot reach it</button></div>
+      <input type="text" id="e22b" data-k="e22b" data-label="Evidence 2" placeholder="What stops you?"></div>
+    <div class="row"><span class="stmt"><span class="num">3</span>Young and Black (2009) observe that "foreigners are eager to mingle with the locals and try new foods" (p.5).</span>
+      <div class="chips" data-k="c22c" data-label="Citation 3"><button type="button" class="chip" data-v="Can reach it" data-tone="ok">Can reach it</button><button type="button" class="chip" data-v="Reachable, wrong format" data-tone="warn">Reachable, wrong format</button><button type="button" class="chip" data-v="Cannot reach it" data-tone="bad">Cannot reach it</button></div>
+      <input type="text" id="e22c" data-k="e22c" data-label="Evidence 3" placeholder="What stops you?"></div>
+    <details class="reveal lock"><summary><svg class="ic"><use href="#i-lock"/></svg>Open when your lecturer says</summary>
+      <div class="rv">
+        <div class="vt">
+          <div><b class="l">1</b><span class="pill bad">Cannot reach</span><span></span><span>The DOI starts with 19. Every DOI starts with "10.", so this link cannot work. Also: "Smith, et al." should be "Smith et al." (no comma).</span></div>
+          <div><b class="l">2</b><span class="pill bad">Cannot reach</span><span></span><span>Name mismatch: the text says Tropical <em>Medicine</em> Bureau, the list says Tropical <em>Medical</em> Bureau. The reader finds nothing under the cited name.</span></div>
+          <div><b class="l">3</b><span class="pill warn">Wrong format</span><span></span><span>"and" should be "&amp;" with a comma (Young, K., &amp; Black, J.), the title should be in sentence case, and the Guardian's domain is theguardian.com. In the text: (p. 5) with a space.</span></div>
+        </div>
+        <p class="twist">Even a model report can be wrong. Never copy a reference: build it from the source and check it.</p>
+      </div>
+    </details>
+  </article>
+
+  <article class="task" data-task="2.3 Placement check">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-marker"/></svg></div>
+      <div><h2>Task 2.3 · Correct or not? If not, fix it</h2><div class="meta"><span class="tag">Pairs</span><span class="tag">6 min</span><span class="tag slide">Slides 8-9</span></div></div></div>
+    <div id="placeRows" style="display:grid;gap:10px"></div>
+    <details class="reveal lock"><summary><svg class="ic"><use href="#i-lock"/></svg>Open when your lecturer says</summary>
+      <div class="rv"><ol>
+        <li><span class="pill bad">No</span> Brackets in the wrong place: According to Fredston (1999), although ...</li>
+        <li><span class="pill ok">Yes</span> Reporting verb, quotation marks, page number after the quote.</li>
+        <li><span class="pill bad">No</span> No reporting verb: Davies (2008) explains that these difficulties ...</li>
+        <li><span class="pill bad">No</span> The citation is on the writer's own sentence. Move it: ... some highs and some lows (Smith et al., 2010). This report will ...</li>
+        <li><span class="pill bad">No</span> No brackets, and the 80% statistic has no source: ... more noticeable (Fredston, 1999). The 80% claim needs its own citation.</li>
+      </ol></div>
+    </details>
+  </article>
+
+  <article class="task" data-task="2.4 Secondary source">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-arrows-repeat"/></svg></div>
+      <div><h2>Task 2.4 · Mulrooney cites Butland. Who do you cite?</h2><div class="meta"><span class="tag">Individual</span><span class="tag">2 min</span><span class="tag slide">Slide 10</span></div></div></div>
+    <div class="src">You read Mulrooney (2019). On page 294 she writes that energy balance is affected by many factors, many of them outside conscious control (Butland et al, 2007). You cannot find Butland et al. (2007).</div>
+    <div class="field"><label for="t24a">Your in-text citation</label><input type="text" id="t24a" data-k="t24a" data-label="Secondary citation"></div>
+    <div class="field"><label for="t24b">What goes on your reference list?</label><input type="text" id="t24b" data-k="t24b" data-label="Reference list entry for it"></div>
+    <details class="reveal"><summary><svg class="ic"><use href="#i-eye"/></svg>Compare with the model answer</summary>
+      <div class="rv"><p class="model">(Butland et al., 2007, as cited in Mulrooney, 2019)</p><p>Reference list: Mulrooney only, because you read only Mulrooney. Best option: find Butland et al. (2007) yourself (the UK Government Foresight report <em>Tackling obesities: Future choices</em>) and cite it directly.</p></div>
+    </details>
+  </article>
+
+  <article class="task activity" data-task="2.5 Fix four, build two">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-list-check"/></svg></div>
+      <div><h2>Task 2.5 · Fix four entries, build two</h2><div class="meta"><span class="tag">Groups of 3</span><span class="tag">20 min</span><span class="tag slide">Slides 14-15</span></div></div></div>
+    <p class="how">Part A: rewrite each entry in APA 7. Type *asterisks* around anything that should be in italics.</p>
+    <div id="fixRows" style="display:grid;gap:10px"></div>
+    <p class="how">Part B: build these two from the data cards. Use the reference builder below, then paste your final version in the box.</p>
+    <div class="two">
+      <div class="src"><b class="lab">Book</b>John Smith. <em>Effective Study</em>. 3rd edition. Study Books Ltd, London. 2019.</div>
+      <div class="src"><b class="lab">Journal article, no DOI</b>Sue Jones, Kevan Long, Boris Gold. "The Impact of Covid-19 on education". <em>Journal of Medical Health</em>, volume 19, issue 25, pages 219-234. 2021.</div>
+    </div>
+    <div class="two">
+      <div class="field"><label for="b25a">Book reference</label><textarea id="b25a" data-k="b25a" data-label="Built: book"></textarea></div>
+      <div class="field"><label for="b25b">Journal reference</label><textarea id="b25b" data-k="b25b" data-label="Built: journal"></textarea></div>
+    </div>
+    <div class="field" style="background:var(--surface);border-radius:6px;padding:14px">
+      <span class="flabel" style="display:flex;gap:8px;align-items:center"><svg class="ic"><use href="#i-pencil"/></svg>Reference builder (4W)</span>
+      <div class="two">
+        <div class="field"><label for="rbType">Source type</label><select id="rbType" data-k="rbType" data-label="Builder type"><option value="journal">Journal article</option><option value="book">Book</option><option value="web">Web page</option><option value="news">Newspaper / news site article</option></select></div>
+        <div class="field"><label for="rbYear">WHEN: Year</label><input type="text" id="rbYear" data-k="rbYear" data-label="Builder year" placeholder="2021"></div>
+        <div class="field"><label for="rbAuth">WHO: authors, one per line as "Surname, Initials" (or an organisation)</label><textarea id="rbAuth" data-k="rbAuth" data-label="Builder authors" style="min-height:76px" placeholder="Jones, S.&#10;Long, K.&#10;Gold, B."></textarea></div>
+        <div class="field"><label for="rbDate">WHEN: Month and day (web and news only)</label><input type="text" id="rbDate" data-k="rbDate" data-label="Builder date" placeholder="January 18"></div>
+        <div class="field"><label for="rbTitle">WHAT: Title, in sentence case</label><input type="text" id="rbTitle" data-k="rbTitle" data-label="Builder title" placeholder="The impact of COVID-19 on education"></div>
+        <div class="field" data-rb="book"><label for="rbEd">Edition (books, e.g. 3rd)</label><input type="text" id="rbEd" data-k="rbEd" data-label="Builder edition"></div>
+        <div class="field" data-rb="journal web news book"><label for="rbSrc">WHERE: Journal / publisher / site / newspaper</label><input type="text" id="rbSrc" data-k="rbSrc" data-label="Builder source" placeholder="Journal of Medical Health"></div>
+        <div class="field" data-rb="journal"><label for="rbVol">Volume</label><input type="text" id="rbVol" data-k="rbVol" data-label="Builder volume"></div>
+        <div class="field" data-rb="journal"><label for="rbIss">Issue</label><input type="text" id="rbIss" data-k="rbIss" data-label="Builder issue"></div>
+        <div class="field" data-rb="journal"><label for="rbPg">Pages (e.g. 219-234)</label><input type="text" id="rbPg" data-k="rbPg" data-label="Builder pages"></div>
+        <div class="field"><label for="rbLink">DOI or URL (optional for print)</label><input type="text" id="rbLink" data-k="rbLink" data-label="Builder link"></div>
+      </div>
+      <div class="w4" id="rbW4"><span data-w="who">WHO</span><span data-w="when">WHEN</span><span data-w="what">WHAT</span><span data-w="where">WHERE</span></div>
+      <div class="out" id="rbOut" aria-live="polite"></div>
+      <p class="count" id="rbHint"></p>
+      <div class="actions"><button class="btn ghost" type="button" id="rbCopy"><svg class="ic"><use href="#i-copy"/></svg>Copy reference</button><span class="status" id="rbStatus"></span></div>
+    </div>
+    <details class="reveal"><summary><svg class="ic"><use href="#i-eye"/></svg>Compare with the model answer</summary>
+      <div class="rv">
+        <p class="ref">Davies, P. (2008). <em>Culture shock</em> (3rd ed.). London University Press.</p>
+        <p class="ref">Fredston, L. (1999). Different country, different life. <em>The Journal of Travel, 3</em>(2), 58–94.</p>
+        <p class="ref">Jones, S., Long, K., &amp; Gold, B. (2021). The impact of COVID-19 on education. <em>Journal of Medical Health, 19</em>(25), 219–234.</p>
+        <p class="ref">Smith, J. (2019). <em>Effective study</em> (3rd ed.). Study Books Ltd.</p>
+        <p class="ref">Smith, T., Black, F., Jones, B., &amp; Grey, H. (2010). Homesickness explained. <em>The Journal of Psychology, 23</em>(9), 5–12. [The DOI was invalid: find the real one or leave it out.]</p>
+        <p class="ref">Young, K., &amp; Black, J. (2009, January 18). Not bad, just different. <em>The Guardian</em>. https://www.theguardian.com/...</p>
+        <p>Check: sentence case titles; italics for book titles, journal names and volume numbers; a comma before "&amp;"; en dash in page ranges; no place of publication (London) in APA 7.</p>
+      </div>
+    </details>
+  </article>
+
+  <article class="task activity" data-task="2.6 My source log">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-books"/></svg></div>
+      <div><h2>Task 2.6 · On your own: start your Assessment 1 source log</h2><div class="meta"><span class="tag">Individual</span><span class="tag">20 min</span><span class="tag slide">Slide 17</span></div></div></div>
+    <p class="how">Three sources on your sustainability topic, at least one journal article. Build each reference from the source itself, run the 4W check, then write one sentence using it.</p>
+    <div id="logRows" style="display:grid;gap:12px"></div>
+  </article>
+
+  <article class="task" data-task="Exit ticket 2">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-check"/></svg></div>
+      <div><h2>Exit ticket · Before you go</h2><div class="meta"><span class="tag">3 min</span><span class="tag slide">Slide 18</span></div></div></div>
+    <div class="quiz" data-quiz="exit2"></div>
+  </article>
+
+  <div class="actions"><button class="btn" type="button" data-copy="s2"><svg class="ic"><use href="#i-clipboard"/></svg>Copy my work (Session 2)</button><span class="status" data-status="s2"></span></div>
+</section>
+
+<!-- ================= PRACTICE ================= -->
+<section class="panel" id="practice" role="tabpanel" aria-labelledby="tab-practice" hidden>
+  <div class="intro">
+    <div class="kicker">Practice · 10 questions</div>
+    <div class="q">Quoting, paraphrasing, synthesising and referencing</div>
+    <p>Choose an answer to see the explanation. Your score updates as you go.</p>
+  </div>
+  <article class="task">
+    <div class="score"><div class="lbl"><span id="pScore">0 of 10 answered</span><span id="pRight">0 correct</span></div><div class="bar"><i id="pBar"></i></div></div>
+    <div class="quiz" data-quiz="practice"></div>
+    <div class="actions"><button class="btn ghost" type="button" id="pRetry"><svg class="ic"><use href="#i-rotate-left"/></svg>Try again</button></div>
+  </article>
+</section>
+
+<!-- ================= TOOLKIT ================= -->
+<section class="panel" id="toolkit" role="tabpanel" aria-labelledby="tab-toolkit" hidden>
+  <article class="task">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-shuffle"/></svg></div><div><h2>SWAPS · five levers for a real paraphrase</h2><div class="meta"><span class="tag">Part 1</span></div></div></div>
+    <div class="letters">
+      <div class="letter"><span class="big">S</span><b>Synonyms</b><span>cheaper &gt; less expensive</span></div>
+      <div class="letter"><span class="big">W</span><b>Word form</b><span>subsidise &gt; a subsidy</span></div>
+      <div class="letter"><span class="big">A</span><b>Active / passive</b><span>80% use the BRT &gt; the BRT is used by 80%</span></div>
+      <div class="letter"><span class="big">P</span><b>Position of ideas</b><span>start with the result, then the cause</span></div>
+      <div class="letter"><span class="big">S</span><b>Statistics &amp; time</b><span>80% &gt; four out of five; a day &gt; daily</span></div>
+    </div>
+    <div class="flags">
+      <div class="flag g"><h3><svg class="ic"><use href="#i-check"/></svg>Green flags</h3><ul><li>Three or more levers used</li><li>Every verb and number checked against the original</li><li>Names, terms and precise numbers kept</li><li>Citation next to the borrowed idea</li><li>Written from notes with the original hidden</li></ul></div>
+      <div class="flag r"><h3><svg class="ic"><use href="#i-cross"/></svg>Red flags</h3><ul><li>Only synonyms swapped (patchwriting)</li><li>Copied wording with a citation but no quotation marks</li><li>A number or verb that says more or less than the source</li><li>No citation because "the words are mine"</li><li>Paraphrasing tools or AI-written text</li></ul></div>
+    </div>
+    <p><strong>3-check:</strong> Meaning kept? Look changed? Source cited?</p>
+  </article>
+
+  <article class="task">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-list-check"/></svg></div><div><h2>4W reference check · Who, When, What, Where</h2><div class="meta"><span class="tag">Part 2</span><span class="tag">APA 7</span></div></div></div>
+    <div class="letters">
+      <div class="letter"><span class="big">W</span><b>WHO · Author</b><span>Surname, Initials. All authors up to 20, comma before &amp;. Or the organisation.</span></div>
+      <div class="letter"><span class="big">W</span><b>WHEN · Date</b><span>(Year). News and web: (Year, Month Day). Same author and year: 2011a, 2011b.</span></div>
+      <div class="letter"><span class="big">W</span><b>WHAT · Title</b><span>Sentence case. Italics for books and stand-alone web pages.</span></div>
+      <div class="letter"><span class="big">W</span><b>WHERE · Source</b><span>Journal, volume(issue), pages, DOI. Or publisher. Or site and URL.</span></div>
+    </div>
+    <div class="flags">
+      <div class="flag g"><h3><svg class="ic"><use href="#i-check"/></svg>Green flags</h3><ul><li>Every citation matches one entry: same spelling, same year</li><li>Built from the source itself</li><li>A to Z by first author's surname, hanging indent</li><li>DOI written as https://doi.org/10....</li></ul></div>
+      <div class="flag r"><h3><svg class="ic"><use href="#i-cross"/></svg>Red flags</h3><ul><li>"et al." on the reference list</li><li>A DOI that does not start with 10.</li><li>Copied straight from an app or database without checking</li><li>Listing a source you did not read</li><li>"Retrieved from", place of publication, [Accessed ...] (older styles)</li></ul></div>
+    </div>
+    <p><strong>Match rule:</strong> every in-text citation has one entry, and every entry has at least one citation.</p>
+  </article>
+
+  <article class="task">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-balance-scale-left"/></svg></div><div><h2>Quote, paraphrase or summarise?</h2></div></div>
+    <div class="flags">
+      <div class="flag" style="background:var(--surface)"><h3>Quote</h3><ul><li>Exact definition, memorable wording, or you respond to the exact words</li><li>Under 40 words: "double quotation marks" + page: (Ervin et al., 2018, p. 470)</li><li>40+ words: block quote, indented 0.5 in, no quotation marks, citation after the final full stop</li></ul></div>
+      <div class="flag" style="background:var(--surface)"><h3>Paraphrase or summarise</h3><ul><li>Your normal choice</li><li>Paraphrase: same ideas and detail, your words and structure</li><li>Summary: selected main points, shorter</li><li>Both always cited</li></ul></div>
+    </div>
+  </article>
+
+  <article class="task">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-pencil"/></svg></div><div><h2>Sentence frames for Assessment 1</h2></div></div>
+    <ul style="margin:0;padding-left:20px;display:grid;gap:6px">
+      <li>According to [Author] ([Year]), ...</li>
+      <li>[Author] ([Year]) reports / argues / suggests / shows that ...</li>
+      <li>... ([Author], [Year]).</li>
+      <li>[Author] ([Year]) outlines three ...: ..., ... and ....</li>
+      <li>Both [A] ([Year]) and [B] ([Year]) highlight ...  /  ... ([A], [Year]; [B], [Year]).</li>
+      <li>While [A] ([Year]) argues that ..., [B] ([Year]) suggests ...</li>
+      <li>[Author] ([Year]) defines ... as "..." (p. [n]).</li>
+      <li>... ([Original], [Year], as cited in [Author], [Year]).</li>
+      <li>As Figure 1 shows, ...  Below the figure: <em>Note.</em> Data from [Author] ([Year]).</li>
+    </ul>
+    <p class="how">Choose the verb that matches the source's certainty: <em>suggests</em> is tentative, <em>shows</em> is strong. Do not upgrade "may" to "always".</p>
+  </article>
+
+  <article class="task">
+    <div class="thead"><div class="circle"><svg class="ic"><use href="#i-book"/></svg></div><div><h2>APA 7 formulas</h2></div></div>
+    <p class="flabel">Journal article</p><p class="ref">Mulrooney, H. (2019). Public health approaches to tackling obesity in the UK. <em>Practice Nursing, 30</em>(6), 294–298. https://doi.org/10.12968/pnur.2019.30.6.294</p>
+    <p class="flabel">Book</p><p class="ref">Smith, J. (2019). <em>Effective study</em> (3rd ed.). Study Books Ltd.</p>
+    <p class="flabel">Web page with an organisation as author</p><p class="ref">BBC. (2021). <em>Sustainable living</em>. BBC Bitesize. https://www.bbc.co.uk/bitesize/guides/zqvxdmn/revision/1</p>
+    <p class="flabel">News article</p><p class="ref">Singleton, T. (2024, July 5). Amazon at 30: What next for 'The Everything Company'? <em>BBC News</em>. [URL]</p>
+    <p class="how">More source types: <a href="https://apastyle.apa.org/style-grammar-guidelines/references/examples" target="_blank" rel="noopener" style="color:var(--accent)">APA Style reference examples</a></p>
+  </article>
+</section>
+
+<p class="foot">PG01 Advanced English Language &amp; Academic Skills · SRH International College Berlin · Answers are saved only in this browser.</p>
+</main>
+
+<script>
+(function () {
+  const KEY = 'pg01-using-sources-lab';
+  let S = {};
+  try { S = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { S = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+  const $ = (q, r = document) => r.querySelector(q), $$ = (q, r = document) => Array.from(r.querySelectorAll(q));
+  const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const icon = (n) => `<svg class="ic"><use href="#i-${n}"/></svg>`;
+
+  /* theme */
+  const root = document.documentElement;
+  if (S.theme) root.setAttribute('data-theme', S.theme);
+  $('#themeBtn').addEventListener('click', () => {
+    const cur = root.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = cur === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', next); S.theme = next; save();
+  });
+
+  /* tabs */
+  const tabs = $$('.tab');
+  function show(id) {
+    tabs.forEach((t) => { const on = t.getAttribute('aria-controls') === id; t.setAttribute('aria-selected', on); $('#' + t.getAttribute('aria-controls')).hidden = !on; });
+    S.tab = id; save();
+  }
+  tabs.forEach((t) => t.addEventListener('click', () => show(t.getAttribute('aria-controls'))));
+  const h = (location.hash || '').slice(1);
+  show(['s1', 's2', 'practice', 'toolkit'].includes(h) ? h : (S.tab || 's1'));
+
+  /* generated rows */
+  const grid = $('#gridBody');
+  for (let i = 1; i <= 7; i++) grid.insertAdjacentHTML('beforeend', `<tr><td><input type="text" id="g${i}t" data-k="g${i}t" data-label="Grid row ${i} theme" aria-label="Theme ${i}"></td><td><input type="text" id="g${i}a" data-k="g${i}a" data-label="Grid row ${i} Text 1" aria-label="Text 1 point ${i}"></td><td><input type="text" id="g${i}b" data-k="g${i}b" data-label="Grid row ${i} Text 2" aria-label="Text 2 point ${i}"></td></tr>`);
+  const PL = ['According to (Fredston, 1999), although there may be some simple initial difficulties, these are considered small challenges.', 'Young and Black (2009) observe that "foreigners are eager to mingle with the locals and try new foods" (p. 5).', 'Davies (2008) These difficulties with the language and customs mean that any initial positive feelings may start to disappear.', '... during which the sufferer experiences some highs and some lows. This report will briefly explain the different stages of Culture Shock (Smith et al., 2010).', 'After about three months, differences in behaviour become more noticeable. Fredston 1999. 80% of international students claim to feel depressed around 10 weeks into their courses.'];
+  PL.forEach((p, i) => $('#placeRows').insertAdjacentHTML('beforeend', `<div class="row"><span class="stmt"><span class="num">${i + 1}</span>${esc(p)}</span><div class="chips" data-k="pl${i}" data-label="Sentence ${i + 1}"><button type="button" class="chip" data-v="Correct" data-tone="ok">Correct</button><button type="button" class="chip" data-v="Incorrect" data-tone="bad">Incorrect</button></div><input type="text" id="plf${i}" data-k="plf${i}" data-label="Fix ${i + 1}" placeholder="Your fix (if needed)"></div>`));
+  const FX = ['Davies, P. (2008). <em>Culture Shock</em> (3rd ed.) London University Press.', 'Fredston, L. (1999). Different Country, Different Life. <em>The Journal of Travel, 3</em>(2), 58 – 94.', 'Smith, T., Black, F., Jones, B. &amp; Grey, H. (2010). Homesickness Explained. <em>The Journal of Psychology, 23</em>(9), 5-12. https://doi.org/19.1980256845/qwesdft', 'Young, K. and Black, J. (2009, January 18). Not Bad, Just Different. <em>The Guardian.</em> https://www.guardian.com/world/2009/jan/18/notbadjustdifferent'];
+  FX.forEach((f, i) => $('#fixRows').insertAdjacentHTML('beforeend', `<div class="row"><span class="stmt"><span class="num">${i + 1}</span>${f}</span><textarea id="fx${i}" data-k="fx${i}" data-label="Fixed entry ${i + 1}" style="min-height:64px" aria-label="Corrected entry ${i + 1}"></textarea></div>`));
+  for (let i = 1; i <= 3; i++) $('#logRows').insertAdjacentHTML('beforeend', `<div class="row"><span class="stmt"><span class="num">${i}</span><strong>Source ${i}</strong></span><div class="field"><label for="lr${i}">APA 7 reference</label><textarea id="lr${i}" data-k="lr${i}" data-label="Source ${i} reference" style="min-height:64px"></textarea></div><div class="checks" data-k="lw${i}" data-label="Source ${i} 4W"><label><input type="checkbox" value="Who">Who</label><label><input type="checkbox" value="When">When</label><label><input type="checkbox" value="What">What</label><label><input type="checkbox" value="Where">Where</label><label><input type="checkbox" value="Match rule">Match rule</label></div><div class="field"><label for="ls${i}">A sentence using this source, with the citation</label><input type="text" id="ls${i}" data-k="ls${i}" data-label="Source ${i} sentence"></div></div>`);
+
+  /* bind text fields */
+  const words = (t) => (t.trim().match(/\S+/g) || []).length;
+  function updCount(el) {
+    const c = $(`.count[data-for="${el.id}"]`); if (!c) return;
+    const n = words(el.value), max = +el.dataset.max || 0, tgt = +el.dataset.count || 0;
+    c.textContent = max ? `${n} / ${max} words` : (tgt > 1 ? `${n} words (target about ${tgt})` : `${n} words`);
+    c.classList.toggle('over', !!max && n > max);
+  }
+  $$('input[type=text][data-k], textarea[data-k], select[data-k]').forEach((el) => {
+    const k = el.dataset.k; if (S[k] !== undefined) el.value = S[k];
+    el.addEventListener('input', () => { S[k] = el.value; save(); updCount(el); });
+    el.addEventListener('change', () => { S[k] = el.value; save(); });
+    updCount(el);
+  });
+  /* chips */
+  $$('.chips[data-k]').forEach((g) => {
+    const k = g.dataset.k;
+    const paint = () => $$('.chip', g).forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === S[k]));
+    $$('.chip', g).forEach((b) => b.addEventListener('click', () => { S[k] = S[k] === b.dataset.v ? '' : b.dataset.v; save(); paint(); }));
+    paint();
+  });
+  /* checks */
+  $$('.checks[data-k]').forEach((g) => {
+    const k = g.dataset.k, cur = S[k] || [];
+    $$('input', g).forEach((c) => { c.checked = cur.includes(c.value); c.addEventListener('change', () => { S[k] = $$('input', g).filter((x) => x.checked).map((x) => x.value); save(); }); });
+  });
+  /* ranking */
+  $$('.rank[data-k]').forEach((ol) => {
+    const k = ol.dataset.k;
+    if (Array.isArray(S[k])) S[k].forEach((id) => { const li = $(`li[data-id="${id}"]`, ol); if (li) ol.appendChild(li); });
+    function paint() {
+      const items = $$('li', ol);
+      items.forEach((li, i) => {
+        $('.pos', li).textContent = i + 1;
+        const m = $('.moves', li);
+        m.innerHTML = `<button type="button" aria-label="Move ${li.dataset.id} up" ${i === 0 ? 'disabled' : ''}>${icon('angle-small-up')}</button><button type="button" aria-label="Move ${li.dataset.id} down" ${i === items.length - 1 ? 'disabled' : ''}>${icon('angle-small-down')}</button>`;
+        const [up, dn] = $$('button', m);
+        up.addEventListener('click', () => { ol.insertBefore(li, li.previousElementSibling); done(li, 0); });
+        dn.addEventListener('click', () => { ol.insertBefore(li.nextElementSibling, li); done(li, 1); });
+      });
+    }
+    function done(li, which) { S[k] = $$('li', ol).map((x) => x.dataset.id); save(); paint(); const b = $$('.moves button', li)[which]; (b && !b.disabled ? b : $('.moves button:not(:disabled)', li)).focus(); }
+    paint();
+  });
+
+  /* sentence builder */
+  function sb() {
+    const g = (id) => ($('#' + id).value || '').trim();
+    const A = g('sbA') || 'Author', Ay = g('sbAy') || 'Year', B = g('sbB') || 'Author B', By = g('sbBy') || 'Year', c1 = g('sbC1') || '...', c2 = g('sbC2') || '...', v = g('sbVerb');
+    const cap = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+    const pair = [[A, Ay], [B, By]].sort((x, y) => x[0].localeCompare(y[0]));
+    const out = {
+      acc: `According to ${A} (${Ay}), ${c1}.`,
+      rep: `${A} (${Ay}) ${v} that ${c1}.`,
+      end: `${cap(c1)} (${A}, ${Ay}).`,
+      both: `Both ${A} (${Ay}) and ${B} (${By}) highlight that ${c1}.`,
+      while: `While ${A} (${Ay}) argues that ${c1}, ${B} (${By}) suggests that ${c2}.`,
+      semi: `${cap(c1)} (${pair[0][0]}, ${pair[0][1]}; ${pair[1][0]}, ${pair[1][1]}).`,
+      quote: `${A} (${Ay}) defines ... as "${c1}" (p. ${c2}).`,
+    }[g('sbFrame') || 'acc'];
+    $('#sbOut').textContent = out;
+  }
+  ['sbFrame', 'sbVerb', 'sbA', 'sbAy', 'sbB', 'sbBy', 'sbC1', 'sbC2'].forEach((id) => { $('#' + id).addEventListener('input', sb); $('#' + id).addEventListener('change', sb); });
+  sb();
+
+  /* reference builder */
+  const NDASH = '–';
+  function authors(lines) {
+    const a = lines.split('\n').map((x) => x.trim()).filter(Boolean);
+    if (!a.length) return '';
+    if (a.length === 1) return a[0];
+    if (a.length === 2) return `${a[0]}, & ${a[1]}`;
+    return a.slice(0, -1).join(', ') + ', & ' + a[a.length - 1];
+  }
+  function rb() {
+    const g = (id) => ($('#' + id).value || '').trim();
+    const t = g('rbType'), au = authors($('#rbAuth').value), y = g('rbYear'), d = g('rbDate'), ti = g('rbTitle'), ed = g('rbEd'), src = g('rbSrc'), vol = g('rbVol'), iss = g('rbIss'), pg = g('rbPg').replace(/\s*[-–—]\s*/, NDASH), ln = g('rbLink');
+    $$('[data-rb]').forEach((f) => { f.hidden = !f.dataset.rb.split(' ').includes(t); });
+    const end = (s) => (s && !/[.?!]$/.test(s) ? s + '.' : s);
+    let who = au ? end(au) : '';
+    let when = y ? `(${y}${(t === 'web' || t === 'news') && d ? ', ' + d : ''}).` : '';
+    let html = '', where = false;
+    if (t === 'journal') {
+      where = !!(src && vol);
+      html = `${esc(who)} ${esc(when)} ${esc(end(ti))} <em>${esc(src)}${vol ? ', ' + esc(vol) : ''}</em>${iss ? '(' + esc(iss) + ')' : ''}${pg ? ', ' + esc(pg) : ''}.${ln ? ' ' + esc(ln) : ''}`;
+    } else if (t === 'book') {
+      where = !!src;
+      html = `${esc(who)} ${esc(when)} <em>${esc(ti)}</em>${ed ? ' (' + esc(ed.replace(/\s*(edition|ed\.?)$/i, '')) + ' ed.)' : ''}. ${esc(end(src))}${ln ? ' ' + esc(ln) : ''}`;
+    } else if (t === 'web') {
+      where = !!ln;
+      html = `${esc(who)} ${esc(when)} <em>${esc(end(ti))}</em>${src && src !== au ? ' ' + esc(end(src)) : ''} ${esc(ln)}`;
+    } else {
+      where = !!src;
+      html = `${esc(who)} ${esc(when)} ${esc(end(ti))} <em>${esc(src)}</em>.${ln ? ' ' + esc(ln) : ''}`;
+    }
+    const filled = { who: !!au, when: !!y, what: !!ti, where };
+    $$('#rbW4 span').forEach((s) => s.classList.toggle('on', filled[s.dataset.w]));
+    const any = Object.values(filled).some(Boolean);
+    $('#rbOut').innerHTML = any ? html.replace(/\s+/g, ' ').trim() : '<span class="ph">Your reference appears here as you type.</span>';
+    const hints = [];
+    const caps = (ti.match(/\b[A-Z][a-z]+/g) || []).slice(1).length;
+    if (caps >= 2) hints.push('Title: APA uses sentence case. Capitalise only the first word, the first word after a colon, and proper nouns.');
+    if (ln && /doi/i.test(ln) && !/10\./.test(ln)) hints.push('This DOI does not contain "10.": check it.');
+    if (/et al/i.test($('#rbAuth').value)) hints.push('Do not use "et al." on the reference list: list every author.');
+    $('#rbHint').textContent = hints.join(' ');
+  }
+  ['rbType', 'rbAuth', 'rbYear', 'rbDate', 'rbTitle', 'rbEd', 'rbSrc', 'rbVol', 'rbIss', 'rbPg', 'rbLink'].forEach((id) => { $('#' + id).addEventListener('input', rb); $('#' + id).addEventListener('change', rb); });
+  rb();
+
+  /* copy helpers */
+  function copyText(text, statusEl, fallbackEl) {
+    const ok = () => { statusEl.textContent = 'Copied. Paste it into Moodle.'; setTimeout(() => (statusEl.textContent = ''), 4000); };
+    const fail = () => {
+      let ta = fallbackEl; if (!ta) { ta = document.createElement('textarea'); ta.style.minHeight = '160px'; statusEl.parentNode.after(ta); }
+      ta.value = text; ta.focus(); ta.select(); statusEl.textContent = 'Press Ctrl+C (Cmd+C on Mac) to copy the selected text.';
+    };
+    try { navigator.clipboard.writeText(text).then(ok, fail); } catch (e) { fail(); }
+  }
+  $('#sbCopy').addEventListener('click', () => copyText($('#sbOut').textContent, $('#sbStatus')));
+  $('#rbCopy').addEventListener('click', () => copyText($('#rbOut').innerText, $('#rbStatus')));
+  $$('[data-copy]').forEach((b) => b.addEventListener('click', () => {
+    const sec = $('#' + b.dataset.copy);
+    const lines = [`PG01 Using Sources Lab · ${b.dataset.copy === 's1' ? 'Session 1: Whose words are these?' : 'Session 2: Could your reader find it?'}`, `Name: ${S.name || ''}`, `Date: ${new Date().toLocaleDateString('en-GB')}`, ''];
+    $$('.task', sec).forEach((t) => {
+      const part = [];
+      $$('[data-k]', t).forEach((el) => {
+        const k = el.dataset.k, v = S[k], lab = el.dataset.label || k;
+        if (v === undefined || v === '' || (Array.isArray(v) && !v.length)) return;
+        if (el.matches('.rank')) part.push(`${lab}: ${v.join(' > ')}`);
+        else part.push(`${lab}: ${Array.isArray(v) ? v.join(', ') : v}`);
+      });
+      const qz = $('.quiz', t);
+      if (qz) { const r = S['quiz-' + qz.dataset.quiz] || {}; const Q = QUIZ[qz.dataset.quiz]; const n = Object.keys(r).length; if (n) part.push(`Quiz: ${Q.filter((q, i) => r[i] === q.a).length} of ${Q.length} correct`); }
+      if (part.length) lines.push('== ' + t.dataset.task + ' ==', ...part, '');
+    });
+    copyText(lines.join('\n'), $(`[data-status="${b.dataset.copy}"]`));
+  }));
+
+  /* quizzes */
+  const L = ['A', 'B', 'C', 'D'];
+  const QUIZ = {
+    exit1: [
+      { q: 'A cited sentence keeps the original wording, without quotation marks. Is it acceptable?', o: ['Yes, because it is cited', 'No: copied wording needs quotation marks (a quote) or a real paraphrase', 'Yes, if it is under 40 words', 'Yes, if the Turnitin score is low'], a: 1, e: 'A citation credits the idea, but copied wording without quotation marks is still plagiarism. Quote it properly or paraphrase it.' },
+      { q: 'Which of these is NOT one of the five SWAPS levers?', o: ['Synonyms', 'Word form', 'Shortening the quotation', 'Statistics & time'], a: 2, e: 'SWAPS = Synonyms, Word form, Active/passive, Position of ideas, Statistics & time expressions.' },
+      { q: 'Your paraphrase scores 0% on Turnitin. Is it automatically acceptable?', o: ['Yes, 0% proves it is original', 'Not necessarily: it may change the meaning or lack a citation', 'Yes, unless it is longer than the original', 'No, 0% means it must be a quote'], a: 1, e: 'Turnitin only finds matching wording. Version C and the BBC jobs paraphrase both score low and still misrepresent the source.' },
+    ],
+    warm2: [
+      { q: 'Three authors: Smith, Black and Jones (2010). The in-text citation is ...', o: ['(Smith, Black, & Jones, 2010)', '(Smith et al., 2010)', '(Smith, et al., 2010)', '(Smith and others, 2010)'], a: 1, e: 'APA 7 uses "et al." from the first citation for three or more authors, with no comma before it.' },
+      { q: 'Inside brackets, two authors are joined with ...', o: ['&', 'and', '+', 'either is correct'], a: 0, e: '(Berlinger & Renton, 2021) in brackets; Berlinger and Renton (2021) in running text.' },
+      { q: 'A BBC article shows no author. The citation is ...', o: ['(Anon, 2023)', '(BBC, 2023)', '(www.bbc.co.uk, 2023)', '(Unknown, 2023)'], a: 1, e: 'Use the organisation responsible for the page. Never "Anon" and never the URL.' },
+      { q: 'A reliable page has no date. You write ...', o: ['(Smith, 0000)', '(Smith, n.d.)', '(Smith)', 'the current year'], a: 1, e: 'n.d. = no date. Check the page is credible first.' },
+      { q: 'A page number is required ...', o: ['always', 'for direct quotes', 'only for books', 'never in APA 7'], a: 1, e: 'Direct quotes need a page (or paragraph) number: (Young & Black, 2009, p. 5). It is optional, but helpful, for paraphrases.' },
+    ],
+    exit2: [
+      { q: 'You read Mulrooney (2019), who cites Butland et al. (2007). The in-text citation is ...', o: ['(Butland et al., 2007)', '(Butland et al., 2007, as cited in Mulrooney, 2019)', '(Mulrooney, 2019, cited Butland)', '(Butland & Mulrooney, 2019)'], a: 1, e: 'APA 7 uses "as cited in". Only Mulrooney goes on your reference list.' },
+      { q: 'Which 4W element is missing? "Garg, R. K., & Paliwal, V. K. Spectrum of neurological complications following COVID-19 vaccination. Neurological Sciences, 43(1), 3–40."', o: ['WHO', 'WHEN', 'WHAT', 'WHERE'], a: 1, e: 'The year (2022) is missing after the authors.' },
+      { q: 'The text says (Tropical Medicine Bureau, 2016); the list says Tropical Medical Bureau. Which rule is broken?', o: ['The match rule', 'Alphabetical order', 'Hanging indent', 'Sentence case'], a: 0, e: 'Every citation must match its entry exactly: same name, same year.' },
+    ],
+    practice: [
+      { q: 'A student changes "cheaper" to "less expensive" and "a day" to "daily" but keeps the rest of the sentence exactly as it was, and adds a citation. What is the problem?', o: ['Nothing: it is cited', 'Patchwriting: only the Synonyms lever was used, so the original structure is still there', 'It should be a block quotation', 'It is a synthesis, so it needs two citations'], a: 1, e: 'Swapping words inside the original skeleton is patchwriting. Use at least three SWAPS levers so the structure changes too.' },
+      { q: '"80% of travellers use the BRT" becomes "The BRT is used by four in five travellers." Which SWAPS levers were used?', o: ['Synonyms and Word form', 'Position of ideas and Synonyms', 'Active/passive and Statistics', 'Word form only'], a: 2, e: 'Active to passive (travellers use > is used by travellers) and Statistics (80% > four in five).' },
+      { q: 'Which definition of synthesis is accurate?', o: ['Combining ideas from two or more sources in one paragraph, with citations that show who said what', 'Shortening one source to its main points', 'Copying the best sentence from each source', 'Listing sources in alphabetical order'], a: 0, e: 'B describes a summary. Synthesis connects sources by theme, with linking words and a citation for each borrowed point.' },
+      { q: '"My Turnitin similarity is 4%, so my work cannot contain plagiarism." True?', o: ['True: below 25% is always safe', 'True: Turnitin checks meaning too', 'False: any score above 0% is plagiarism', 'Not necessarily: Turnitin matches wording, so an uncited or inaccurate paraphrase can still score low'], a: 3, e: 'The similarity index is not a verdict. Open the highlights, and check meaning and citations yourself.' },
+      { q: 'The BBC writes: "Employers added 206,000 jobs in June." Which paraphrase keeps the meaning?', o: ['Employers advertised over 205,000 jobs in June.', 'Around 206,000 new jobs were created by employers in June.', 'Unemployment fell by 206,000 people in June.', 'Employers added more than 260,000 jobs in June.'], a: 1, e: 'A changes the verb (advertised is not added). C changes the topic. D changes the number.' },
+      { q: 'When is a direct quotation the best choice?', o: ['When the source is a journal article', 'When you are short of time', 'When you need to analyse an exact definition', 'Whenever a paragraph is long'], a: 2, e: 'Quote for exact definitions, memorable or concise wording, or when you respond to the exact words. Otherwise paraphrase.' },
+      { q: 'You want to quote 45 words from a source. What does APA 7 require?', o: ['A block quotation: new line, indented 0.5 in, no quotation marks, citation after the final punctuation', 'Double quotation marks and a citation before the quote', 'Single quotation marks and no page number', 'Italics instead of quotation marks'], a: 0, e: 'Quotes of 40 words or more are block quotations.' },
+      { q: 'You read Mulrooney (2019), who cites Butland et al. (2007). You could not find Butland. What do you write?', o: ['(Butland et al., 2007), with Butland on the reference list', '(Mulrooney, 2019) only, without mentioning Butland', '(Butland, 2007 cited Mulrooney)', '(Butland et al., 2007, as cited in Mulrooney, 2019), with only Mulrooney on the reference list'], a: 3, e: 'Name the original, show where you found it, and list only the source you read.' },
+      { q: 'Text: (Tropical Medicine Bureau, 2016). List: Tropical Medical Bureau. (2016, May 15). Which 4W element breaks the match rule?', o: ['WHO', 'WHEN', 'WHAT', 'WHERE'], a: 0, e: 'The author name differs, so the reader cannot find the entry.' },
+      { q: 'Source: Walden University (2024) says students who interact with software more than with a teacher may feel disconnected and isolated. Which sentence uses the source best in an essay?', o: ['AI makes students lonely and causes them to drop out.', 'Walden University (2024) states that "if students interact with a software program more than with a teacher, their social interaction is also reduced, and they can begin to feel disconnected and isolated."', 'Walden University (2024) warns that students who interact more with software than with teachers may feel isolated, which suggests that AI tools should complement rather than replace classroom contact.', 'Students who use AI always become isolated (Walden University, 2024).'], a: 2, e: 'C paraphrases accurately, keeps "may", cites, and adds the writer\'s own point. A has no citation and overclaims; B only quotes; D turns "may" into "always".' },
+    ],
+  };
+  function renderQuiz(box) {
+    const id = box.dataset.quiz, Q = QUIZ[id], key = 'quiz-' + id;
+    S[key] = S[key] || {};
+    box.innerHTML = Q.map((q, i) => `<div class="qq" data-i="${i}"><div class="qt">${i + 1}. ${esc(q.q)}</div><div class="opts">${q.o.map((o, j) => `<button type="button" class="opt" data-j="${j}"><b>${L[j]}</b><span>${esc(o)}</span></button>`).join('')}</div><div class="fbx"></div></div>`).join('');
+    $$('.qq', box).forEach((qq) => {
+      const i = +qq.dataset.i;
+      const paint = () => {
+        const pick = S[key][i]; if (pick === undefined) return;
+        $$('.opt', qq).forEach((b) => { const j = +b.dataset.j; b.disabled = true; b.classList.toggle('right', j === Q[i].a); b.classList.toggle('wrong', j === pick && pick !== Q[i].a); });
+        const ok = pick === Q[i].a;
+        $('.fbx', qq).innerHTML = `<div class="fb ${ok ? 'ok' : 'bad'}"><strong>${ok ? 'Correct.' : 'Not quite. The answer is ' + L[Q[i].a] + '.'}</strong>${esc(Q[i].e)}</div>`;
+      };
+      $$('.opt', qq).forEach((b) => b.addEventListener('click', () => { if (S[key][i] !== undefined) return; S[key][i] = +b.dataset.j; save(); paint(); if (id === 'practice') score(); }));
+      paint();
+    });
+  }
+  function score() {
+    const r = S['quiz-practice'] || {}, Q = QUIZ.practice, n = Object.keys(r).length, c = Q.filter((q, i) => r[i] === q.a).length;
+    $('#pScore').textContent = `${n} of ${Q.length} answered`; $('#pRight').textContent = `${c} correct`; $('#pBar').style.width = (c / Q.length * 100) + '%';
+  }
+  $$('.quiz[data-quiz]').forEach(renderQuiz);
+  score();
+  $('#pRetry').addEventListener('click', () => { S['quiz-practice'] = {}; save(); renderQuiz($('.quiz[data-quiz="practice"]')); score(); $('#practice').scrollIntoView({ behavior: 'smooth' }); });
+})();
+</script>
