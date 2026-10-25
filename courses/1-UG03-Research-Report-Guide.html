@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UG03 Research Report Guide: From Questions to Paragraphs</title>
+<meta name="description" content="A question-by-question guide and report builder for the UG03 Research Report. Your work stays on your device.">
+<style>
+:root{--ink:#1d2433;--mute:#5b6577;--line:#d9dee8;--bg:#f6f7fb;--card:#fff;--accent:#1f4fd8;--accent-d:#163aa3;--ok:#14794a;--warn:#a85b00;--soft:#eaf0ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+header.top{background:#12214d;color:#fff;padding:28px 18px 24px}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+header.top .wrap{padding:0}
+header.top h1{margin:0 0 6px;font-size:1.65rem;line-height:1.2}
+header.top p{margin:0;color:#c9d4f5}
+nav.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+nav.bar .wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 16px;-webkit-overflow-scrolling:touch}
+nav.bar a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:.88rem;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:#fff}
+nav.bar a:hover{background:var(--soft)}
+main.wrap{padding-top:18px;padding-bottom:120px}
+section.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+h2{margin:0 0 4px;font-size:1.3rem}
+h3{margin:18px 0 6px;font-size:1.05rem}
+.meta{color:var(--mute);font-size:.9rem;margin:0 0 10px}
+.note{background:var(--soft);border-left:4px solid var(--accent);padding:10px 12px;border-radius:6px;font-size:.93rem;margin:12px 0}
+.note.warn{background:#fff4e5;border-color:var(--warn)}
+.note.ok{background:#e9f7ef;border-color:var(--ok)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:6px 7px;font-size:.85rem;text-align:left;vertical-align:top}
+th{background:#f0f2f8}
+.tablewrap{overflow-x:auto}
+.para{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:#fcfdff}
+.para h3{margin-top:0}
+.q{margin:12px 0}
+.q label{display:block;font-weight:600;font-size:.95rem;margin-bottom:4px}
+.q .n{display:inline-block;min-width:1.5em;color:var(--accent)}
+textarea,input[type=text]{width:100%;font:inherit;padding:9px 10px;border:1px solid #b9c1d3;border-radius:8px;background:#fff;color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+textarea:focus,input:focus,button:focus-visible,a:focus-visible{outline:3px solid #9db6ff;outline-offset:1px}
+.starter{font-size:.88rem;color:var(--mute);margin:2px 0 0}
+.draftbox{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+.draftbox h4{margin:0 0 6px;font-size:.95rem}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+button,.btn{font:inherit;font-size:.92rem;padding:9px 14px;border-radius:9px;border:1px solid var(--accent);background:#fff;color:var(--accent);cursor:pointer}
+button.primary,.btn.primary{background:var(--accent);color:#fff}
+button:hover,.btn:hover{filter:brightness(.95)}
+.count{font-size:.88rem;color:var(--mute)}
+.count.ok{color:var(--ok);font-weight:600}
+.count.warn{color:var(--warn);font-weight:600}
+.peel{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.peel div{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}
+.peel b{display:block;color:var(--accent)}
+.rule{font-weight:700;font-size:1.02rem;border:2px solid var(--accent);border-radius:12px;padding:12px 14px;background:var(--soft)}
+.tracerow{display:grid;grid-template-columns:1fr;gap:6px;border:1px solid var(--line);border-radius:10px;padding:10px;margin:10px 0;background:#fff}
+.tracerow .tag{font-size:.82rem;color:var(--mute);font-weight:600}
+.status{font-size:.85rem}
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(20,30,60,.08)}
+.savebar .wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 16px}
+.savebar .msg{flex:1;min-width:140px;font-size:.82rem;color:var(--mute)}
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:10px 0}
+.totals div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;font-size:.88rem}
+.totals b{display:block;font-size:1.1rem}
+details{margin:10px 0}
+summary{cursor:pointer;font-weight:600}
+.small{font-size:.88rem;color:var(--mute)}
+@media(min-width:700px){.tracerow{grid-template-columns:1fr 1fr 1fr}}
+.pager{justify-content:space-between;margin:10px 0}
+nav.bar a,nav.bar button.step{white-space:nowrap;font-size:.88rem;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+nav.bar button.step.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+nav.bar button.step.done{border-color:var(--ok)}
+@media print{nav.bar,.savebar,.row,button{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<noscript><div style="background:#fff4e5;border-bottom:3px solid #a85b00;padding:14px 18px;font:16px/1.5 system-ui,sans-serif"><b>This preview cannot run the interactive builder.</b> Use the hosted Teaching Hub page when available, or open this HTML file in a desktop browser with JavaScript enabled.</div></noscript>
+<header class="top"><div class="wrap">
+<h1>UG03 Research Report Guide</h1>
+<p>Critical and Creative Thinking (UG03). From questions to paragraphs: a planning tool for your 1,000-word report.</p>
+</div></header>
+<nav class="bar" aria-label="Report steps"><div class="wrap" id="steps"></div></nav>
+
+<main class="wrap">
+
+<section class="card" id="start" data-step="guide">
+<h2>Start here</h2>
+<div class="row" style="margin:0 0 10px"><button class="primary" type="button" data-go="title">Start writing: open the report builder</button></div>
+<p>Every paragraph in a report has one job. Each question below helps you build one sentence of that paragraph. You research, answer the questions in your own words, then connect your answers into a paragraph.</p>
+<div class="note warn"><b>Your official brief decides.</b> This guide follows the UG03 Research Report assessment brief (50% of the module grade, deadline 14:00 CET, Friday 22 January 2027, submitted through Moodle). If anything here differs from the brief or from what your lecturer tells you, follow the brief and your lecturer.</div>
+<div class="note ok"><b>Your work is private.</b> There is no account and no server. Everything you type stays in this browser on this device. To keep your work safe, or to continue on another device, use <b>Save to my device</b> at the bottom of the screen and later <b>Open saved work</b>.</div>
+<div class="note"><b>These questions are a thinking and planning tool.</b> They do not write sentences for you. Write and edit your own work. Follow the rules in your brief about AI.</div>
+</section>
+
+<section class="card" id="structure" data-step="guide">
+<h2>Report structure</h2>
+<p class="meta">Word ranges as given in the guide. Total target: about 1,000 words, between 900 and 1,100, not counting the reference list. Confirm with your brief.</p>
+<div class="tablewrap"><table>
+<tr><th>Section</th><th>Words</th><th>Job of this section</th></tr>
+<tr><td>Title</td><td style="white-space:nowrap">10-20</td><td>Concise and clear about the content of your report. Your chosen topic goes at the start as your title.</td></tr>
+<tr><td>Executive Summary</td><td style="white-space:nowrap">75-100</td><td>Sum up the whole report, including the main conclusions. Write it last.</td></tr>
+<tr><td>Introduction</td><td style="white-space:nowrap">175-225</td><td>Present the problem, why it matters, and the context. Two paragraphs.</td></tr>
+<tr><td>Research</td><td style="white-space:nowrap">250-300</td><td>What the evidence says: studies, initiatives, real examples, what worked and what did not. Use subheadings.</td></tr>
+<tr><td>Analysis</td><td style="white-space:nowrap">200-250</td><td>What the evidence means. Why things worked or failed. How convincing the evidence is.</td></tr>
+<tr><td>Recommendations</td><td style="white-space:nowrap">200-250</td><td>Concrete solutions supported by your research and analysis, how they would work, and their limits.</td></tr>
+<tr><td>Reference List</td><td>not counted</td><td>Full APA references, in alphabetical order.</td></tr>
+<tr><td>AI Declaration</td><td>not counted</td><td>Your own statement about whether and how you used AI. See your brief.</td></tr>
+</table></div>
+<p class="small">Images, graphs and charts are allowed where useful and relevant, and you should think about how the design of your report helps communicate it. Subheadings guide the reader. If you use a graph or table, give it a title and a source, and say in the text what it shows.</p>
+<h3>The four topics</h3>
+<ol>
+<li>How can people be encouraged to buy electric rather than fossil fuel cars?</li>
+<li>How should the working practices of the gig economy be regulated?</li>
+<li>How should the conflict between freedom of speech and access to trustworthy and reliable information be managed?</li>
+<li>How can the threats to democracy posed by disinformation best be countered?</li>
+</ol>
+<p class="small">You may focus on a specific region or nation. Your recommendations must arise clearly from your research and analysis. The full wording of each topic is in your brief.</p>
+<div class="note"><b>Research and Analysis are different.</b> Research answers: <i>What does the evidence say?</i> Analysis answers: <i>What does that evidence mean, and how convincing is it?</i></div>
+</section>
+
+<section class="card" id="rules" data-step="guide">
+<h2>Requirements checklist</h2>
+<p class="meta">From the brief. Tick things off as you go. Ticks are saved with your work.</p>
+<div id="checks"></div>
+<h3>How your report is assessed</h3>
+<p>The brief's rubric has four criteria: <b>Structure</b> (logical sections, linking words, structure that helps your argument), <b>Content</b> (relevant content and sources, a well-reasoned argument drawing on evidence, critical thinking), <b>Referencing</b> (in-text citations and reference list present, complete, and matching), and <b>Formatting and Writing</b> (clear writing, few errors, correct formatting). Read the full rubric at the end of your brief.</p>
+<h3>AI rules</h3>
+<div class="note warn">Your report must be written and edited by you. The brief does not allow generative AI or similar tools to produce any part of your report or its structure, to translate your writing into English, to suggest more academic wording that you then submit, to paraphrase sources for you, or to improve your writing beyond your own ability. AI must not be used to write your AI Declaration. Read the full AI section of your brief. This guide is a set of questions, not sentences, so that the thinking stays yours.</div>
+</section>
+
+<section class="card" id="peel" data-step="guide">
+<h2>The universal paragraph formula</h2>
+<p>Use this in every section, adapting it to the job of the paragraph. It is especially useful in Research and Analysis.</p>
+<div class="peel">
+<div><b>1. Point</b>What am I explaining?</div>
+<div><b>2. Evidence</b>What supports it?</div>
+<div><b>3. Explanation</b>What does the evidence mean?</div>
+<div><b>4. Link</b>How does this connect to my report?</div>
+</div>
+<div class="rule">Every recommendation must be traceable to something you investigated and analysed. If you cannot point to that evidence, rethink the recommendation.</div>
+</section>
+
+<section class="card" id="builder" data-step="write">
+<h2 id="stepTitle">Report builder</h2>
+<p class="small" style="margin-top:0">For each paragraph: answer the questions in your own words, press <b>Put my answers in the draft box</b>, then edit the result into a real paragraph. New here? Open <b>Guide</b> in the steps bar first.</p>
+<details id="totdet"><summary id="totsum">Word count</summary><div class="totals" id="totals"></div></details>
+<div id="sections"></div>
+</section>
+
+<section class="card" id="trace" data-step="trace">
+<h2>Evidence trail</h2>
+<p>For each recommendation, name the finding in your Research and the point in your Analysis that supports it. If a box stays empty, your recommendation may not be supported yet.</p>
+<div id="tracerows"></div>
+<div class="row"><button id="addtrace" type="button">Add a recommendation</button></div>
+</section>
+
+<section class="card" id="refsai" data-step="refs">
+<h2>Reference list and AI declaration</h2>
+<p class="meta">Neither is counted in the word total. The reference list comes first, then the AI Declaration, both at the end of your report.</p>
+<div class="q"><label for="refs">Reference list (APA, alphabetical order)</label>
+<textarea id="refs" rows="6" placeholder="Type your references here, in APA style and alphabetical order. Each in-text citation must appear here, and each reference must be cited in the text."></textarea></div>
+<div class="q"><label for="ai">AI declaration</label>
+<div class="note"><b>Your declaration must</b> state whether any generative AI tool was used. If you used one, it must: name the tool; explain how you used it; include the prompts; explain what you changed in what it produced; say how much of your final report is AI generated; and confirm that the work is your own and you take full responsibility. If you used no AI, say so explicitly. Write it yourself.</div>
+<textarea id="ai" rows="5" aria-label="AI declaration" placeholder="Write your own declaration here."></textarea></div>
+</section>
+
+<section class="card" id="full" data-step="full">
+<h2>Full draft</h2>
+<p>All your paragraphs in order, ready to copy into your document. Formatting, page numbers, and layout are your job in your document: check the format required in your brief.</p>
+<pre id="fulltext" style="white-space:pre-wrap;font:inherit;background:#fafbff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:0"></pre>
+<div class="row"><button id="copyfull" type="button">Copy full draft</button><button id="txtfull" type="button">Download as text file</button><span class="status" id="copystatus" role="status"></span></div>
+</section>
+
+<section class="card" id="save" data-step="guide">
+<h2>Saving and continuing</h2>
+<ul>
+<li>Your work is saved automatically in this browser on this device.</li>
+<li>Browsers can clear that storage, so also press <b>Save to my device</b> now and then. It downloads a small file, <code>ug03-report-work.json</code>.</li>
+<li>To continue later, or on another device, open this page and press <b>Open saved work</b>, then choose that file. Keep the file somewhere safe, such as your own cloud drive.</li>
+<li>Opening a saved file replaces what is currently on the page.</li>
+</ul>
+</section>
+
+<div class="row pager" id="pager"><button type="button" id="prevb">Back</button><button type="button" class="primary" id="nextb">Next</button></div>
+</main>
+
+<div class="savebar"><div class="wrap">
+<button class="primary" id="savebtn" type="button">Save to my device</button>
+<button id="openbtn" type="button">Open saved work</button>
+<input type="file" id="openfile" accept=".json,application/json" hidden>
+<span class="msg" id="savemsg" role="status">Ready.</span>
+</div></div>
+
+<script>
+(function(){
+"use strict";
+var STORE="ug03-report-guide.v1";
+var DEFS=[
+{id:"es",sec:"Executive Summary",title:"Executive Summary",range:[75,100],when:"One paragraph. Write this section last.",
+ result:"The result is one paragraph that summarises the whole report, not only the introduction.",
+ qs:["What problem does this report investigate?","Why is this problem important?","What did the research reveal?","What is the most important conclusion from the analysis?","What solution or recommendation does the report propose?"]},
+{id:"i1",sec:"Introduction",title:"Paragraph 1: Introducing the problem",
+ qs:["What is the problem or issue?","Who is affected by it?","Where or in what context does it occur?","What evidence demonstrates its importance?","Why does this problem need attention?","What will this report investigate, analyse and recommend?"],
+ starter:{5:"Your last sentence states the purpose of the report. Pattern: This report will examine [specific problem], analyse [key aspects or challenges], and propose recommendations for [desired outcome]."},
+ tip:"The last sentence of this paragraph is your statement of purpose."},
+{id:"i2",sec:"Introduction",title:"Paragraph 2: Scope",
+ qs:["What specific aspect of this problem will the report investigate?","Why is this particular aspect important?","What limits will the investigation have (what will it not cover)?","What questions will guide the investigation?","What will the report examine before presenting its recommendations?"],
+ tip:"Develop the scope here. Do not repeat the purpose statement from paragraph 1."},
+{id:"r1",sec:"Research",title:"Paragraph 1: What research tells us",sub:true,
+ qs:["What have researchers discovered about this issue?","What is one important finding from a credible source?","What evidence, statistics or examples support that finding?","What does this evidence help us understand about the problem?"]},
+{id:"r2",sec:"Research",title:"Paragraph 2: Existing approaches",sub:true,
+ qs:["What has already been done to address this problem?","Who implemented these measures or initiatives?","What evidence exists about their results?","Which approaches appear to have worked, and why?"]},
+{id:"r3",sec:"Research",title:"Paragraph 3: Limitations and challenges",sub:true,
+ qs:["Which approaches have been less successful?","What evidence demonstrates their limitations?","What difficulties have researchers or organisations identified?","What important questions or problems remain unresolved?"],
+ tip:"Support factual claims with citations. A relevant graph or table can go in this section if it adds useful evidence."},
+{id:"a1",sec:"Analysis",title:"Paragraph 1: Interpreting the evidence",
+ qs:["What are the most important findings from the Research section?","What do these findings suggest about the causes or nature of the problem?","Do the sources agree, or do they reach different conclusions?","Which findings appear most convincing, and why?","What can reasonably be concluded from the available evidence?"]},
+{id:"a2",sec:"Analysis",title:"Paragraph 2: Evaluating the challenges",
+ qs:["Why have some approaches succeeded while others have failed?","What factors explain these different outcomes?","What are the strengths and weaknesses of the existing evidence?","What risks, trade-offs or limitations must be considered?","What does this analysis suggest needs to change?"]},
+{id:"c1",sec:"Recommendations",title:"Paragraph 1: Proposed solutions",
+ qs:["Based on your research and analysis, what should be done?","Who should be responsible for taking action?","What specific steps should they take?","Which findings in your report support this recommendation?","How could the proposed action improve the situation?"],
+ tip:"Add each recommendation to the Evidence trail step."},
+{id:"c2",sec:"Recommendations",title:"Paragraph 2: Implementation and limitations",
+ qs:["How could the proposed solution be put into practice?","What resources, cooperation or changes would be necessary?","What obstacles might prevent it from succeeding?","How could those obstacles be addressed?","How would we know whether the recommendation worked?"]}
+];
+var SECS=[{name:"Executive Summary",range:[75,100]},{name:"Introduction",range:[175,225]},{name:"Research",range:[250,300]},{name:"Analysis",range:[200,250]},{name:"Recommendations",range:[200,250]}];
+var CHECKS=["Title is my chosen topic, 10 to 20 words","Sections are clearly labelled: Title, Executive Summary, Introduction, Research, Analysis, Recommendation(s), Reference List, AI Declaration","Research has subheadings","Total is 1,000 words, plus or minus 10%, not counting the reference list","I use relevant academic sources and evidence (the brief recommends a minimum of 5)","In-text citations and reference list match, in APA, alphabetical order","Each recommendation arises from my Research and Analysis (see the Evidence trail step)","Recommendations say how they would work in a real context, and name their limits","Arial or Times New Roman, size 12, double-spaced, pages numbered","AI Declaration is at the very end, after the reference list, and written by me","Submitted through the Moodle link, as a PDF if possible, and I kept the confirmation"];
+var state=freshState();
+var persistOK=true;
+
+function freshState(){var s={v:1,checks:[],title:"",paras:{},trace:[{finding:"",analysis:"",rec:""}],refs:"",ai:"",saved:""};
+ DEFS.forEach(function(d){s.paras[d.id]={a:d.qs.map(function(){return ""}),draft:"",sub:""}});return s}
+function words(t){var m=(t||"").trim().match(/\S+/g);return m?m.length:0}
+function el(tag,attrs,kids){var e=document.createElement(tag);for(var k in (attrs||{})){if(k==="text")e.textContent=attrs[k];else if(k==="class")e.className=attrs[k];else e.setAttribute(k,attrs[k])}(kids||[]).forEach(function(c){e.appendChild(c)});return e}
+function $(id){return document.getElementById(id)}
+function msg(t){$("savemsg").textContent=t}
+
+/* build UI */
+function build(){
+ var host=$("sections");host.innerHTML="";
+ /* title block */
+ var tb=el("div",{class:"para"});
+ tb.appendChild(el("h3",{text:"Title"}));
+ tb.appendChild(el("p",{class:"meta",text:"10 to 20 words. Say clearly what topic and focus your report has. Put the topic you have chosen at the start of your report as your title."}));
+ var ti=el("input",{type:"text",id:"title","aria-label":"Report title",placeholder:"Write your report title"});
+ tb.appendChild(ti);tb.appendChild(el("div",{class:"count",id:"c-title"}));
+ host.appendChild(tb);
+ var last="";
+ DEFS.forEach(function(d){
+  if(d.sec!==last){last=d.sec;var sd=SECS.filter(function(s){return s.name===d.sec})[0];
+   var h=el("h2",{text:d.sec,style:"margin-top:26px"});host.appendChild(h);
+   host.appendChild(el("p",{class:"meta",id:"sechead-"+d.sec.replace(/\s/g,""),text:""}));
+   if(d.when)host.appendChild(el("p",{class:"meta",text:d.when}));}
+  var box=el("div",{class:"para"});
+  box.appendChild(el("h3",{text:d.title}));
+  if(d.sub){var sl=el("div",{class:"q"});sl.appendChild(el("label",{for:"sub-"+d.id,text:"Subheading for this paragraph"}));sl.appendChild(el("input",{type:"text",id:"sub-"+d.id,placeholder:"A short, clear subheading"}));box.appendChild(sl)}
+  d.qs.forEach(function(q,i){
+   var w=el("div",{class:"q"});
+   var lab=el("label",{for:"q-"+d.id+"-"+i});lab.appendChild(el("span",{class:"n",text:(i+1)+"."}));lab.appendChild(document.createTextNode(" "+q));
+   w.appendChild(lab);
+   w.appendChild(el("textarea",{id:"q-"+d.id+"-"+i,rows:"2"}));
+   if(d.starter&&d.starter[i])w.appendChild(el("p",{class:"starter",text:d.starter[i]}));
+   box.appendChild(w)});
+  if(d.tip)box.appendChild(el("div",{class:"note",text:d.tip}));
+  if(d.result)box.appendChild(el("p",{class:"small",text:d.result}));
+  var db=el("div",{class:"draftbox"});
+  db.appendChild(el("h4",{text:"Your paragraph draft"}));
+  db.appendChild(el("textarea",{id:"d-"+d.id,rows:"6","aria-label":"Draft for "+d.title,placeholder:"Press the button to bring your answers here, then edit them into a real paragraph."}));
+  var r=el("div",{class:"row"});
+  r.appendChild(el("button",{type:"button","data-fill":d.id,text:"Put my answers in the draft box"}));
+  r.appendChild(el("span",{class:"count",id:"c-"+d.id}));
+  db.appendChild(r);
+  db.appendChild(el("p",{class:"small",text:"This joins your answers into a first draft. It is not a finished paragraph. Edit the transitions, check your citations, remove repetition, and make sure the writing is yours."}));
+  box.appendChild(db);host.appendChild(box)});
+ /* events */
+ host.addEventListener("input",onInput);
+ host.addEventListener("click",function(e){var b=e.target.closest("[data-fill]");if(b)fill(b.getAttribute("data-fill"))});
+}
+
+function onInput(e){
+ var id=e.target.id||"";var m;
+ if(id==="title"){state.title=e.target.value}
+ else if((m=id.match(/^q-(\w+)-(\d+)$/))){state.paras[m[1]].a[+m[2]]=e.target.value}
+ else if((m=id.match(/^d-(\w+)$/))){state.paras[m[1]].draft=e.target.value}
+ else if((m=id.match(/^sub-(\w+)$/))){state.paras[m[1]].sub=e.target.value}
+ changed();
+}
+function fill(id){
+ var p=state.paras[id];var txt=p.a.map(function(s){return s.trim()}).filter(Boolean).join(" ");
+ if(!txt){msg("Answer at least one question first.");return}
+ if(p.draft.trim()&&!confirm("This replaces the text in the draft box with your answers. Continue?"))return;
+ p.draft=txt;$("d-"+id).value=txt;changed();msg("Answers moved to the draft box. Now edit them.");
+}
+
+/* trace */
+function renderTrace(){
+ var h=$("tracerows");h.innerHTML="";
+ state.trace.forEach(function(t,i){
+  var r=el("div",{class:"tracerow"});
+  [["rec","Recommendation "+(i+1),"What do you recommend?"],["finding","Supporting finding (Research)","Which finding from your Research supports it? Include the source."],["analysis","Supporting point (Analysis)","What does your Analysis say about why this finding matters?"]].forEach(function(f){
+   var c=el("div");c.appendChild(el("div",{class:"tag",text:f[1]}));
+   var ta=el("textarea",{rows:"3",placeholder:f[2],"aria-label":f[1]});ta.value=t[f[0]]||"";
+   ta.addEventListener("input",function(){state.trace[i][f[0]]=ta.value;changed();flagTrace()});
+   c.appendChild(ta);r.appendChild(c)});
+  var s=el("div",{class:"status",id:"tstat-"+i});r.appendChild(s);
+  var rm=el("button",{type:"button",text:"Remove this row"});rm.addEventListener("click",function(){if(state.trace.length>1){state.trace.splice(i,1);renderTrace();changed()}});r.appendChild(rm);
+  h.appendChild(r)});
+ flagTrace();
+}
+function flagTrace(){
+ state.trace.forEach(function(t,i){var s=$("tstat-"+i);if(!s)return;
+  if(!t.rec.trim()&&!t.finding.trim()&&!t.analysis.trim()){s.textContent="";return}
+  var ok=t.rec.trim()&&t.finding.trim()&&t.analysis.trim();
+  s.textContent=ok?"All three fields completed. Check that the evidence genuinely supports your recommendation.":"Incomplete: fill all three boxes, or rethink this recommendation.";
+  s.style.color=ok?"var(--ok)":"var(--warn)"});
+}
+
+/* counts + totals + full text */
+function secWords(name){var n=0;DEFS.forEach(function(d){if(d.sec===name)n+=words(state.paras[d.id].draft)});return n}
+function range(c,r){return c===0?"":(c<r[0]?"warn":(c>r[1]?"warn":"ok"))}
+function refresh(){
+ var tw=words(state.title);var tc=$("c-title");
+ tc.textContent=tw+" words (target 10 to 20)";tc.className="count "+range(tw,[10,20]);
+ DEFS.forEach(function(d){var c=words(state.paras[d.id].draft);var e=$("c-"+d.id);if(e)e.textContent=c+" words in this paragraph"});
+ var total=tw,html="";
+ SECS.forEach(function(s){var c=secWords(s.name);total+=c;
+  var hd=$("sechead-"+s.name.replace(/\s/g,""));
+  if(hd){hd.textContent=s.range[0]+" to "+s.range[1]+" words for this section. Your draft so far: "+c+" words."+(c&&c<s.range[0]?" Below the range.":(c>s.range[1]?" Above the range.":(c?" Within the range.":"")))}
+  html+='<div><span class="count">'+s.name+'</span><b class="count '+range(c,s.range)+'">'+c+'</b><span class="count">'+s.range[0]+' to '+s.range[1]+'</span></div>'});
+ var tot='<div><span class="count">Total (title + five sections)</span><b class="count '+(total?(total>=900&&total<=1100?"ok":"warn"):"")+'">'+total+'</b><span class="count">target 900 to 1,100</span></div>';
+ $("totals").innerHTML=tot+html;var ts=$("totsum");ts.textContent="Words so far: "+total+" of about 1,000 (target 900 to 1,100). Tap for each section.";
+ $("fulltext").textContent=fullText();
+}
+function fullText(){
+ var out=[];if(state.title.trim())out.push(state.title.trim());
+ var last="";
+ DEFS.forEach(function(d){var p=state.paras[d.id];if(!p.draft.trim())return;
+  if(d.sec!==last){last=d.sec;out.push("\n"+d.sec.toUpperCase())}
+  if(d.sub&&p.sub.trim())out.push(p.sub.trim());
+  out.push(p.draft.trim())});
+ if(state.refs.trim())out.push("\nREFERENCES\n"+state.refs.trim());
+ if(state.ai.trim())out.push("\nAI DECLARATION\n"+state.ai.trim());
+ return out.join("\n\n").replace(/\n\n\n+/g,"\n\n").trim()||"Your paragraphs will appear here as you write them.";
+}
+
+/* persistence */
+var timer;
+function changed(){
+ state.refs=$("refs").value;state.ai=$("ai").value;
+ refresh();clearTimeout(timer);timer=setTimeout(persist,400);
+}
+function persist(){
+ state.saved=new Date().toISOString();
+ try{localStorage.setItem(STORE,JSON.stringify(state));persistOK=true;msg("Autosaved in this browser. Use Save to my device for a backup file.")}
+ catch(e){persistOK=false;msg("This browser is not keeping your work. Use Save to my device often.")}
+}
+function loadLocal(){try{var r=localStorage.getItem(STORE);if(r){var s=JSON.parse(r);return merge(s)}}catch(e){}return false}
+function merge(s){
+ if(!s||typeof s!=="object"||!s.paras)return false;
+ var f=freshState();
+ f.title=typeof s.title==="string"?s.title:"";
+ DEFS.forEach(function(d){var p=s.paras[d.id];if(p){f.paras[d.id].draft=typeof p.draft==="string"?p.draft:"";f.paras[d.id].sub=typeof p.sub==="string"?p.sub:"";
+   if(Array.isArray(p.a))d.qs.forEach(function(_,i){if(typeof p.a[i]==="string")f.paras[d.id].a[i]=p.a[i]})}});
+ if(Array.isArray(s.trace)&&s.trace.length)f.trace=s.trace.map(function(t){return{rec:String(t.rec||""),finding:String(t.finding||""),analysis:String(t.analysis||"")}});
+  f.checks=Array.isArray(s.checks)?s.checks.filter(function(n){return typeof n==="number"}):[];
+ f.refs=typeof s.refs==="string"?s.refs:"";f.ai=typeof s.ai==="string"?s.ai:"";
+ state=f;return true;
+}
+function renderChecks(){var h=$("checks");h.innerHTML="";
+ CHECKS.forEach(function(t,i){var l=el("label",{style:"display:flex;gap:8px;align-items:flex-start;margin:6px 0"});
+  var c=el("input",{type:"checkbox"});c.checked=state.checks.indexOf(i)>-1;
+  c.addEventListener("change",function(){var k=state.checks.indexOf(i);if(c.checked&&k<0)state.checks.push(i);if(!c.checked&&k>-1)state.checks.splice(k,1);changed()});
+  l.appendChild(c);l.appendChild(el("span",{text:t}));h.appendChild(l)})}
+function paint(){renderChecks();
+ $("title").value=state.title;$("refs").value=state.refs;$("ai").value=state.ai;
+ DEFS.forEach(function(d){var p=state.paras[d.id];$("d-"+d.id).value=p.draft;if(d.sub)$("sub-"+d.id).value=p.sub;d.qs.forEach(function(_,i){$("q-"+d.id+"-"+i).value=p.a[i]})});
+ renderTrace();refresh();
+}
+function download(name,text,type){
+ var b=new Blob([text],{type:type});var a=document.createElement("a");
+ a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();
+ setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1500);
+}
+function stamp(){var d=new Date();function z(n){return(n<10?"0":"")+n}return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())}
+
+$("savebtn").addEventListener("click",function(){
+ changed();persist();
+ download("ug03-report-work.json",JSON.stringify({app:"ug03-report-guide",saved:new Date().toISOString(),data:state},null,1),"application/json");
+ msg("Saved. Look for ug03-report-work.json in your Downloads. Keep it safe.");
+});
+$("openbtn").addEventListener("click",function(){$("openfile").click()});
+$("openfile").addEventListener("change",function(e){
+ var f=e.target.files&&e.target.files[0];if(!f)return;
+ var r=new FileReader();
+ r.onload=function(){try{var o=JSON.parse(r.result);var d=o&&o.data?o.data:o;
+   if(!confirm("Opening this file replaces what is on the page now. Continue?"))return;
+   if(!merge(d))throw 0;paint();persist();msg("Opened "+f.name+". You can keep working.")}
+  catch(x){msg("That file could not be opened. Choose a file saved from this guide.")}
+  $("openfile").value=""};
+ r.onerror=function(){msg("The file could not be read.")};
+ r.readAsText(f);
+});
+$("addtrace").addEventListener("click",function(){state.trace.push({rec:"",finding:"",analysis:""});renderTrace();changed()});
+$("refs").addEventListener("input",changed);$("ai").addEventListener("input",changed);
+$("copyfull").addEventListener("click",function(){
+ var t=fullText(),s=$("copystatus");
+ function done(){s.textContent="Copied."}
+ function fb(){var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done()}catch(e){s.textContent="Copy failed. Select the text and copy it."}ta.remove()}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb();
+});
+$("txtfull").addEventListener("click",function(){download("ug03-report-draft-"+stamp()+".txt",fullText(),"text/plain")});
+
+var STEPS=[["guide","Guide"],["title","Title"],["Executive Summary","Summary"],["Introduction","Introduction"],["Research","Research"],["Analysis","Analysis"],["Recommendations","Recommendations"],["trace","Evidence trail"],["refs","References and AI"],["full","Full draft"]];
+var cur="title";
+function tagSteps(){var c="title";Array.prototype.forEach.call($("sections").children,function(e){if(e.tagName==="H2")c=e.textContent;e.setAttribute("data-step-in",c)})}
+function show(id){
+ cur=id;var writeStep=["title","Executive Summary","Introduction","Research","Analysis","Recommendations"].indexOf(id)>-1;
+ Array.prototype.forEach.call(document.querySelectorAll("main > section.card"),function(e){var st=e.getAttribute("data-step");e.style.display=(st==="write"?writeStep:st===id)?"":"none"});
+ Array.prototype.forEach.call($("sections").children,function(e){e.style.display=(!writeStep||e.getAttribute("data-step-in")===id)?"":"none"});
+ var bi=document.querySelectorAll("#steps button");STEPS.forEach(function(st,i){bi[i].className="step"+(st[0]===id?" on":"")});
+ var i=STEPS.map(function(x){return x[0]}).indexOf(id);
+ $("prevb").style.visibility=i>0?"visible":"hidden";$("nextb").style.visibility=i<STEPS.length-1?"visible":"hidden";
+ if(i>0)$("prevb").textContent="Back: "+STEPS[i-1][1];if(i<STEPS.length-1)$("nextb").textContent="Next: "+STEPS[i+1][1];
+ var t={title:"Title","Executive Summary":"Executive Summary (write this last)",Introduction:"Introduction",Research:"Research",Analysis:"Analysis",Recommendations:"Recommendations"}[id];$("stepTitle").textContent=t?"Report builder: "+t:"Report builder";
+ window.scrollTo({top:0,behavior:"instant"});
+}
+function initSteps(){var h=$("steps");STEPS.forEach(function(st){var b=el("button",{type:"button","class":"step",text:st[1]});b.addEventListener("click",function(){show(st[0])});h.appendChild(b)});
+ $("prevb").addEventListener("click",function(){var k=STEPS.map(function(x){return x[0]});show(k[k.indexOf(cur)-1])});
+ $("nextb").addEventListener("click",function(){var k=STEPS.map(function(x){return x[0]});show(k[k.indexOf(cur)+1])});
+ document.addEventListener("click",function(e){var g=e.target.closest("[data-go]");if(g)show(g.getAttribute("data-go"))});
+ tagSteps();show("title")}
+
+build();initSteps();
+if(loadLocal()){paint();msg("Welcome back. Your earlier work on this device was restored.")}else{paint()}
+})();
+</script>
+</body>
+</html>
