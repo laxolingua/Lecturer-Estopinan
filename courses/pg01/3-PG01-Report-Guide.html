@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PG01 Report Guide: From Questions to Paragraphs</title>
+<meta name="description" content="A question-by-question guide and report builder for the PG01 sustainability report. Your work stays on your device.">
+<style>
+:root{--ink:#1d2433;--mute:#5b6577;--line:#d9dee8;--bg:#f6f7fb;--card:#fff;--accent:#1f4fd8;--accent-d:#163aa3;--ok:#14794a;--warn:#a85b00;--soft:#eaf0ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+header.top{background:#12214d;color:#fff;padding:28px 18px 24px}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px}
+header.top .wrap{padding:0}
+header.top h1{margin:0 0 6px;font-size:1.65rem;line-height:1.2}
+header.top p{margin:0;color:#c9d4f5}
+nav.bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+nav.bar .wrap{display:flex;gap:6px;overflow-x:auto;padding:8px 16px;-webkit-overflow-scrolling:touch}
+nav.bar a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:.88rem;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:#fff}
+nav.bar a:hover{background:var(--soft)}
+main.wrap{padding-top:18px;padding-bottom:120px}
+section.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+h2{margin:0 0 4px;font-size:1.3rem}
+h3{margin:18px 0 6px;font-size:1.05rem}
+.meta{color:var(--mute);font-size:.9rem;margin:0 0 10px}
+.note{background:var(--soft);border-left:4px solid var(--accent);padding:10px 12px;border-radius:6px;font-size:.93rem;margin:12px 0}
+.note.warn{background:#fff4e5;border-color:var(--warn)}
+.note.ok{background:#e9f7ef;border-color:var(--ok)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:6px 7px;font-size:.85rem;text-align:left;vertical-align:top}
+th{background:#f0f2f8}
+.tablewrap{overflow-x:auto}
+.para{border:1px solid var(--line);border-radius:12px;padding:14px;margin:14px 0;background:#fcfdff}
+.para h3{margin-top:0}
+.q{margin:12px 0}
+.q label{display:block;font-weight:600;font-size:.95rem;margin-bottom:4px}
+.q .n{display:inline-block;min-width:1.5em;color:var(--accent)}
+textarea,input[type=text]{width:100%;font:inherit;padding:9px 10px;border:1px solid #b9c1d3;border-radius:8px;background:#fff;color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+textarea:focus,input:focus,button:focus-visible,a:focus-visible{outline:3px solid #9db6ff;outline-offset:1px}
+.starter{font-size:.88rem;color:var(--mute);margin:2px 0 0}
+.draftbox{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+.draftbox h4{margin:0 0 6px;font-size:.95rem}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+button,.btn{font:inherit;font-size:.92rem;padding:9px 14px;border-radius:9px;border:1px solid var(--accent);background:#fff;color:var(--accent);cursor:pointer}
+button.primary,.btn.primary{background:var(--accent);color:#fff}
+button:hover,.btn:hover{filter:brightness(.95)}
+.count{font-size:.88rem;color:var(--mute)}
+.count.ok{color:var(--ok);font-weight:600}
+.count.warn{color:var(--warn);font-weight:600}
+.peel{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.peel div{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fff}
+.peel b{display:block;color:var(--accent)}
+.rule{font-weight:700;font-size:1.02rem;border:2px solid var(--accent);border-radius:12px;padding:12px 14px;background:var(--soft)}
+.tracerow{display:grid;grid-template-columns:1fr;gap:6px;border:1px solid var(--line);border-radius:10px;padding:10px;margin:10px 0;background:#fff}
+.tracerow .tag{font-size:.82rem;color:var(--mute);font-weight:600}
+.status{font-size:.85rem}
+.savebar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 14px rgba(20,30,60,.08)}
+.savebar .wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 16px}
+.savebar .msg{flex:1;min-width:140px;font-size:.82rem;color:var(--mute)}
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:10px 0}
+.totals div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;font-size:.88rem}
+.totals b{display:block;font-size:1.1rem}
+details{margin:10px 0}
+summary{cursor:pointer;font-weight:600}
+.small{font-size:.88rem;color:var(--mute)}
+@media(min-width:700px){.tracerow{grid-template-columns:1fr 1fr 1fr}}
+.pager{justify-content:space-between;margin:10px 0}
+nav.bar a,nav.bar button.step{white-space:nowrap;font-size:.88rem;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+nav.bar button.step.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+nav.bar button.step.done{border-color:var(--ok)}
+@media print{nav.bar,.savebar,.row,button{display:none!important}body{background:#fff}}
+</style>
+</head>
+<body>
+<noscript><div style="background:#fff4e5;border-bottom:3px solid #a85b00;padding:14px 18px;font:16px/1.5 system-ui,sans-serif"><b>This preview cannot run the interactive builder.</b> Use the hosted Teaching Hub page when available, or open this HTML file in a desktop browser with JavaScript enabled.</div></noscript>
+<header class="top"><div class="wrap">
+<h1>PG01 Report Guide</h1>
+<p>Academic English for Postgraduate Study (PG01). From questions to paragraphs: a planning tool for your 1,000-word sustainability report.</p>
+</div></header>
+<nav class="bar" aria-label="Report steps"><div class="wrap" id="steps"></div></nav>
+
+<main class="wrap">
+
+<section class="card" id="start" data-step="guide">
+<h2>Start here</h2>
+<div class="row" style="margin:0 0 10px"><button class="primary" type="button" data-go="Introduction">Start writing: open the report builder</button></div>
+<p>Every part of a report has one job. Each question below helps you build one sentence of a paragraph. You research, answer the questions in your own words, then connect your answers into a paragraph. The questions follow the sections and bullet points of your assessment brief.</p>
+<div class="note warn"><b>Your official brief decides.</b> This guide follows the PG01 Assessment 1 brief (Report, 40% of the module grade, deadline 14:00 CET, Friday 20 November 2026, submitted through Turnitin via Moodle). If anything here differs from the brief or from what your teacher tells you, follow the brief and your teacher.</div>
+<div class="note warn"><b>Write and edit the report yourself.</b> Your brief does not allow generative AI or similar tools (including Grammarly AI) to generate any part of the report or its structure, to translate your writing, to suggest wording you then submit, to paraphrase sources for you, or to improve your writing beyond your own ability. You must still include an AI Declaration. Read the AI section of your brief. This guide gives questions only, not sentences, so that the thinking stays yours.</div>
+<div class="note ok"><b>Your work is private.</b> There is no account and no server. Everything you type stays in this browser on this device. To keep your work safe, or to continue on another device, use <b>Save to my device</b> at the bottom of the screen and later <b>Open saved work</b>.</div>
+</section>
+
+<section class="card" id="structure" data-step="guide">
+<h2>Report structure</h2>
+<p class="meta">As recommended in the brief. Total: 1,000 words, excluding the reference list. Your grade will be affected if you are more than 10% above or below (under 900 or over 1,100). Section lengths are approximate.</p>
+<div class="tablewrap"><table>
+<tr><th>Section</th><th>Words</th><th>What it includes</th></tr>
+<tr><td>Introduction</td><td style="white-space:nowrap">about 150</td><td>Definition of sustainability and how it relates to your topic; the relevant contexts; a thesis statement that makes clear what the report will do ("This report will...").</td></tr>
+<tr><td>Main Body</td><td style="white-space:nowrap">about 650</td><td>Analysis of the relationships between your topic and sustainability; examples that illustrate and support your analysis, including changes made in response to sustainability concerns; ongoing matters that need further action or discussion.</td></tr>
+<tr><td>Conclusion</td><td style="white-space:nowrap">about 200</td><td>A summary of the key points (2 to 4 sentences); one sentence on how far the evidence suggests sustainability has been achieved, tied back to your thesis; a final statement on what could or should be done in future.</td></tr>
+<tr><td>Reference List</td><td>not counted</td><td>Required. APA.</td></tr>
+<tr><td>AI Declaration</td><td>not counted</td><td>Required. After the reference list.</td></tr>
+</table></div>
+<div class="note"><b>Required and suggested.</b> The brief recommends the three sections and their approximate lengths, and lists what each should include. It does not set a number of paragraphs. The paragraph breakdown in the builder (one introduction paragraph, five Main Body paragraphs, two conclusion paragraphs) is only a suggested way to cover those points. Add, merge or drop paragraphs to fit your case study and the word count.</div>
+<p class="small">Every section needs a heading, including the introduction and conclusion. Use subheadings where appropriate. Link paragraphs and ideas so the report is cohesive and coherent.</p>
+</section>
+
+<section class="card" id="rules" data-step="guide">
+<h2>Requirements checklist</h2>
+<p class="meta">From the brief. Tick things off as you go. Ticks are saved with your work.</p>
+<div id="checks"></div>
+<h3>How your report is assessed</h3>
+<p>The brief's rubric has four criteria: <b>Structure</b> (identifiable, logical components; linking words and phrases), <b>Content</b> (relevant content and sources; a well-reasoned argument; critical thinking), <b>Referencing</b> (in-text citations and reference list present, complete and matching), and <b>Formatting and Writing</b> (clear writing, few errors, appropriate formatting). The brief notes that marking is holistic: the four categories are not each worth 25%. Read the full rubric at the end of your brief.</p>
+</section>
+
+<section class="card" id="peel" data-step="guide">
+<h2>The universal paragraph formula</h2>
+<p>Use this in the Main Body, adapting it to the job of each paragraph.</p>
+<div class="peel">
+<div><b>1. Point</b>What am I explaining?</div>
+<div><b>2. Evidence</b>What supports it? Which source?</div>
+<div><b>3. Explanation</b>What does the evidence mean?</div>
+<div><b>4. Link</b>How does this connect to my thesis and to sustainability?</div>
+</div>
+<div class="rule">Your content must be based on research, not on your own ideas, and supported with specific examples, evidence or data.</div>
+</section>
+
+<section class="card" id="builder" data-step="write">
+<h2 id="stepTitle">Report builder</h2>
+<p class="small" style="margin-top:0">For each paragraph: answer the questions in your own words, press <b>Put my answers in the draft box</b>, then edit the result into a real paragraph. New here? Open <b>Guide</b> in the steps bar first.</p>
+<details id="totdet"><summary id="totsum">Word count</summary><div class="totals" id="totals"></div></details>
+<div id="sections"></div>
+</section>
+
+<section class="card" id="graphic" data-step="graphic">
+<h2>Your graphic</h2>
+<p class="meta">The brief says you must include at least one appropriate graphic that reflects a key aspect of your topic (for example a graph or table). It also says you should create your own graph or table on Excel and reference the data source. You must not include photographs.</p>
+<div class="q"><label for="g-what">What key aspect of your topic does it show?</label><textarea id="g-what" rows="2"></textarea></div>
+<div class="q"><label for="g-type">What type of graphic is it (graph or table), and what is on each axis or in each column?</label><textarea id="g-type" rows="2"></textarea></div>
+<div class="q"><label for="g-src">Where do the data come from? (the source you will reference in APA)</label><textarea id="g-src" rows="2"></textarea></div>
+<div class="q"><label for="g-where">Where in your report will it go, and which sentence will refer to it?</label><textarea id="g-where" rows="2"></textarea></div>
+<div class="q"><label for="g-mean">What does it show, and how does it support your analysis?</label><textarea id="g-mean" rows="2"></textarea></div>
+</section>
+
+<section class="card" id="sources" data-step="sources">
+<h2>Your sources</h2>
+<p class="meta">The brief requires a minimum of 6 academic sources (10 to 12 is usual for a report like this), including at least 2 relevant academic journal articles, all published in English. This tracker is for you. Your reference list goes in the next step.</p>
+<div id="srcrows"></div>
+<div class="row"><button id="addsrc" type="button">Add a source</button></div>
+<p class="status" id="srcstat"></p>
+</section>
+
+<section class="card" id="refsai" data-step="refs">
+<h2>Reference List and AI Declaration</h2>
+<p class="meta">Neither is counted in the word total. Both are required. The reference list comes first, then the AI Declaration, both at the end of your report.</p>
+<div class="q"><label for="refs">Reference list (APA, alphabetical order)</label>
+<textarea id="refs" rows="6" placeholder="Type your references here, in APA style and alphabetical order. Each in-text citation must appear here, and each reference must be cited in the text."></textarea></div>
+<div class="q"><label for="ai">AI declaration</label>
+<div class="note"><b>Your declaration must</b> state whether any generative AI tool was used. If you used one, it must: name the tool; explain how you used it; include the prompts; explain what you changed in what it produced; say how much of your final report is AI generated; and confirm that the work is your own and you take full responsibility. If you used no AI, say so explicitly. Write it yourself.</div>
+<textarea id="ai" rows="5" aria-label="AI declaration" placeholder="Write your own declaration here."></textarea></div>
+</section>
+
+<section class="card" id="full" data-step="full">
+<h2>Full draft</h2>
+<p>All your paragraphs in order, ready to copy into your document. Formatting, page numbers, and layout are your job in your document: check the format required in your brief.</p>
+<pre id="fulltext" style="white-space:pre-wrap;font:inherit;background:#fafbff;border:1px solid var(--line);border-radius:10px;padding:12px;margin:0"></pre>
+<div class="row"><button id="copyfull" type="button">Copy full draft</button><button id="txtfull" type="button">Download as text file</button><span class="status" id="copystatus" role="status"></span></div>
+</section>
+
+<section class="card" id="save" data-step="guide">
+<h2>Saving and continuing</h2>
+<ul>
+<li>Your work is saved automatically in this browser on this device.</li>
+<li>Browsers can clear that storage, so also press <b>Save to my device</b> now and then. It downloads a small file, <code>pg01-report-work.json</code>.</li>
+<li>To continue later, or on another device, open this page and press <b>Open saved work</b>, then choose that file. Keep the file somewhere safe, such as your own cloud drive.</li>
+<li>Opening a saved file replaces what is currently on the page.</li>
+</ul>
+</section>
+
+<div class="row pager" id="pager"><button type="button" id="prevb">Back</button><button type="button" class="primary" id="nextb">Next</button></div>
+</main>
+
+<div class="savebar"><div class="wrap">
+<button class="primary" id="savebtn" type="button">Save to my device</button>
+<button id="openbtn" type="button">Open saved work</button>
+<input type="file" id="openfile" accept=".json,application/json" hidden>
+<span class="msg" id="savemsg" role="status">Ready.</span>
+</div></div>
+
+<script>
+(function(){
+"use strict";
+var STORE="pg01-report-guide.v1";
+var DEFS=[
+{id:"i1",sec:"Introduction",title:"Introduction paragraph",
+ qs:["How do you define sustainability? (Cite your source.)","What is your case study: a company, an aspect of an industry, or an industry in a particular country?","How does your case study relate to sustainability? What needs to be considered?","What contexts are relevant to sustainability and your topic (for example environmental, economic, social, regional, regulatory)?","What will your report do?"],
+ starter:{4:"Your last sentence is the thesis statement that makes clear what the report intends to do. Pattern: This report will [verb] [your case study] and [verb] [what you will analyse or evaluate]."},
+ tip:"Include a definition, the context, and a thesis statement. The thesis statement says what your report will do."},
+{id:"b1",sec:"Main Body",title:"Analysis paragraph 1: first relationship with sustainability",sub:true,
+ qs:["What is the first important relationship between your topic and sustainability?","What evidence from a source shows this relationship? (Cite it.)","What do the evidence and data mean?","How does this link to your thesis statement?"]},
+{id:"b2",sec:"Main Body",title:"Analysis paragraph 2: second relationship with sustainability",sub:true,
+ qs:["What is a second important relationship between your topic and sustainability?","What evidence from a source shows it? (Cite it.)","What do the evidence and data mean?","How does this connect to the first relationship, and to your thesis?"],
+ tip:"Suggested layout, not a brief requirement: the brief does not set a number of paragraphs. Add, merge or drop paragraphs as your case study needs, and keep the whole report near 1,000 words."},
+{id:"b3",sec:"Main Body",title:"Examples paragraph: illustrating your analysis",sub:true,
+ qs:["Which real example illustrates one of your analysis points?","Who, where and when? What happened?","What facts, figures or data support it? (Cite them. Link to your graphic if it fits here.)","How does this example support your argument?"]},
+{id:"b4",sec:"Main Body",title:"Examples paragraph: changes made in response to concerns",sub:true,
+ qs:["What change has been made in response to concerns about sustainability?","Who made the change, and what prompted it?","What results or evidence show whether the change worked?","What does this example tell us about sustainability in your case study?"]},
+{id:"b5",sec:"Main Body",title:"Ongoing matters paragraph",sub:true,
+ qs:["Which issues are ongoing or still need action or discussion?","Why are they still unresolved? What evidence shows this?","Who is involved, and what are the different views?","What further action or discussion is needed?"]},
+{id:"c1",sec:"Conclusion",title:"Conclusion paragraph 1: summary and extent",
+ qs:["What are the key points from your analysis? (2 to 4 sentences in all)","What are the key points from your examples?","What are the key points about ongoing matters?","In one sentence, to what extent does the evidence suggest sustainability has been achieved? (Tie this back to your thesis statement.)"],
+ tip:"Summarise the key points from the sections above in 2 to 4 sentences. Then add one sentence on how far sustainability has been achieved. This sentence ties back to your thesis statement and leads into your final statement."},
+{id:"c2",sec:"Conclusion",title:"Conclusion paragraph 2: final statement",
+ qs:["What could or should be done in future to improve things further?","Who could do it?","Why does the evidence suggest this is the right next step?"]}
+];
+var SECS=[{name:"Introduction",about:150},{name:"Main Body",about:650},{name:"Conclusion",about:200}];
+var CHECKS=["The theme is sustainability and I have a case study (a company in my field, an aspect of the industry, or the industry in a particular country)", "Every section has a heading, including the introduction and conclusion, with subheadings where appropriate", "Introduction has a definition of sustainability, the context, and a thesis statement (\"This report will...\")", "Main Body has analysis, examples (including changes made in response to concerns), and ongoing matters", "Conclusion has a 2 to 4 sentence summary, one sentence on how far sustainability has been achieved, and a final statement", "Total is 1,000 words, plus or minus 10%, not counting the reference list", "At least one appropriate graphic for a key aspect of my topic (for example a graph or table). The brief says I should create it myself on Excel and reference the data source. No photographs", "At least 6 academic sources, including at least 2 academic journal articles, all published in English", "APA in-text citations and reference list match", "Reference List and AI Declaration are at the end, with the declaration after the reference list, written by me", "One typeface throughout, including the reference list (Arial, Calibri, Times New Roman or Georgia), size 11", "Double line spacing, no extra spacing between paragraphs or around headings, paragraphs aligned to the left margin", "Headings and subheadings are bold and aligned to the left margin", "Page number in the top right corner of every page, with the title or cover page as page 1", "My name is not on the submission", "Submitted through Turnitin via Moodle before 14:00 CET on Friday 20 November 2026"];
+var state=freshState();
+var persistOK=true;
+
+function freshState(){var s={v:1,checks:[],title:"",paras:{},graphic:{what:"",type:"",src:"",where:"",mean:""},sources:[1,2,3,4,5,6].map(blankSrc),refs:"",ai:"",saved:""};
+ DEFS.forEach(function(d){s.paras[d.id]={a:d.qs.map(function(){return ""}),draft:"",sub:""}});return s}
+function blankSrc(){return{ref:"",type:""}}
+function words(t){var m=(t||"").trim().match(/\S+/g);return m?m.length:0}
+function el(tag,attrs,kids){var e=document.createElement(tag);for(var k in (attrs||{})){if(k==="text")e.textContent=attrs[k];else if(k==="class")e.className=attrs[k];else e.setAttribute(k,attrs[k])}(kids||[]).forEach(function(c){e.appendChild(c)});return e}
+function $(id){return document.getElementById(id)}
+function msg(t){$("savemsg").textContent=t}
+
+/* build UI */
+function build(){
+ var host=$("sections");host.innerHTML="";
+ /* title block */
+ var tb=el("div",{class:"para"});
+ tb.appendChild(el("h3",{text:"Title"}));
+ tb.appendChild(el("p",{class:"meta",text:"Your title or cover page. Do not put your name on your submission. The cover page counts as page 1."}));
+ var ti=el("input",{type:"text",id:"title","aria-label":"Report title",placeholder:"Write your report title (no name)"});
+ tb.appendChild(ti);tb.appendChild(el("div",{class:"count",id:"c-title"}));
+ host.appendChild(tb);
+ var last="";
+ DEFS.forEach(function(d){
+  if(d.sec!==last){last=d.sec;var sd=SECS.filter(function(s){return s.name===d.sec})[0];
+   var h=el("h2",{text:d.sec,style:"margin-top:26px"});host.appendChild(h);
+   host.appendChild(el("p",{class:"meta",id:"sechead-"+d.sec.replace(/\s/g,""),text:""}));
+   if(d.when)host.appendChild(el("p",{class:"meta",text:d.when}));}
+  var box=el("div",{class:"para"});
+  box.appendChild(el("h3",{text:d.title}));
+  if(d.sub){var sl=el("div",{class:"q"});sl.appendChild(el("label",{for:"sub-"+d.id,text:"Subheading for this paragraph"}));sl.appendChild(el("input",{type:"text",id:"sub-"+d.id,placeholder:"A short, clear subheading"}));box.appendChild(sl)}
+  d.qs.forEach(function(q,i){
+   var w=el("div",{class:"q"});
+   var lab=el("label",{for:"q-"+d.id+"-"+i});lab.appendChild(el("span",{class:"n",text:(i+1)+"."}));lab.appendChild(document.createTextNode(" "+q));
+   w.appendChild(lab);
+   w.appendChild(el("textarea",{id:"q-"+d.id+"-"+i,rows:"2"}));
+   if(d.starter&&d.starter[i])w.appendChild(el("p",{class:"starter",text:d.starter[i]}));
+   box.appendChild(w)});
+  if(d.tip)box.appendChild(el("div",{class:"note",text:d.tip}));
+  if(d.result)box.appendChild(el("p",{class:"small",text:d.result}));
+  var db=el("div",{class:"draftbox"});
+  db.appendChild(el("h4",{text:"Your paragraph draft"}));
+  db.appendChild(el("textarea",{id:"d-"+d.id,rows:"6","aria-label":"Draft for "+d.title,placeholder:"Press the button to bring your answers here, then edit them into a real paragraph."}));
+  var r=el("div",{class:"row"});
+  r.appendChild(el("button",{type:"button","data-fill":d.id,text:"Put my answers in the draft box"}));
+  r.appendChild(el("span",{class:"count",id:"c-"+d.id}));
+  db.appendChild(r);
+  db.appendChild(el("p",{class:"small",text:"This joins your answers into a first draft. It is not a finished paragraph. Edit the transitions, check your citations, remove repetition, and make sure the writing is yours."}));
+  box.appendChild(db);host.appendChild(box)});
+ /* events */
+ host.addEventListener("input",onInput);
+ host.addEventListener("click",function(e){var b=e.target.closest("[data-fill]");if(b)fill(b.getAttribute("data-fill"))});
+}
+
+function onInput(e){
+ var id=e.target.id||"";var m;
+ if(id==="title"){state.title=e.target.value}
+ else if((m=id.match(/^q-(\w+)-(\d+)$/))){state.paras[m[1]].a[+m[2]]=e.target.value}
+ else if((m=id.match(/^d-(\w+)$/))){state.paras[m[1]].draft=e.target.value}
+ else if((m=id.match(/^sub-(\w+)$/))){state.paras[m[1]].sub=e.target.value}
+ changed();
+}
+function fill(id){
+ var p=state.paras[id];var txt=p.a.map(function(s){return s.trim()}).filter(Boolean).join(" ");
+ if(!txt){msg("Answer at least one question first.");return}
+ if(p.draft.trim()&&!confirm("This replaces the text in the draft box with your answers. Continue?"))return;
+ p.draft=txt;$("d-"+id).value=txt;changed();msg("Answers moved to the draft box. Now edit them.");
+}
+
+/* trace */
+var STYPES=["Academic journal article","Other academic source (book, report, conference paper...)","Not academic (check again)"];
+function renderTrace(){
+ var h=$("srcrows");h.innerHTML="";
+ state.sources.forEach(function(t,i){
+  var r=el("div",{class:"tracerow",style:"grid-template-columns:1fr"});
+  r.appendChild(el("div",{class:"tag",text:"Source "+(i+1)}));
+  var ta=el("textarea",{rows:"2",placeholder:"Author, year, title (a note to yourself; your full APA reference goes in the reference list)","aria-label":"Source "+(i+1)});ta.value=t.ref||"";
+  ta.addEventListener("input",function(){state.sources[i].ref=ta.value;changed()});r.appendChild(ta);
+  var sel=el("select",{"aria-label":"Type of source "+(i+1),style:"width:100%;font:inherit;padding:9px 10px;border:1px solid #b9c1d3;border-radius:8px;background:#fff"});
+  [""].concat(STYPES).forEach(function(v){sel.appendChild(el("option",{value:v,text:v||"Choose the type of source"}))});
+  sel.value=t.type||"";sel.addEventListener("change",function(){state.sources[i].type=sel.value;changed()});r.appendChild(sel);
+  var rm=el("button",{type:"button",text:"Remove this source"});rm.addEventListener("click",function(){if(state.sources.length>1){state.sources.splice(i,1);renderTrace();changed()}});r.appendChild(rm);
+  h.appendChild(r)});
+}
+function srcStatus(){
+ var e=$("srcstat");if(!e)return;
+ var all=state.sources.filter(function(t){return t.ref.trim()&&t.type&&t.type!==STYPES[2]});
+ var j=all.filter(function(t){return t.type===STYPES[0]});
+ e.textContent=all.length+" academic source"+(all.length===1?"":"s")+" listed (the brief requires at least 6), including "+j.length+" journal article"+(j.length===1?"":"s")+" (at least 2). Check that every source is in English and in your reference list.";
+ e.style.color=(all.length>=6&&j.length>=2)?"var(--ok)":"var(--warn)";
+}
+var GIDS=["what","type","src","where","mean"];
+
+/* counts + totals + full text */
+function secWords(name){var n=0;DEFS.forEach(function(d){if(d.sec===name)n+=words(state.paras[d.id].draft)});return n}
+function range(c,r){return c===0?"":(c<r[0]?"warn":(c>r[1]?"warn":"ok"))}
+function refresh(){
+ var tw=words(state.title);var tc=$("c-title");
+ tc.textContent="";
+ DEFS.forEach(function(d){var c=words(state.paras[d.id].draft);var e=$("c-"+d.id);if(e)e.textContent=c+" words in this paragraph"});
+ var total=0,html="";
+ SECS.forEach(function(s){var c=secWords(s.name);total+=c;
+  var hd=$("sechead-"+s.name.replace(/\s/g,""));
+  if(hd){hd.textContent="About "+s.about+" words for this section (approximate). Your draft so far: "+c+" words."}
+  html+='<div><span class="count">'+s.name+'</span><b class="count">'+c+'</b><span class="count">about '+s.about+'</span></div>'});
+ var tot='<div><span class="count">Total (three sections)</span><b class="count '+(total?(total>=900&&total<=1100?"ok":"warn"):"")+'">'+total+'</b><span class="count">target 900 to 1,100</span></div>';
+ $("totals").innerHTML=tot+html;var ts=$("totsum");ts.textContent="Words so far: "+total+" of about 1,000 (target 900 to 1,100). Tap for each section.";
+ srcStatus();
+ $("fulltext").textContent=fullText();
+}
+function fullText(){
+ var out=[];if(state.title.trim())out.push(state.title.trim());
+ var last="";
+ DEFS.forEach(function(d){var p=state.paras[d.id];if(!p.draft.trim())return;
+  if(d.sec!==last){last=d.sec;out.push("\n"+d.sec.toUpperCase())}
+  if(d.sub&&p.sub.trim())out.push(p.sub.trim());
+  out.push(p.draft.trim())});
+ if(state.refs.trim())out.push("\nREFERENCES\n"+state.refs.trim());
+ if(state.ai.trim())out.push("\nAI DECLARATION\n"+state.ai.trim());
+ return out.join("\n\n").replace(/\n\n\n+/g,"\n\n").trim()||"Your paragraphs will appear here as you write them.";
+}
+
+/* persistence */
+var timer;
+function changed(){GIDS.forEach(function(k){state.graphic[k]=$("g-"+k).value});
+ state.refs=$("refs").value;state.ai=$("ai").value;
+ refresh();clearTimeout(timer);timer=setTimeout(persist,400);
+}
+function persist(){
+ state.saved=new Date().toISOString();
+ try{localStorage.setItem(STORE,JSON.stringify(state));persistOK=true;msg("Autosaved in this browser. Use Save to my device for a backup file.")}
+ catch(e){persistOK=false;msg("This browser is not keeping your work. Use Save to my device often.")}
+}
+function loadLocal(){try{var r=localStorage.getItem(STORE);if(r){var s=JSON.parse(r);return merge(s)}}catch(e){}return false}
+function merge(s){
+ if(!s||typeof s!=="object"||!s.paras)return false;
+ var f=freshState();
+ f.title=typeof s.title==="string"?s.title:"";
+ DEFS.forEach(function(d){var p=s.paras[d.id];if(p){f.paras[d.id].draft=typeof p.draft==="string"?p.draft:"";f.paras[d.id].sub=typeof p.sub==="string"?p.sub:"";
+   if(Array.isArray(p.a))d.qs.forEach(function(_,i){if(typeof p.a[i]==="string")f.paras[d.id].a[i]=p.a[i]})}});
+  if(Array.isArray(s.sources)&&s.sources.length)f.sources=s.sources.map(function(t){var v=String(t.type||"");return{ref:String(t.ref||""),type:STYPES.indexOf(v)>-1?v:""}});
+ if(s.graphic&&typeof s.graphic==="object")GIDS.forEach(function(k){f.graphic[k]=typeof s.graphic[k]==="string"?s.graphic[k]:""});
+  f.checks=Array.isArray(s.checks)?s.checks.filter(function(n){return typeof n==="number"}):[];
+ f.refs=typeof s.refs==="string"?s.refs:"";f.ai=typeof s.ai==="string"?s.ai:"";
+ state=f;return true;
+}
+function renderChecks(){var h=$("checks");h.innerHTML="";
+ CHECKS.forEach(function(t,i){var l=el("label",{style:"display:flex;gap:8px;align-items:flex-start;margin:6px 0"});
+  var c=el("input",{type:"checkbox"});c.checked=state.checks.indexOf(i)>-1;
+  c.addEventListener("change",function(){var k=state.checks.indexOf(i);if(c.checked&&k<0)state.checks.push(i);if(!c.checked&&k>-1)state.checks.splice(k,1);changed()});
+  l.appendChild(c);l.appendChild(el("span",{text:t}));h.appendChild(l)})}
+function paint(){renderChecks();
+ $("title").value=state.title;$("refs").value=state.refs;$("ai").value=state.ai;GIDS.forEach(function(k){$("g-"+k).value=state.graphic[k]});
+ DEFS.forEach(function(d){var p=state.paras[d.id];$("d-"+d.id).value=p.draft;if(d.sub)$("sub-"+d.id).value=p.sub;d.qs.forEach(function(_,i){$("q-"+d.id+"-"+i).value=p.a[i]})});
+ renderTrace();refresh();
+}
+function download(name,text,type){
+ var b=new Blob([text],{type:type});var a=document.createElement("a");
+ a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();
+ setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1500);
+}
+function stamp(){var d=new Date();function z(n){return(n<10?"0":"")+n}return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate())}
+
+$("savebtn").addEventListener("click",function(){
+ changed();persist();
+ download("pg01-report-work.json",JSON.stringify({app:"pg01-report-guide",saved:new Date().toISOString(),data:state},null,1),"application/json");
+ msg("Saved. Look for pg01-report-work.json in your Downloads. Keep it safe.");
+});
+$("openbtn").addEventListener("click",function(){$("openfile").click()});
+$("openfile").addEventListener("change",function(e){
+ var f=e.target.files&&e.target.files[0];if(!f)return;
+ var r=new FileReader();
+ r.onload=function(){try{var o=JSON.parse(r.result);var d=o&&o.data?o.data:o;
+   if(!confirm("Opening this file replaces what is on the page now. Continue?"))return;
+   if(!merge(d))throw 0;paint();persist();msg("Opened "+f.name+". You can keep working.")}
+  catch(x){msg("That file could not be opened. Choose a file saved from this guide.")}
+  $("openfile").value=""};
+ r.onerror=function(){msg("The file could not be read.")};
+ r.readAsText(f);
+});
+$("addsrc").addEventListener("click",function(){state.sources.push(blankSrc());renderTrace();changed()});
+GIDS.forEach(function(k){$("g-"+k).addEventListener("input",changed)});
+$("refs").addEventListener("input",changed);$("ai").addEventListener("input",changed);
+$("copyfull").addEventListener("click",function(){
+ var t=fullText(),s=$("copystatus");
+ function done(){s.textContent="Copied."}
+ function fb(){var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done()}catch(e){s.textContent="Copy failed. Select the text and copy it."}ta.remove()}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,fb);else fb();
+});
+$("txtfull").addEventListener("click",function(){download("pg01-report-draft-"+stamp()+".txt",fullText(),"text/plain")});
+
+var STEPS=[["guide","Guide"],["title","Title"],["Introduction","Introduction"],["Main Body","Main Body"],["Conclusion","Conclusion"],["graphic","Graphic"],["sources","Sources"],["refs","References and AI"],["full","Full draft"]];
+var WRITE=["title","Introduction","Main Body","Conclusion"];
+var cur="title";
+function tagSteps(){var c="title";Array.prototype.forEach.call($("sections").children,function(e){if(e.tagName==="H2")c=e.textContent;e.setAttribute("data-step-in",c)})}
+function show(id){
+ cur=id;var writeStep=WRITE.indexOf(id)>-1;
+ Array.prototype.forEach.call(document.querySelectorAll("main > section.card"),function(e){var st=e.getAttribute("data-step");e.style.display=(st==="write"?writeStep:st===id)?"":"none"});
+ Array.prototype.forEach.call($("sections").children,function(e){e.style.display=(!writeStep||e.getAttribute("data-step-in")===id)?"":"none"});
+ var bi=document.querySelectorAll("#steps button");STEPS.forEach(function(st,i){bi[i].className="step"+(st[0]===id?" on":"")});
+ var i=STEPS.map(function(x){return x[0]}).indexOf(id);
+ $("prevb").style.visibility=i>0?"visible":"hidden";$("nextb").style.visibility=i<STEPS.length-1?"visible":"hidden";
+ if(i>0)$("prevb").textContent="Back: "+STEPS[i-1][1];if(i<STEPS.length-1)$("nextb").textContent="Next: "+STEPS[i+1][1];
+ var t={title:"Title",Introduction:"Introduction (about 150 words)","Main Body":"Main Body (about 650 words)",Conclusion:"Conclusion (about 200 words)"}[id];$("stepTitle").textContent=t?"Report builder: "+t:"Report builder";
+ window.scrollTo({top:0,behavior:"instant"});
+}
+function initSteps(){var h=$("steps");STEPS.forEach(function(st){var b=el("button",{type:"button","class":"step",text:st[1]});b.addEventListener("click",function(){show(st[0])});h.appendChild(b)});
+ $("prevb").addEventListener("click",function(){var k=STEPS.map(function(x){return x[0]});show(k[k.indexOf(cur)-1])});
+ $("nextb").addEventListener("click",function(){var k=STEPS.map(function(x){return x[0]});show(k[k.indexOf(cur)+1])});
+ document.addEventListener("click",function(e){var g=e.target.closest("[data-go]");if(g)show(g.getAttribute("data-go"))});
+ tagSteps();show("title")}
+
+build();initSteps();
+if(loadLocal()){paint();msg("Welcome back. Your earlier work on this device was restored.")}else{paint()}
+})();
+</script>
+</body>
+</html>
